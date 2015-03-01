@@ -27,7 +27,14 @@ class Search extends \yii\db\ActiveRecord
     {
         return 'search';
     }
-
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParameters(){
+        return $this->hasMany(SearchParameters::className(), ['search_id' => 'id']);
+    }
+    
     /**
      * @inheritdoc
      */
@@ -41,7 +48,7 @@ class Search extends \yii\db\ActiveRecord
             [['chage_data'], 'safe']
         ];
     }
-
+    
     /**
      * @inheritdoc
      */

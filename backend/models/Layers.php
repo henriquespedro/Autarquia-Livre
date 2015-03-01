@@ -27,6 +27,7 @@ use Yii;
  */
 class Layers extends \yii\db\ActiveRecord
 {
+    public $permissionsgroups; 
     /**
      * @inheritdoc
      */
@@ -46,7 +47,8 @@ class Layers extends \yii\db\ActiveRecord
             [['name', 'layer', 'layer_type', 'crs', 'style', 'serverType', 'type', 'icon'], 'string'],
             [['visible', 'show_toc'], 'boolean'],
             [['opacity'], 'number'],
-            [['chage_data'], 'safe']
+            [['chage_data'], 'safe'],
+            [['permissionsgroups'], 'safe']
         ];
     }
 

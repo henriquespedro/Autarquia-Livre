@@ -7,27 +7,39 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\FormsParameters */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+<!--Adicionado Para o Ajax Model-->
+<!-- modal dialog for display pop up login -->
+<div class="modal-dialog our-modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header our-modal-header">
+            <button type="button" class="close" data-dismiss="modal" ><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title our-modal-title" id="myModalLabel">Adicionar Novo Parâmetro</h4>
+        </div>
+        <div class="modal-body our-modal-body">
+            <!--<div class="forms-parameters-form">-->
+            <!-- start ActiveForm -->
+            <?php $form = ActiveForm::begin(['id' => 'forms-form', 'enableClientValidation' => 'true']); ?>
 
-<div class="forms-parameters-form">
+            <?= $form->field($model, 'form_id')->textInput() ?>
 
-    <?php $form = ActiveForm::begin(); ?>
+            <?= $form->field($model, 'type')->textInput() ?>
 
-    <?= $form->field($model, 'form_id')->textInput() ?>
+            <?= $form->field($model, 'parameter')->textInput() ?>
 
-    <?= $form->field($model, 'type')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'label')->textInput() ?>
 
-    <?= $form->field($model, 'parameter')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'description_field')->textInput() ?>
 
-    <?= $form->field($model, 'label')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'sqlquery')->textarea(['rows' => 2]) ?>
 
-    <?= $form->field($model, 'description_field')->textarea(['rows' => 6]) ?>
+            <div class="modal-footer our-modal-footer">
+                <div class="form-group our-form-group">
+                    <!--<div class="form-group">-->
+                    <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Aplicar Alterações', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                </div>
 
-    <?= $form->field($model, 'sqlquery')->textarea(['rows' => 6]) ?>
+                <?php ActiveForm::end(); ?>
 
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            </div>
+        </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
-</div>

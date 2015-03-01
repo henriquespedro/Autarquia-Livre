@@ -48,8 +48,13 @@ class SearchController extends Controller
      */
     public function actionView($id)
     {
+//        $model = $this->findModel($id);
+//        $dataProviderParameters = new ActiveDataProvider([
+//            'query' => $model->getParameters(),
+//        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+//            '$dataProviderParameters' => $dataProviderParameters,
         ]);
     }
 

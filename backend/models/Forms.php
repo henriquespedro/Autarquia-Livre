@@ -32,6 +32,21 @@ class Forms extends \yii\db\ActiveRecord
         return 'forms';
     }
 
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParameters(){
+        return $this->hasMany(FormsParameters::className(), ['form_id' => 'id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getChield(){
+        return $this->hasMany(FormsChield::className(), ['form_id' => 'id']);
+    }
+    
     /**
      * @inheritdoc
      */
