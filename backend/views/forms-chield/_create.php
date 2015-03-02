@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\SearchParameters */
+/* @var $model app\models\FormsChield */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -14,26 +14,24 @@ use yii\widgets\ActiveForm;
     <div class="modal-content">
         <div class="modal-header our-modal-header">
             <button type="button" class="close" data-dismiss="modal" ><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title our-modal-title" id="myModalLabel">Adicionar Novo Parâmetro</h4>
+            <h4 class="modal-title our-modal-title" id="myModalLabel">Adicionar Ficha Filho</h4>
         </div>
         <div class="modal-body our-modal-body">
             <!--<div class="forms-parameters-form">-->
             <!-- start ActiveForm -->
             <?php $form = ActiveForm::begin(); ?>
 
-            <?= $form->field($model, 'search_id')->textInput() ?>
+            <?= $form->field($model, 'form_id')->textInput() ?>
 
-            <?= $form->field($model, 'name')->textInput() ?>
+            <?= $form->field($model, 'template')->textInput() ?>
 
-            <?= $form->field($model, 'require')->checkbox() ?>
+            <?= $form->field($model, 'sqlselect')->textarea(['rows' => 2]) ?>
 
-            <?= $form->field($model, 'type')->dropDownList(['values_list'=>'Lista de Valores', 'text'=>'Texto Livre'],['prompt' => '---- Select Type of Parameter ----'])  ?>
-            
-            <?= $form->field($model, 'value_field')->textInput() ?>
-            
-            <?= $form->field($model, 'description_field')->textInput() ?>
+            <?= $form->field($model, 'sqlinsert')->textarea(['rows' => 2]) ?>
 
-            <?= $form->field($model, 'sqlquery')->textarea(['rows' => 2]) ?>
+            <?= $form->field($model, 'sqlupdate')->textarea(['rows' => 2]) ?>
+
+            <?= $form->field($model, 'sqldelete')->textarea(['rows' => 2]) ?>
 
             <div class="modal-footer our-modal-footer">
                 <div class="form-group our-form-group">

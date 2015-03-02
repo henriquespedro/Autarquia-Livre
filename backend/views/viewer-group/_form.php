@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Group;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ViewerGroup */
@@ -14,7 +16,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_viewer')->textInput() ?>
 
-    <?= $form->field($model, 'id_group')->textInput() ?>
+    <?php $items = ArrayHelper::map(Group::find()->all(), 'id', 'description'); ?>
+    <?= $form->field($model, 'id_group')->dropDownList($items,['prompt' => '---- Select Group ----'])  ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Aplicar Alterações', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

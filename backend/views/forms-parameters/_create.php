@@ -4,10 +4,9 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\SearchParameters */
+/* @var $model app\models\FormsParameters */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
 <!--Adicionado Para o Ajax Model-->
 <!-- modal dialog for display pop up login -->
 <div class="modal-dialog our-modal-dialog">
@@ -19,18 +18,16 @@ use yii\widgets\ActiveForm;
         <div class="modal-body our-modal-body">
             <!--<div class="forms-parameters-form">-->
             <!-- start ActiveForm -->
-            <?php $form = ActiveForm::begin(); ?>
+            <?php $form = ActiveForm::begin(['id' => 'forms-form', 'enableClientValidation' => 'true']); ?>
 
-            <?= $form->field($model, 'search_id')->textInput() ?>
-
-            <?= $form->field($model, 'name')->textInput() ?>
-
-            <?= $form->field($model, 'require')->checkbox() ?>
-
+            <?= $form->field($model, 'form_id')->textInput() ?>
+            
+            <?= $form->field($model, 'label')->textInput() ?>
+            
             <?= $form->field($model, 'type')->dropDownList(['values_list'=>'Lista de Valores', 'text'=>'Texto Livre'],['prompt' => '---- Select Type of Parameter ----'])  ?>
-            
-            <?= $form->field($model, 'value_field')->textInput() ?>
-            
+
+            <?= $form->field($model, 'parameter')->textInput() ?>
+
             <?= $form->field($model, 'description_field')->textInput() ?>
 
             <?= $form->field($model, 'sqlquery')->textarea(['rows' => 2]) ?>
@@ -42,6 +39,7 @@ use yii\widgets\ActiveForm;
                 </div>
 
                 <?php ActiveForm::end(); ?>
+
             </div>
         </div>
     </div>
