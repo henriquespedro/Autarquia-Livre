@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use yii\helpers\ArrayHelper;
+use app\models\ParamCoordinates;
 /* @var $this yii\web\View */
 /* @var $model app\models\Viewers */
 /* @var $form yii\widgets\ActiveForm */
@@ -21,14 +22,15 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'init_extent')->textInput(['maxlength' => 250]) ?>
 
     <?= $form->field($model, 'max_extent')->textInput(['maxlength' => 250]) ?>
+    
+    <?php $items = ArrayHelper::map(ParamCoordinates::find()->all(), 'code', 'name'); ?>
+    <?= $form->field($model, 'projection')->dropDownList($items,['prompt' => '---- Select Coordinates System ----'])  ?>
 
-    <?= $form->field($model, 'projection')->dropDownList(['prompt' => '---- Select Projection System ----'])  ?>
-
-    <?= $form->field($model, 'units')->dropDownList(['prompt' => '---- Select Map Units ----'])  ?>
+    <?= $form->field($model, 'units')->dropDownList(['m'=>'Meters', 'km'=>'kilometers', 'ml'=>'Miles'],['prompt' => '---- Select Map Units ----'])  ?>
 
     <?= $form->field($model, 'active')->checkbox() ?>
 
-    <?= $form->field($model, 'theme')->dropDownList(['prompt' => '---- Select Theme ----'])  ?>
+    <?= $form->field($model, 'theme')->dropDownList(['default'=>'Default', 'mobile'=>'Mobile'], ['prompt' => '---- Select Theme ----'])  ?>
 
 
     <div class="form-group">

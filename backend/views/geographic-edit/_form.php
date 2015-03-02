@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Users;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\GeographicEdit */
@@ -24,10 +26,11 @@ use yii\widgets\ActiveForm;
 
                     <?= $form->field($model, 'layer')->textInput() ?>
 
-                    <?= $form->field($model, 'type')->dropDownList(['prompt' => '---- Select geometry layer ----'])  ?>
+                    <?= $form->field($model, 'type')->dropDownList(['line'=>'Line', 'polygon'=>'Polygon', 'point'=>'Point'],['prompt' => '---- Select geometry layer ----'])  ?>
             </div>
             <div id="yw0_tab_2" class="tab-pane">
-
+                <?php $dataList=ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
+                <?= html::activeCheckBoxList($model,'name', $dataList); ?>
             </div>
         </div>
     </div>

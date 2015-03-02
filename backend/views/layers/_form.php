@@ -2,6 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\ParamCoordinates;
+use app\models\ParamFormat;
+use app\models\ParamServer;
+use app\models\Users;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Layers */
@@ -26,7 +31,8 @@ use yii\widgets\ActiveForm;
 
                 <?= $form->field($model, 'layer')->textInput() ?>
 
-                <?= $form->field($model, 'layer_type')->dropDownList(['prompt' => '---- Select Layer Format ----']) ?>
+                <?php $items_format = ArrayHelper::map(ParamFormat::find()->all(), 'format', 'name'); ?>
+                <?= $form->field($model, 'layer_type')->dropDownList($items_format,['prompt' => '---- Select Layer Format ----']) ?>
 
                 <?= $form->field($model, 'visible')->checkbox() ?>
 
@@ -34,19 +40,23 @@ use yii\widgets\ActiveForm;
 
                 <?= $form->field($model, 'opacity')->textInput() ?>
 
-                <?= $form->field($model, 'crs')->dropDownList(['prompt' => '---- Select Coordinates System ----']) ?>
+                <?php $items = ArrayHelper::map(ParamCoordinates::find()->all(), 'code', 'name'); ?>
+                <?= $form->field($model, 'crs')->dropDownList($items,['prompt' => '---- Select Coordinates System ----']) ?>
 
                 <?= $form->field($model, 'style')->textInput() ?>
-
-                <?= $form->field($model, 'serverType')->dropDownList(['prompt' => '---- Select Server Type ----']) ?>
-
-                <?= $form->field($model, 'type')->dropDownList(['prompt' => '---- Select Layer Type ----']) ?>
+                
+                <?php $items_server = ArrayHelper::map(ParamServer::find()->all(), 'type', 'name'); ?>
+                <?= $form->field($model, 'serverType')->dropDownList($items_server,['prompt' => '---- Select Server Type ----']) ?>
+                
+                
+                <?= $form->field($model, 'type')->dropDownList(['operational_layer'=>'Operational Layer', 'baselayer'=>'BaseLayer'],['prompt' => '---- Select Layer Type ----']) ?>
 
                 <?= $form->field($model, 'icon')->textInput() ?>
             </div>
 
             <div id="yw0_tab_2" class="tab-pane">
-
+                <?php $dataList=ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
+                <?= html::activeCheckBoxList($model,'name', $dataList); ?>
             </div>
          </div>
     </div>   

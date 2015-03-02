@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
+use app\models\Users;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Search */
@@ -40,8 +42,22 @@ $dataProviderParameters = new ActiveDataProvider([
                 <?= $form->field($model, 'sql_search')->textarea(['rows' => 3]) ?>
             </div>
             <div id="yw0_tab_2" class="tab-pane">
-                <?php
-                ?>
+                <?= Html::button('Novo', [ 'class' => 'btn btn-success', 'onclick' => 'AddParameters();']); ?>
+                <div class="modal fade" id="parameters_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+
+                <script>
+                    function AddParameters() {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'index.php?r=search-parameters/create',
+                            success: function (data)
+                            {
+                                $('#parameters_model').html(data);
+                                $('#parameters_model').modal();
+                            }
+                        });
+                    }
+                </script>
 
                 <?=
                 GridView::widget([
@@ -59,7 +75,8 @@ $dataProviderParameters = new ActiveDataProvider([
             </div>
 
             <div id="yw0_tab_3" class="tab-pane">
-
+                <?php $dataList=ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
+                <?= html::activeCheckBoxList($model,'name', $dataList); ?>
             </div>
         </div>
     </div>

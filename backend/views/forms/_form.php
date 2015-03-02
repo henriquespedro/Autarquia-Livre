@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
+use app\models\Users;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Forms */
@@ -118,7 +120,8 @@ $dataProviderChield = new ActiveDataProvider([
             </div>
 
             <div id="yw0_tab_5" class="tab-pane">
-
+                <?php $dataList=ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
+                <?= html::activeCheckBoxList($model,'name', $dataList); ?>
             </div>
         </div>
     </div>
