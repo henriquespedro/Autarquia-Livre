@@ -1,4 +1,4 @@
-[![logo](http://www.novaims.unl.pt/favicon.ico "Autarquia-Livre")][Autarquia-Livre]Autarquia-Livre beta
+![logo](http://www.novaims.unl.pt/favicon.ico "Autarquia-Livre") Autarquia-Livre beta
 ================================================================
 
 Autarquia-Livre, by Pedro Henriques.
