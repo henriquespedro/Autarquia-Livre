@@ -5,8 +5,9 @@ Autarquia-Livre, by Pedro Henriques.
 
     begin       : 2015-01-01
     copyright   : (C) 2015 by Pedro Henriques
-    authors     : Pedro Henriques
+    author      : Pedro Henriques
     email       : henriques.pedro.mf@gmail.com
+    website     : http://zoomto.pt
 
 About
 -------
