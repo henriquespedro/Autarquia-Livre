@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
 /* @var $model app\models\Bookmarks */
 
@@ -12,18 +11,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bookmarks-create">
 
-    <div class="row">
-        <div class="col-lg-3">
-            <?= $this->render('/menus') ?>
-        </div>
-        <div class="col-lg-9">
-
-        <?= $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
-    ]) ?>
-        
-        </div>
-    </div>
-   
+    ])
+    ?>
+
 
 </div>

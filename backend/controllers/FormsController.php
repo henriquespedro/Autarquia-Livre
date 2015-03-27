@@ -14,6 +14,8 @@ use yii\filters\VerbFilter;
  */
 class FormsController extends Controller
 {
+    public $layout = 'admin_layout';
+    
     public function behaviors()
     {
         return [

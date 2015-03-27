@@ -14,6 +14,8 @@ use yii\filters\VerbFilter;
  */
 class ViewersController extends Controller
 {
+    public $layout = 'admin_layout';
+    
     public function behaviors()
     {
         return [
@@ -32,6 +34,8 @@ class ViewersController extends Controller
      */
     public function actionIndex()
     {
+        $this->layout='main';
+
         $searchModel = new ViewersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -79,6 +83,7 @@ class ViewersController extends Controller
      */
     public function actionUpdate($id)
     {
+        //$layout = 'column3';
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

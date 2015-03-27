@@ -13,33 +13,26 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="geographic-edit-index">
 
 
-    <div class="row">
-        <div class="col-lg-3">
-        <?= $this->render('/menus') ?>
-        </div>
-        <div class="col-lg-9">
-        
-        <p>
-            <?= Html::a('Nova Layer', ['create'], ['class' => 'btn btn-success']) ?>
-        </p>
+    <p>
+        <?= Html::a('Nova Layer', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+    <?=
+    GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            //'id',
+            //'viewer_id',
+            'name:ntext',
+            'layer:ntext',
+            //'type:ntext',
+            // 'chage_data',
+            // 'setOrder',
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]);
+    ?>
 
-                    //'id',
-                    //'viewer_id',
-                    'name:ntext',
-                    'layer:ntext',
-                    //'type:ntext',
-                    // 'chage_data',
-                    // 'setOrder',
-
-                    ['class' => 'yii\grid\ActionColumn'],
-                ],
-            ]); ?>
-        </div>
-    </div>
 </div>

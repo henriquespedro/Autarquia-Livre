@@ -12,41 +12,36 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="layers-index">
 
-    <div class="row">
-        <div class="col-lg-3">
-        <?= $this->render('/menus') ?>
-        </div>
-        <div class="col-lg-9">
-        
-        <p>
-            <?= Html::a('Nova Layer', ['create'], ['class' => 'btn btn-success']) ?>
-        </p>
 
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                //'id',
-                //'viewer_id',
-                'name:ntext',
-                'layer:ntext',
-                //'layer_type:ntext',
-                // 'visible:boolean',
-                // 'show_toc:boolean',
-                // 'opacity',
-                // 'crs:ntext',
-                // 'style:ntext',
-                // 'serverType:ntext',
-                 'type:ntext',
-                // 'icon:ntext',
-                // 'chage_data',
-                // 'setOrder',
+    <p>
+        <?= Html::a('Nova Layer', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
-                ['class' => 'yii\grid\ActionColumn'],
-            ],
-        ]); ?>
-        </div>
-    </div>
+    <?=
+    GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            //'id',
+            //'viewer_id',
+            'name:ntext',
+            'layer:ntext',
+            //'layer_type:ntext',
+            // 'visible:boolean',
+            // 'show_toc:boolean',
+            // 'opacity',
+            // 'crs:ntext',
+            // 'style:ntext',
+            // 'serverType:ntext',
+            'type:ntext',
+            // 'icon:ntext',
+            // 'chage_data',
+            // 'setOrder',
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]);
+    ?>
+
 
 </div>

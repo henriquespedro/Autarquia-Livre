@@ -12,37 +12,30 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bookmarks-index">
 
-    <div class="row">
-        <div class="col-lg-3">
-            <?= $this->render('/menus') ?>
-        </div>
-        <div class="col-lg-9">
-        
-        <p>
-            <?= Html::a('Novo Bookmark', ['create'], ['class' => 'btn btn-success']) ?>
-        </p>
 
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+    <p>
+        <?= Html::a('Novo Bookmark', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
-                //'id',
-                //'viewer_id',
-                'name:ntext',
-                'description:ntext',
-                //'x_coordinate:ntext',
-                // 'y_coordinate:ntext',
-                // 'chage_data',
-                // 'setOrder',
+    <?=
+    GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            //'id',
+            //'viewer_id',
+            'name:ntext',
+            'description:ntext',
+            //'x_coordinate:ntext',
+            // 'y_coordinate:ntext',
+            // 'chage_data',
+            // 'setOrder',
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]);
+    ?>
 
-                ['class' => 'yii\grid\ActionColumn'],
-            ],
-        ]); ?>
-        
-        </div>
-    </div>
 
 
 </div>

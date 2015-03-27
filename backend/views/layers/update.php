@@ -12,14 +12,9 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="layers-update">
 
-	<div class="row">
-	    <div class="col-lg-3">
-	    	<?= $this->render('/menus') ?>
-	    </div>
-	    <div class="col-lg-9">
-		    <?= $this->render('_form', [
-		        'model' => $model,
-		    ]) ?>
-		</div>
-	</div>
+<?=
+    $this->render('_form', [
+        'model' => $model,
+    ])
+    ?>
 </div>

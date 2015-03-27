@@ -12,17 +12,10 @@ $this->params['breadcrumbs'][] = $this->title ;
 ?>
 <div class="bookmarks-update">
 
-    <div class="row">
-        <div class="col-lg-3">
-            <?= $this->render('/menus') ?>
-        </div>
-        <div class="col-lg-9">
-
-        <?= $this->render('_form', [
+<?=
+    $this->render('_form', [
         'model' => $model,
-    ]) ?>
-        
-        </div>
-    </div>
+    ])
+    ?>
 
 </div>

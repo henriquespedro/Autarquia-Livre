@@ -11,22 +11,16 @@ $this->title = 'Searches';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="search-index">
-
-    <div class="row">
-        <div class="col-lg-3">
-            <?= $this->render('/menus') ?>
-        </div>
-        <div class="col-lg-9">
             <p>
                 <?= Html::a('Nova Pesquisa', ['create'], ['class' => 'btn btn-success']) ?>
             </p>
 
-            <?= GridView::widget([
+            <?=
+            GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-
                     //'id',
                     //'viewer_id',
                     'name:ntext',
@@ -35,10 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'visible:boolean',
                     // 'chage_data',
                     // 'setOrder',
-
                     ['class' => 'yii\grid\ActionColumn'],
                 ],
-            ]); ?>
-        </div>
-    </div>
+            ]);
+            ?>
+ 
+
+
 </div>

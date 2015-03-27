@@ -11,12 +11,6 @@ $this->title = 'Viewer Groups';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="viewer-group-index">
-
-    <div class="row">
-        <div class="col-lg-3">
-        <?= $this->render('/menus') ?>
-        </div>
-        <div class="col-lg-9">
         
         <p>
         <b>ATENÇÃO:</b> Para ativar protecção ás configurações e/ou layers, tem que adicionar os grupos pretendidos. Caso a tabela não possua nenhum grupo indentificado não adicionada segurança ao visualizador.
@@ -37,6 +31,5 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['class' => 'yii\grid\ActionColumn'],
             ],
         ]); ?>
-        </div>
-    </div>
+
 </div>

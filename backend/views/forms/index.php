@@ -12,37 +12,31 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="forms-index">
 
-    <div class="row">
-        <div class="col-lg-3">
-        <?= $this->render('/menus') ?>
-        </div>
-        <div class="col-lg-9">
-            <p>
-                <?= Html::a('Novo Formulário', ['create'], ['class' => 'btn btn-success']) ?>
-            </p>
+    <p>
+        <?= Html::a('Novo Formulário', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+    <?=
+    GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            //'id',
+            //'viewer_id',
+            'name:ntext',
+            'description:ntext',
+            'html_template:ntext',
+            // 'sql_select:ntext',
+            // 'sql_insert:ntext',
+            // 'sql_update:ntext',
+            // 'sql_delete:ntext',
+            // 'icon:ntext',
+            // 'chage_data',
+            // 'setOrder',
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]);
+    ?>
 
-                    //'id',
-                    //'viewer_id',
-                    'name:ntext',
-                    'description:ntext',
-                    'html_template:ntext',
-                    // 'sql_select:ntext',
-                    // 'sql_insert:ntext',
-                    // 'sql_update:ntext',
-                    // 'sql_delete:ntext',
-                    // 'icon:ntext',
-                    // 'chage_data',
-                    // 'setOrder',
-
-                    ['class' => 'yii\grid\ActionColumn'],
-                ],
-            ]); ?>
-        </div>
-    </div>
 </div>

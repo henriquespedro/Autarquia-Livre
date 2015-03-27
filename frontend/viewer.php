@@ -51,6 +51,10 @@ $connection = new SQLite3(__DIR__ . '/../data/data.db');
         <script src="../vendor/bower/bootstrap/dist/js/bootstrap.min.js"></script>
         <!--OpenLayers 3-->
         <script src="../vendor/openlayers/build/ol.js"></script>
+        <!--    
+                GeoExt 2
+                <script src="loader.js"></script>
+        -->
         <!-- IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
         <script src="http://madrona2d.labs.ecotrust.org/media/html5shiv.js"></script>
@@ -84,20 +88,20 @@ $connection = new SQLite3(__DIR__ . '/../data/data.db');
         <?php
         $load_tools = $connection->query('SELECT * FROM tools WHERE tabs_id ="' . $row_tabs['code'] . '"');
         while ($row_tools = $load_tools->fetchArray(SQLITE3_ASSOC)) {
-            ?>             
-                $('#<?php echo $row_tabs['code']; ?>').append('<button type="button" onclick="<?php echo $row_tools['code']; ?>()" title="<?php echo $row_tools['description']; ?>" class="btn bt_size " data-toggle="button"> <span class="glyphicon" style="background-image:url(images/<?php echo $row_tools['icon']; ?>);background-repeat:no-repeat;background-position:center;width:24px;height:24px;" aria-hidden="true"></span> <div><span class="glyphicon-class"><?php echo $row_tools['name']; ?></span></div></button>');
-                
+            ?>
+                        $('#<?php echo $row_tabs['code']; ?>').append('<button type="button" onclick="<?php echo $row_tools['code']; ?>()" title="<?php echo $row_tools['description']; ?>" class="btn bt_size " data-toggle="button"> <span class="glyphicon" style="background-image:url(images/<?php echo $row_tools['icon']; ?>);background-repeat:no-repeat;background-position:center;width:26px;height:26px;" aria-hidden="true"></span> <div><span class="glyphicon-class"><?php echo $row_tools['name']; ?></span></div></button>');
+
             <?php
         }
     }
     ?>
-            $( '#top_tabs li').first().addClass("active");
-            $( '#content_tabs div').first().addClass("active");
+                $('#top_tabs li').first().addClass("active");
+                $('#content_tabs div').first().addClass("active");
             </script>
             <?php
         }
         ?>
-            <script src="javascript/tools.js" type="text/javascript"></script>
+        <script src="javascript/tools.js" type="text/javascript"></script>
 
     </body>
 </html>
