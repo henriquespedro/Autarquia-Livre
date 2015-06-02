@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model app\models\Layers */
 
 $this->title = 'Update Layers: ' . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Layers', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = ['label'=>'Visualizador', 'url'=> array('viewers/update', 'id'=> $model->viewer_id, 'viewer_id' => $model->viewer_id)];
+$this->params['breadcrumbs'][] = ['label'=>'Lista de Layers', 'url'=> array('index', 'viewer_id' => $model->viewer_id)];
+$this->params['breadcrumbs'][] = $model->name;
 ?>
 <div class="layers-update">
 

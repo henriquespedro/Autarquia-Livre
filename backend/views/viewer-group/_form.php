@@ -13,11 +13,16 @@ use app\models\Group;
 <div class="viewer-group-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'id_viewer')->textInput() ?>
+    <?php
+    if ($model->isNewRecord) {
+        echo $form->field($model, 'viewer_id')->hiddenInput(array('value' => $_GET['viewer_id']))->label(false);
+    } else {
+        echo $form->field($model, 'viewer_id')->hiddenInput()->label(false);
+    }
+    ?>
 
     <?php $items = ArrayHelper::map(Group::find()->all(), 'id', 'description'); ?>
-    <?= $form->field($model, 'id_group')->dropDownList($items,['prompt' => '---- Select Group ----'])  ?>
+    <?= $form->field($model, 'group_id')->dropDownList($items, ['prompt' => '---- Select Group ----']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Aplicar Alterações', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

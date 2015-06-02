@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-9">
         
         <p>
-            <?= Html::a('Nova Layer', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Nova Layer', ['create', 'viewer_id' => $_GET['viewer_id']], ['class' => 'btn btn-success']) ?>
         </p>
 
         <?= GridView::widget([
@@ -27,15 +27,22 @@ $this->params['breadcrumbs'][] = $this->title;
             //'filterModel' => $searchModel,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-
-                //'id',
-                //'confrontation_id',
                 'name:ntext',
                 'layer:ntext',
-                //'description_field:ntext',
-                // 'regulement_field:ntext',
 
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'update') {
+                        $url = array('layers-confrontation/update', 'id' => $model->id, 'viewer_id' => $model->viewer_id);
+                        return $url;
+                    }
+                    if ($action === 'delete') {
+                        $url = array('layers-confrontation/delete', 'id' => $model->id, 'viewer_id' => $model->viewer_id);
+                        return $url;
+                    }
+                }],
             ],
         ]); ?>
         </div>

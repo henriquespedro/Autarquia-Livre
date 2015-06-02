@@ -58,7 +58,7 @@ class SearchParametersSearch extends SearchParameters
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'search_id' => $this->search_id,
+            'search_id' => $_GET['id'],
             'require' => $this->require,
         ]);
 

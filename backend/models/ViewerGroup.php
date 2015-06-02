@@ -7,8 +7,8 @@ use Yii;
 /**
  * This is the model class for table "viewer_group".
  *
- * @property integer $id_viewer
- * @property integer $id_group
+ * @property integer $viewer_id
+ * @property integer $group_id
  */
 class ViewerGroup extends \yii\db\ActiveRecord
 {
@@ -19,16 +19,16 @@ class ViewerGroup extends \yii\db\ActiveRecord
     {
         return 'viewer_group';
     }
-
+    
+    
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id_viewer', 'id_group'], 'required'],
-            [['id_viewer', 'id_group'], 'integer'],
-            [['id_viewer', 'id_group'], 'unique', 'targetAttribute' => ['id_viewer', 'id_group'], 'message' => 'The combination of Id Viewer and Id Group has already been taken.']
+            [['viewer_id', 'group_id'], 'required'],
+            [['viewer_id', 'group_id'], 'integer'],
         ];
     }
 
@@ -38,8 +38,17 @@ class ViewerGroup extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_viewer' => 'Id Viewer',
-            'id_group' => 'Id Group',
+            'id' => 'ID',
+            'viewer_id' => 'Id Viewer',
+            'group_id' => 'Id Grupo',
         ];
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getViewer()
+    {
+        return $this->hasOne(Viewers::className(), ['id' => 'viewer_id']);
     }
 }

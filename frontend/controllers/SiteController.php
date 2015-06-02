@@ -18,6 +18,7 @@ use yii\filters\AccessControl;
  */
 class SiteController extends Controller
 {
+    public $layout = 'main';
     /**
      * @inheritdoc
      */
@@ -120,7 +121,7 @@ class SiteController extends Controller
     {
         return $this->render('metadata');
     }
-
+    
     public function actionSignup()
     {
         $model = new SignupForm();

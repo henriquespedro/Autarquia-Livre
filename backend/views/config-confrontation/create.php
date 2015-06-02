@@ -7,8 +7,9 @@ use yii\helpers\Html;
 /* @var $model app\models\ConfigConfrontation */
 
 $this->title = 'Novo configuração';
-$this->params['breadcrumbs'][] = ['label' => 'Configurações - Confrontação', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label'=>'Visualizador', 'url'=> array('viewers/update', 'id'=> $_GET['viewer_id'], 'viewer_id' => $_GET['viewer_id'])];
+$this->params['breadcrumbs'][] = ['label'=>'Configuração - Confrontações', 'url'=> array('index', 'viewer_id' => $_GET['viewer_id'])];
+$this->params['breadcrumbs'][] = 'Nova';
 ?>
 <div class="config-confrontation-create">
 

@@ -12,13 +12,13 @@ use yii\widgets\ActiveForm;
     <!-- start ActiveForm -->
     <?php $form = ActiveForm::begin(['id' => 'forms-form', 'enableClientValidation' => 'true']); ?>
 
-    <?= $form->field($model, 'form_id')->textInput() ?>
+    <?= $form->field($model, 'form_id')->hiddenInput()->label(false) ?>
+    
+    <?= $form->field($model, 'label')->textInput() ?>
 
-    <?= $form->field($model, 'type')->textInput() ?>
+    <?= $form->field($model, 'type')->dropDownList(['values_list'=>'Lista de Valores', 'text'=>'Texto Livre'],['prompt' => '---- Select Type of Parameter ----'])  ?>
 
     <?= $form->field($model, 'parameter')->textInput() ?>
-
-    <?= $form->field($model, 'label')->textInput() ?>
 
     <?= $form->field($model, 'description_field')->textInput() ?>
 

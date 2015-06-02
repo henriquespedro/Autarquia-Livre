@@ -7,8 +7,9 @@ use yii\helpers\Html;
 /* @var $model app\models\LayersConfrontation */
 
 $this->title = 'Nova Layer para Confrontação';
-$this->params['breadcrumbs'][] = ['label' => 'Layers - Confrontação', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label'=>'Visualizador', 'url'=> array('viewers/update', 'id'=> $_GET['viewer_id'], 'viewer_id' => $_GET['viewer_id'])];
+$this->params['breadcrumbs'][] = ['label'=>'Layers - Confrontação', 'url'=> array('index', 'viewer_id' => $_GET['viewer_id'])];
+$this->params['breadcrumbs'][] = 'Novo';
 ?>
 <div class="layers-confrontation-create">
 

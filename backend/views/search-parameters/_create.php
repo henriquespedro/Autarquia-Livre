@@ -20,9 +20,9 @@ use yii\widgets\ActiveForm;
             <!--<div class="forms-parameters-form">-->
             <!-- start ActiveForm -->
             <?php $form = ActiveForm::begin(); ?>
-
-            <?= $form->field($model, 'search_id')->textInput() ?>
-
+            
+            <?= $form->field($model, 'search_id')->hiddenInput(array('value' => $_GET['search_id']))->label(false) ?>
+            
             <?= $form->field($model, 'name')->textInput() ?>
 
             <?= $form->field($model, 'require')->checkbox() ?>

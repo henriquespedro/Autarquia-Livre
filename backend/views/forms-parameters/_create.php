@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
             <!-- start ActiveForm -->
             <?php $form = ActiveForm::begin(['id' => 'forms-form', 'enableClientValidation' => 'true']); ?>
 
-            <?= $form->field($model, 'form_id')->textInput() ?>
+            <?= $form->field($model, 'form_id')->hiddenInput(array('value' => $_GET['form_id']))->label(false) ?>
             
             <?= $form->field($model, 'label')->textInput() ?>
             

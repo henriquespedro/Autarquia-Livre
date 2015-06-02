@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model app\models\Search */
 
 $this->title = 'Atualizar: ' . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Pesquisas', 'url' => ['index']];
-//$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label'=>'Visualizador', 'url'=> array('viewers/update', 'id'=> $model->viewer_id, 'viewer_id' => $model->viewer_id)];
+$this->params['breadcrumbs'][] = ['label'=>'Pesquisas', 'url'=> array('index', 'viewer_id' => $model->viewer_id)];
+$this->params['breadcrumbs'][] = $model->name;
 ?>
 <div class="search-update">
 <?=

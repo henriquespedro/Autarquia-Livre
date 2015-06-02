@@ -12,9 +12,8 @@ use yii\widgets\ActiveForm;
 <div class="forms-parameters-form">
     <!-- start ActiveForm -->
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'form_id')->textInput() ?>
-
+    <?= $form->field($model, 'form_id')->hiddenInput()->label(false) ?>
+    
     <?= $form->field($model, 'template')->textInput() ?>
 
     <?= $form->field($model, 'sqlselect')->textarea(['rows' => 2]) ?>

@@ -7,8 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Viewers */
 
 $this->title = 'Novo Visualizador';
-//$this->params['breadcrumbs'][] = ['label' => 'Viewers', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = 'Novo Visualizador';
 ?>
 <div class="viewers-create">
 

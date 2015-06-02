@@ -10,23 +10,21 @@ use app\models\ViewerGroup;
 /**
  * ViewerGroupSearch represents the model behind the search form about `app\models\ViewerGroup`.
  */
-class ViewerGroupSearch extends ViewerGroup
-{
+class ViewerGroupSearch extends ViewerGroup {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id_viewer', 'id_group'], 'integer'],
+            [['id', 'viewer_id', 'group_id'], 'integer'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -38,8 +36,7 @@ class ViewerGroupSearch extends ViewerGroup
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = ViewerGroup::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -53,12 +50,18 @@ class ViewerGroupSearch extends ViewerGroup
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        if (isset($_GET['viewer_id'])) {
+            $viewer_id = $_GET['viewer_id'];
+        } else {
+            $viewer_id = $this->viewer_id;
+        }
         $query->andFilterWhere([
-            'id_viewer' => $this->id_viewer,
-            'id_group' => $this->id_group,
+            'id' => $this->id,
+            'viewer_id' => $viewer_id,
+            'group_id' => $this->group_id,
         ]);
 
         return $dataProvider;
     }
+
 }

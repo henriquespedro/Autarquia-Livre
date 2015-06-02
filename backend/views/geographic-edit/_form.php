@@ -22,15 +22,22 @@ use app\models\Users;
         </ul>
         <div id="my-tab-content" class="tab-content">
             <div id="yw0_tab_1" class="tab-pane active in">
-                    <?= $form->field($model, 'name')->textInput() ?>
+                <?php
+                if ($model->isNewRecord) {
+                    echo $form->field($model, 'viewer_id')->hiddenInput(array('value' => $_GET['viewer_id']))->label(false);
+                } else {
+                    echo $form->field($model, 'viewer_id')->hiddenInput()->label(false);
+                }
+                ?>
+                <?= $form->field($model, 'name')->textInput() ?>
 
-                    <?= $form->field($model, 'layer')->textInput() ?>
+                <?= $form->field($model, 'layer')->textInput() ?>
 
-                    <?= $form->field($model, 'type')->dropDownList(['line'=>'Line', 'polygon'=>'Polygon', 'point'=>'Point'],['prompt' => '---- Select geometry layer ----'])  ?>
+                <?= $form->field($model, 'type')->dropDownList(['line' => 'Line', 'polygon' => 'Polygon', 'point' => 'Point'], ['prompt' => '---- Select geometry layer ----']) ?>
             </div>
             <div id="yw0_tab_2" class="tab-pane">
-                <?php $dataList=ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
-                <?= html::activeCheckBoxList($model,'name', $dataList); ?>
+                <?php $dataList = ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
+                <?= html::activeCheckBoxList($model, 'name', $dataList); ?>
             </div>
         </div>
     </div>

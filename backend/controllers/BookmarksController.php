@@ -64,7 +64,7 @@ class BookmarksController extends Controller
         $model = new Bookmarks();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'viewer_id' => $model->viewer_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -83,7 +83,7 @@ class BookmarksController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'viewer_id' => $model->viewer_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -101,7 +101,7 @@ class BookmarksController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'viewer_id' => $_GET['viewer_id']]);
     }
 
     /**

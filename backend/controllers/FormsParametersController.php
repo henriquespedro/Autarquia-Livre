@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
  */
 class FormsParametersController extends Controller {
 
+    public $layout = 'admin_layout';
     public function behaviors() {
         return [
             'verbs' => [
@@ -58,9 +59,12 @@ class FormsParametersController extends Controller {
      */
     public function actionCreate() {
         $model = new FormsParameters();
+        
+//        if ($form_id)
+//            $model->form_id = $form_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['forms/update', 'id' => $model->form_id, 'viewer_id' => $_GET['viewer_id']]);
         } else {
             return $this->renderAjax('create', [
                         'model' => $model,
@@ -81,7 +85,7 @@ class FormsParametersController extends Controller {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['forms/update', 'id' => $model->form_id, 'viewer_id' => $_GET['viewer_id']]);
         } else {
             return $this->render('update', [
                         'model' => $model,
@@ -95,10 +99,10 @@ class FormsParametersController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id, $form_id, $viewer_id) {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['forms/update', 'id' => $form_id, 'viewer_id' => $viewer_id]);
     }
 
     /**

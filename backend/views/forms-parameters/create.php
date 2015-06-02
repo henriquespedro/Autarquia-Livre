@@ -12,7 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="forms-parameters-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_create', [
         'model' => $model,

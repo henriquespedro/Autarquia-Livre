@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-9">
         
         <p>
-            <?= Html::a('Novo Grupo', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Novo Grupo', ['create', 'viewer_id' => $_GET['viewer_id']], ['class' => 'btn btn-success']) ?>
         </p>
 
         <?= GridView::widget([
@@ -34,7 +34,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'name:ntext',
                 //'search_field:ntext',
 
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'update') {
+                        $url = array('config-confrontation/update', 'id' => $model->id, 'viewer_id' => $model->viewer_id);
+                        return $url;
+                    }
+                    if ($action === 'delete') {
+                        $url = array('config-confrontation/delete', 'id' => $model->id, 'viewer_id' => $model->viewer_id);
+                        return $url;
+                    }
+                }],
             ],
         ]); ?>
         </div>

@@ -63,7 +63,7 @@ class ViewersController extends Controller
      * @return mixed
      */
     public function actionCreate()
-    {
+    {$this->layout='main';
         $model = new Viewers();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

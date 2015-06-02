@@ -57,7 +57,7 @@ class GeographicEditSearch extends GeographicEdit
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'viewer_id' => $this->viewer_id,
+            'viewer_id' => $_GET['viewer_id'],
             'chage_data' => $this->chage_data,
             'setOrder' => $this->setOrder,
         ]);

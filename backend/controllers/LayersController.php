@@ -65,7 +65,7 @@ class LayersController extends Controller
         $model = new Layers();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['index', 'viewer_id' => $model->viewer_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -84,7 +84,7 @@ class LayersController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['index', 'viewer_id' => $model->viewer_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -102,7 +102,7 @@ class LayersController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'viewer_id' => $_GET['viewer_id']]);
     }
 
     /**

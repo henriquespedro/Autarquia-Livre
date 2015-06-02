@@ -19,12 +19,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Search Parameters', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'search_id',
             'name:ntext',
@@ -33,9 +33,21 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'sqlquery:ntext',
             // 'value_field:ntext',
             // 'description_field:ntext',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'update') {
+                        $url = array('search-parameters/update', 'id' => $model->id, 'viewer_id' => $model->viewer_id);
+                        return $url;
+                    }
+                    if ($action === 'delete') {
+                        $url = array('search-parameters/delete', 'id' => $model->id, 'viewer_id' => $model->viewer_id);
+                        return $url;
+                    }
+                }],
+                ],
+            ]);
+            ?>
 
 </div>

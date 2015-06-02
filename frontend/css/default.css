@@ -19,31 +19,67 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     Created on : 5/Mar/2015, 14:29:40
     Author     : Pedro Henriques
 */
-
+body{
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+}
+.navbar {
+    margin-bottom: 5px;
+}
+.col-md-10, .col-md-2{
+    padding-right: 5px;
+    padding-left: 5px;
+/*    padding-right-value: 5px;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;*/
+}
+.tab-content {
+    min-height: 72px !important;
+}
 .fill { 
     height: 70vh;
     min-height: 70vh;
 }
 
 .top {
-    height: 12vh;
-    min-height: 12vh;
+    height: 11vh !important; 
+    max-height: 11vh !important;
 }
 
 .map {
     width: 100%;
-    height: 85vh;
-    min-height: 85vh;
+    height: 84vh;
+    min-height: 84vh;
 }
 
 .bt_size * {
     width: 70px;
-    word-wrap: break-word;
-    height: 25px;
-    min-height: 25px;
-    font-size: 12px;
+    white-space: wrap;
+    /*word-wrap: break-word;*/
+    height: 21px  !important;
+    max-height: 21px !important;
+    font-size: 11px;
 }
-
+.btn_config {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: wrap;
+    padding: 6px 12px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 .content_border {
     border-radius: 10px; 
     -moz-border-radius: 1px; 
@@ -125,4 +161,125 @@ a {
 }
 .tooltip-static:before {
     border-top-color: #ffcc33;
+}
+
+.ol-mouse-position {
+    right: 3em;
+    color: #fff;
+    background-color: rgba(0,60,136,.5);
+    padding: 2px 10px;
+    border-radius: 5px;
+    bottom: 0;
+    left: auto;
+    right: 45%;
+    top: auto;
+    font-size: 11px;
+}
+
+
+.tree {
+    min-height:20px;
+    /*max-height: 150px;*/
+    overflow: auto;
+    padding: 3px;
+    margin-bottom:5px;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+.tree li {
+    list-style-type:none;
+    margin:0;
+    padding:5px 5px 5px 5px;
+    /*padding:2px 1px 2px 1px;*/
+    position:relative;
+    /*                -moz-border-radius:5px;
+                    -webkit-border-radius:5px;
+                    border:1px solid #999;
+                    border-radius:5px;*/
+}
+.tree li::before, .tree li::after {
+    content:'';
+    left:-20px;
+    position:absolute;
+    right:auto
+}
+.tree li::before {
+    border-left:1px solid #999;
+    bottom:50px;
+    height:100%;
+    top:0;
+    width:1px
+}
+.tree li::after {
+    border-top:1px solid #999;
+    height:20px;
+    top:25px;
+    width:25px
+}
+.tree li span {
+    display:inline-block;
+    padding:3px 8px;
+    text-decoration:none
+}
+.tree li.parent_li>span {
+    cursor:pointer
+}
+.tree>ul>li::before, .tree>ul>li::after {
+    border:0
+}
+.tree li:last-child::before {
+    height:30px
+}
+.tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
+    background:#eee;
+    border:1px solid #94a0b4;
+    color:#000;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+}
+
+ul.layerstack {
+    list-style: none;
+}
+
+ul.layerstack li {
+    border-bottom: 1px solid #ccc;
+    padding: 3px;
+}
+ul.layerstack li:hover {
+    background-color: #eee;
+}
+ul.layerstack li.selected {
+    background-color: #ddd;
+}
+
+/**
+ * The zoomslider in the second map shall be placed between the zoom-in and
+ * zoom-out buttons.
+ */
+.ol-zoom .ol-zoom-out {
+    margin-top: 204px;
+}
+.ol-zoomslider {
+    background-color: transparent;
+    top: 2.3em;
+}
+
+.ol-touch .ol-zoom .ol-zoom-out { 
+    margin-top: 212px;
+}
+.ol-touch .ol-zoomslider {
+    top: 2.75em;
+}
+
+.ol-zoom-in.ol-has-tooltip:hover [role=tooltip],
+.ol-zoom-in.ol-has-tooltip:focus [role=tooltip] {
+    top: 3px;
+}
+
+.ol-zoom-out.ol-has-tooltip:hover [role=tooltip],
+.ol-zoom-out.ol-has-tooltip:focus [role=tooltip] {
+    top: 232px;
 }

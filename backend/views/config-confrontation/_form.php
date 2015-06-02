@@ -12,7 +12,13 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'viewer_id')->textInput() ?>
+    <?php
+    if ($model->isNewRecord) {
+        echo $form->field($model, 'viewer_id')->hiddenInput(array('value' => $_GET['viewer_id']))->label(false);
+    } else {
+        echo $form->field($model, 'viewer_id')->hiddenInput()->label(false);
+    }
+    ?>
 
     <?= $form->field($model, 'layer')->textInput() ?>
 

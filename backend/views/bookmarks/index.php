@@ -8,13 +8,14 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Bookmarks';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label'=>'Visualizador', 'url'=> array('viewers/update', 'id'=> $_GET['viewer_id'], 'viewer_id' => $_GET['viewer_id'])];
+$this->params['breadcrumbs'][] = 'Bookmarks';
 ?>
 <div class="bookmarks-index">
 
 
     <p>
-        <?= Html::a('Novo Bookmark', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Novo Bookmark', ['create', 'viewer_id' => $_GET['viewer_id']], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?=
@@ -31,7 +32,19 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'y_coordinate:ntext',
             // 'chage_data',
             // 'setOrder',
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'update') {
+                        $url = array('bookmarks/update', 'id' => $model->id, 'viewer_id' => $model->viewer_id);
+                        return $url;
+                    }
+                    if ($action === 'delete') {
+                        $url = array('bookmarks/delete', 'id' => $model->id, 'viewer_id' => $model->viewer_id);
+                        return $url;
+                    }
+                }],
         ],
     ]);
     ?>

@@ -57,7 +57,7 @@ class ConfigConfrontationSearch extends ConfigConfrontation
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'viewer_id' => $this->viewer_id,
+            'viewer_id' => $_GET['viewer_id'],
         ]);
 
         $query->andFilterWhere(['like', 'layer', $this->layer])

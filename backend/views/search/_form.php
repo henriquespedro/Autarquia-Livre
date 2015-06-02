@@ -33,6 +33,13 @@ $dataProviderParameters = new ActiveDataProvider([
         </ul>
         <div id="my-tab-content" class="tab-content">
             <div id="yw0_tab_1" class="tab-pane active in">
+                <?php
+                if ($model->isNewRecord) {
+                    echo $form->field($model, 'viewer_id')->hiddenInput(array('value' => $_GET['viewer_id']))->label(false);
+                } else {
+                    echo $form->field($model, 'viewer_id')->hiddenInput()->label(false);
+                }
+                ?>
                 <?= $form->field($model, 'name')->textInput() ?>
 
                 <?= $form->field($model, 'description')->textInput() ?>
@@ -49,7 +56,7 @@ $dataProviderParameters = new ActiveDataProvider([
                     function AddParameters() {
                         $.ajax({
                             type: 'POST',
-                            url: 'index.php?r=search-parameters/create',
+                            url: 'index.php?r=search-parameters/create&search_id=<?php echo $_GET["id"]?>&viewer_id=<?php $model->viewer_id ?>',
                             success: function (data)
                             {
                                 $('#parameters_model').html(data);
@@ -68,23 +75,35 @@ $dataProviderParameters = new ActiveDataProvider([
                         'name:ntext',
                         'type:ntext',
                         // 'setOrder',
-                        ['class' => 'yii\grid\ActionColumn'],
-                    ],
-                ]);
-                ?>
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{update} {delete}',
+                            'urlCreator' => function ($action, $dataProviderParameters, $key, $index) {
+                                if ($action === 'update') {
+                                    $url = array('search-parameters/update', 'id' => $dataProviderParameters->id, 'viewer_id' => $_GET['viewer_id']);
+                                    return $url;
+                                }
+                                if ($action === 'delete') {
+                                    $url = array('search-parameters/delete', 'id' => $dataProviderParameters->id, 'search_id'=> $dataProviderParameters->search_id, 'viewer_id' => $_GET['viewer_id']);
+                                    return $url;
+                                }
+                            }],
+                            ],
+                        ]);
+                        ?>
+                    </div>
+
+                    <div id="yw0_tab_3" class="tab-pane">
+                        <?php $dataList = ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
+                        <?= html::activeCheckBoxList($model, 'name', $dataList); ?>
+                    </div>
+                </div>
             </div>
 
-            <div id="yw0_tab_3" class="tab-pane">
-                <?php $dataList=ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
-                <?= html::activeCheckBoxList($model,'name', $dataList); ?>
+            <div class="form-group">
+                <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Aplicar Alterações', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
-        </div>
-    </div>
 
-    <div class="form-group">
-<?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Aplicar Alterações', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
-<?php ActiveForm::end(); ?>
+            <?php ActiveForm::end(); ?>
 
 </div>

@@ -57,6 +57,7 @@ class LayersConfrontationSearch extends LayersConfrontation
 
         $query->andFilterWhere([
             'id' => $this->id,
+//            'viewer_id' => $_GET['viewer_id'],
             'confrontation_id' => $this->confrontation_id,
         ]);
 

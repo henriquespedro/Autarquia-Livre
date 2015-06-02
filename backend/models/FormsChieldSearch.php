@@ -57,7 +57,7 @@ class FormsChieldSearch extends FormsChield
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'form_id' => $this->form_id,
+            'form_id' => $_GET['id'],
         ]);
 
         $query->andFilterWhere(['like', 'template', $this->template])

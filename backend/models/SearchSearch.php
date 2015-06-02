@@ -58,7 +58,7 @@ class SearchSearch extends Search
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'viewer_id' => $this->viewer_id,
+            'viewer_id' => $_GET['viewer_id'],
             'visible' => $this->visible,
             'chage_data' => $this->chage_data,
             'setOrder' => $this->setOrder,

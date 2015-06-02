@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Viewers */
 $this->title = 'Atualizar ' . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Visualizadores', 'url' => ['index']];
-//$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Html::encode($this->title);
+$this->params['breadcrumbs'][] = ['label'=>'Visualizador', 'url'=> array('viewers/update', 'id'=> $model->id, 'viewer_id' => $model->id)];
+$this->params['breadcrumbs'][] = $model->description;
+
 ?>
 <div class="viewers-update">
 

@@ -57,7 +57,7 @@ class FormsParametersSearch extends FormsParameters
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'form_id' => $this->form_id,
+            'form_id' => $_GET['id'],
         ]);
 
         $query->andFilterWhere(['like', 'type', $this->type])

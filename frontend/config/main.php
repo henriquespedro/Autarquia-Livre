@@ -1,9 +1,7 @@
 <?php
+
 $params = array_merge(
-    require(__DIR__ . '/../../common/config/params.php'),
-    require(__DIR__ . '/../../common/config/params-local.php'),
-    require(__DIR__ . '/params.php'),
-    require(__DIR__ . '/params-local.php')
+        require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
@@ -12,9 +10,14 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'enablePrettyUrl' => false,
+            'showScriptName' => false,
+        ],
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'sqlite:'.dirname(__FILE__).'/../../data/data.db', 
+            'dsn' => 'sqlite:' . dirname(__FILE__) . '/../../data/data.db',
             'charset' => 'utf8',
         ],
         'user' => [

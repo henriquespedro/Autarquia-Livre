@@ -35,7 +35,13 @@ $dataProviderChield = new ActiveDataProvider([
         </ul>
         <div id="my-tab-content" class="tab-content">
             <div id="yw0_tab_1" class="tab-pane active in">
-                <?= $form->field($model, 'viewer_id')->textInput() ?>
+                <?php
+                if ($model->isNewRecord) {
+                    echo $form->field($model, 'viewer_id')->hiddenInput(array('value' => $_GET['viewer_id']))->label(false);
+                } else {
+                    echo $form->field($model, 'viewer_id')->hiddenInput()->label(false);
+                }
+                ?>
 
                 <?= $form->field($model, 'name')->textInput() ?>
 
@@ -57,7 +63,7 @@ $dataProviderChield = new ActiveDataProvider([
                     function AddParameters() {
                         $.ajax({
                             type: 'POST',
-                            url: 'index.php?r=forms-parameters/create',
+                            url: 'index.php?r=forms-parameters/create&form_id=<?php echo $_GET["id"]?>&viewer_id=<?php $model->viewer_id ?>',
                             success: function (data)
                             {
                                 $('#parameters_model').html(data);
@@ -75,7 +81,19 @@ $dataProviderChield = new ActiveDataProvider([
                         'label:ntext',
                         'type:ntext',
                         'parameter:ntext',
-                        ['class' => 'yii\grid\ActionColumn'],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{update} {delete}',
+                            'urlCreator' => function ($action, $dataProviderParameters, $key, $index) {
+                                if ($action === 'update') {
+                                    $url = array('forms-parameters/update', 'id' => $dataProviderParameters->id, 'viewer_id' => $_GET['viewer_id']);
+                                    return $url;
+                                }
+                                if ($action === 'delete') {
+                                    $url = array('forms-parameters/delete', 'id' => $dataProviderParameters->id, 'form_id'=> $dataProviderParameters->form_id, 'viewer_id' => $_GET['viewer_id']);
+                                    return $url;
+                                }
+                            }],
                     ],
                 ]);
                 ?>
@@ -89,7 +107,7 @@ $dataProviderChield = new ActiveDataProvider([
                     function AddChield() {
                         $.ajax({
                             type: 'POST',
-                            url: 'index.php?r=forms-chield/create',
+                            url: 'index.php?r=forms-chield/create&form_id=<?php echo $_GET["id"]?>&viewer_id=<?php $model->viewer_id ?>',
                             success: function (data)
                             {
                                 $('#chield_modal').html(data);
@@ -105,7 +123,19 @@ $dataProviderChield = new ActiveDataProvider([
                         ['class' => 'yii\grid\SerialColumn'],
                         //'id',
                         'template:ntext',
-                        ['class' => 'yii\grid\ActionColumn'],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{update} {delete}',
+                            'urlCreator' => function ($action, $dataProviderChield, $key, $index) {
+                                if ($action === 'update') {
+                                    $url = array('forms-chield/update', 'id' => $dataProviderChield->id, 'viewer_id' => $_GET['viewer_id']);
+                                    return $url;
+                                }
+                                if ($action === 'delete') {
+                                    $url = array('forms-chield/delete', 'id' => $dataProviderChield->id, 'form_id'=> $dataProviderChield->form_id, 'viewer_id' => $_GET['viewer_id']);
+                                    return $url;
+                                }
+                            }],
                     ],
                 ]);
                 ?>
@@ -120,8 +150,8 @@ $dataProviderChield = new ActiveDataProvider([
             </div>
 
             <div id="yw0_tab_5" class="tab-pane">
-                <?php $dataList=ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
-                <?= html::activeCheckBoxList($model,'name', $dataList); ?>
+                <?php $dataList = ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
+                <?= html::activeCheckBoxList($model, 'name', $dataList); ?>
             </div>
         </div>
     </div>

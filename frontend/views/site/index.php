@@ -1,43 +1,28 @@
 <?php
 /* @var $this yii\web\View */
 $this->title = 'Autarquia Livre - OpenSource WebSIG';
+$connection = new SQLite3(__DIR__ . '/../../../data/data.db');
+$load_config = $connection->query('SELECT * FROM viewers ORDER BY id ASC');
 ?>
 <div class="site-index">
-
     <div class="body-content">
-
         <div class="row">
-            <div class="col-lg-4">
-                <h4><b>Emissão de Plantas de Localização</b></h4>
-                <img alt="Emissão de Plantas de Localização" src="http://cloud.cm-ourem.pt/images/icons/default.png"></img>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Aceder &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+            <?php
+            while ($row = $load_config->fetchArray(SQLITE3_ASSOC)) {
+                ?>
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['description']; ?>">
+                        <div class="caption">
+                            <h3 style="text-align: center;"><?php echo $row['description']; ?></h3>
+                            <p style="text-align: justify;"><?php echo $row['comments']; ?></p>
+                            <p><a href="?r=viewer&page=<?php echo $row['name']; ?>" target="_blanck" class="btn btn-info" role="button"><span class="glyphicon glyphicon-eye-open"></span> Aceder</a></p>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
         </div>
-
     </div>
 </div>

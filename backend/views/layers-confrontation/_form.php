@@ -11,7 +11,13 @@ use yii\widgets\ActiveForm;
 <div class="layers-confrontation-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+    <?php
+    if ($model->isNewRecord) {
+        echo $form->field($model, 'viewer_id')->hiddenInput(array('value' => $_GET['viewer_id']))->label(false);
+    } else {
+        echo $form->field($model, 'viewer_id')->hiddenInput()->label(false);
+    }
+    ?>
     <?= $form->field($model, 'confrontation_id')->textInput() ?>
 
     <?= $form->field($model, 'name')->textInput() ?>

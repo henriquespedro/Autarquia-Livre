@@ -48,10 +48,10 @@ class ViewerGroupController extends Controller
      * @param integer $id_group
      * @return mixed
      */
-    public function actionView($id_viewer, $id_group)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id_viewer, $id_group),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -65,7 +65,7 @@ class ViewerGroupController extends Controller
         $model = new ViewerGroup();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_viewer' => $model->id_viewer, 'id_group' => $model->id_group]);
+            return $this->redirect(['index', 'viewer_id' => $model->viewer_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -80,12 +80,12 @@ class ViewerGroupController extends Controller
      * @param integer $id_group
      * @return mixed
      */
-    public function actionUpdate($id_viewer, $id_group)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($id_viewer, $id_group);
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_viewer' => $model->id_viewer, 'id_group' => $model->id_group]);
+            return $this->redirect(['index', 'viewer_id' => $model->viewer_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -100,11 +100,11 @@ class ViewerGroupController extends Controller
      * @param integer $id_group
      * @return mixed
      */
-    public function actionDelete($id_viewer, $id_group)
+    public function actionDelete($id)
     {
-        $this->findModel($id_viewer, $id_group)->delete();
+        $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'viewer_id' => $_GET['viewer_id']]);
     }
 
     /**
@@ -115,9 +115,9 @@ class ViewerGroupController extends Controller
      * @return ViewerGroup the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_viewer, $id_group)
+    protected function findModel($id)
     {
-        if (($model = ViewerGroup::findOne(['id_viewer' => $id_viewer, 'id_group' => $id_group])) !== null) {
+        if (($model = ViewerGroup::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

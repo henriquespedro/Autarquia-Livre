@@ -4256,6 +4256,35 @@ fieldset[disabled] .navbar-default .btn-link:hover,
 fieldset[disabled] .navbar-default .btn-link:focus {
   color: #ccc;
 }
+
+/*Navbar BLue*/
+/*.navbar {
+     background-image: linear-gradient(#54B4EB, #2FA4E7 60%, #1D9CE5);
+     background-repeat: no-repeat;
+     border-bottom: 1px solid #178ACC;
+     box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
+     border-radius: 0px;
+}*/
+
+.navbar-blue {
+     background-color: #2FA4E7;
+     border-color: #1995DC;
+}
+
+.navbar-blue .navbar-brand,
+.navbar-blue .navbar-brand:hover,
+.navbar-blue .navbar-brand:focus ,
+.navbar-blue .navbar-nav > li > a {
+     color: #FFF;
+}
+
+.navbar-blue .navbar-nav > li > a:hover,
+.navbar-blue .navbar-nav > li > a:focus {
+     color: #FFF;
+     background-color: #178ACC;
+}
+
+/*NavBar Inverse*/
 .navbar-inverse {
   background-color: #222;
   border-color: #080808;

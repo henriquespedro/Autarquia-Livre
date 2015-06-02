@@ -17,33 +17,38 @@ $this->title = 'Visualizadores';
     -->
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    
 
-    <?= GridView::widget([
+
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            //'id',
             'name',
-            //'description',
-            //'scales',
-            //'init_extent',
-            // 'max_extent',
-            // 'projection',
-            // 'units',
-             'active:boolean',
-            // 'author',
-            // 'theme',
-             'create_data',
-             'modified_dat',
+            'active:boolean',
+            'create_data',
+            'modified_dat',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'update') {
+                        $url = array('viewers/update', 'id' => $model->id, 'viewer_id' => $model->id);
+                        return $url;
+                    }
+                    if ($action === 'delete') {
+                        $url = array('viewers/delete', 'id' => $model->id);
+                        return $url;
+                    }
+                }
+                    ],
+                ],
+            ]);
+            ?>
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
-    <p>
-        <?= Html::a('Novo', ['create'], ['class' => 'btn btn-success']) ?>
+            <p>
+                <?= Html::a('Novo', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 </div>

@@ -59,7 +59,7 @@ class LayersSearch extends Layers
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'viewer_id' => $this->viewer_id,
+            'viewer_id' => $_GET['viewer_id'],
             'visible' => $this->visible,
             'show_toc' => $this->show_toc,
             'opacity' => $this->opacity,
