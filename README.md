@@ -13,6 +13,16 @@ About
 -------
 Work Project for Master Degree in Geographic Information Systems and Science from NOVA IMS
 
+Screenshots
+
+Frontend
+-------
+![frontend](http://zoomto.pt/github/frontend.png)
+
+Backend
+-------
+![backend](http://zoomto.pt/github/backend.png)
+
 Authors
 -------
 Pedro Henriques <henriques.pedro.mf@gmail.com@gmail.com>
