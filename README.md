@@ -14,7 +14,7 @@ About
 Work Project for Master Degree in Geographic Information Systems and Science from NOVA IMS
 
 Screenshots
-
+================================================================
 Frontend
 -------
 ![frontend](http://zoomto.pt/github/frontend.png)
