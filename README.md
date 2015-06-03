@@ -1,5 +1,4 @@
-[archiving]
-repo-name = ["1.0", "1.1"]
+
 ![logo](http://www.novaims.unl.pt/images/Logo.png "Autarquia-Livre") Autarquia-Livre V1 beta
 ================================================================
 
