@@ -114,10 +114,10 @@
             </div>
             <!--<button  onclick='removeTopLayer()'>Remove Top Layer</button>-->
         </div>
-
     </div>
     <div class="row" id="button">
 
     </div>
 </div><!-- /.container-fluid -->
 <div id="search_div" hidden></div>
+<div id="streetview_div" title="Google StreetView"></div>

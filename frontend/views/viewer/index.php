@@ -26,9 +26,12 @@ $connection = new SQLite3(__DIR__ . '/../../../data/data.db');
 <!--<script type="text/javascript" src="http://cdn.sencha.com/ext/gpl/4.2.1/examples/shared/include-ext.js?theme=neptune"></script>-->
 <!--<script type="text/javascript" src="http://cdn.sencha.com/ext/gpl/4.2.1/examples/shared/options-toolbar.js"></script>-->
 
+<!--<link rel="newest stylesheet" href="//code.jquery.com/ui/1.11.4/themes/flick/jquery-ui.css">-->
+
 <!--JQuery v1.9.1-->
 <script src="../../vendor/openlayers/resources/jquery.min.js" type="text/javascript"></script>
 
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <!--Bootstrap-->
 <script src="../../vendor/bower/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 

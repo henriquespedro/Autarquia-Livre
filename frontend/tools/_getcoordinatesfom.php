@@ -39,7 +39,8 @@
 
     var init_coordinate_x, init_coordinate_y;
     map.on('click', function (evt) {
-        $("#transform_coordinate>option[value='3763']").attr('selected', 'selected');
+        $("#transform_coordinate").val(3763);
+//        $("#transform_coordinate>option[value='3763']").attr('selected', 'selected');
         init_coordinate_x = evt.coordinate[0];
         init_coordinate_y = evt.coordinate[1];
         $("#coordinate_x").val(evt.coordinate[0]);

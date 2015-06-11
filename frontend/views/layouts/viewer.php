@@ -36,6 +36,9 @@ use frontend\assets\AppAsset;
 
         <!--Default Project CSS-->
         <?php $this->registerCssFile(Yii::$app->request->baseUrl . '/../css/default.css'); ?>
+        
+        <!-- Jquery UI -->
+        <?php $this->registerCssFile('//code.jquery.com/ui/1.11.4/themes/flick/jquery-ui.css'); ?>
         <!--<link rel="newest stylesheet" type="text/css" href="../css/default.css"/>-->
         
         <!-- IE6-8 support of HTML5 elements -->

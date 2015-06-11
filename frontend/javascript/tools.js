@@ -630,9 +630,23 @@ function edit_geo() {
 }
 
 function streetview() {
+
     map.on('click', function (evt) {
         var lonlat = ol.proj.transform([evt.coordinate[0], evt.coordinate[1]], 'EPSG:3763', 'EPSG:4326');
-        window.open("../views/viewer/streetview.php?long=" + lonlat[0] + "&lat=" + lonlat[1], "_blank", "toolbar=false, scrollbars=yes, resizable=yes, top=200, left=500, width=700, height=500");
+//        $("#streetview_div").load("../views/viewer/streetview.php?long=" + lonlat[0] + "&lat=" + lonlat[1]);
+        $("#streetview_div").html('<iframe src="../views/viewer/streetview.php?long=' + lonlat[0] + '&lat=' + lonlat[1] + '" style="width:100%; height:100%; position:relative; border:none"></iframe>');
+        $("#streetview_div").dialog({width: 600,height:500});
+
+//        $("#sidebar-hide-btn").click();        
+//        $("#map_panel").removeClass();
+//        $("#map_panel").addClass("col-md-8");
+//        $("#panel_streetview").addClass("col-md-4");
+//        map.updateSize();
+//
+//        var lonlat = ol.proj.transform([evt.coordinate[0], evt.coordinate[1]], 'EPSG:3763', 'EPSG:4326');
+//        $("#panel_streetview").html('<object  width="100%" height="'+ $("#map").height() +'" data="../views/viewer/streetview.php?long=' + lonlat[0] + '&lat=' + lonlat[1] + '"/>');
+
+//        $("#panel_streetview").load('../views/viewer/streetview.php?long=' + lonlat[0] + '&lat=' + lonlat[1]);
     });
 }
 

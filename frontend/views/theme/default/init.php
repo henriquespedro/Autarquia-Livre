@@ -67,10 +67,24 @@ while ($row_search = $load_search->fetchArray(SQLITE3_ASSOC)) {
         }
     <?php
     $load_search_paramenters = $connection->query('SELECT * FROM search_parameters WHERE search_id =' . $row_search['id'] . '');
+
     while ($row_search_parameters = $load_search_paramenters->fetchArray(SQLITE3_ASSOC)) {
-        if ($row_search_parameters['id'] = 'Lista_Valores') {
+        if ($row_search_parameters['type'] === 'Lista_Valores') {
             ?>
-                $('#search_div_<?php echo $row_search['id']; ?>').append('<div id="div_search_parameter_<?php echo $row_search_parameters['id'] ?>" ><label for="search_parameter_<?php echo $row_search_parameters['id'] ?>"><?php echo $row_search_parameters['name'] ?>:</label><select class="form-control" name="search_parameter_<?php echo $row_search_parameters['id'] ?>" id="search_parameter_<?php echo $row_search_parameters['id'] ?>"><option>1</option></select></div>');
+                $('#search_div_<?php echo $row_search['id']; ?>').append('<div id="div_search_parameter_<?php echo $row_search_parameters['id'] ?>" ><label for="search_parameter_<?php echo $row_search_parameters['id'] ?>"><?php echo $row_search_parameters['name'] ?>:</label><select class="form-control" onchange="function_search_<?php echo $row_search_parameters['id'] ?>(this)" name="search_parameter_<?php echo $row_search_parameters['id'] ?>" id="search_parameter_<?php echo $row_search_parameters['id'] ?>"><option value="1">one</option><option value="2">two</option></select></div>');
+
+                function function_search_<?php echo $row_search_parameters['id'] ?>(select) {
+                    $.ajax({
+                        url: 'search.php',
+                        type: 'post',
+                        dataType: "json",
+                        data: {'corrent_parameter_id': <?php echo $row_search_parameters['id'] ?>, 'search_parameter_id': <?php echo ($row_search_parameters['id'] + 1) ?>, 'searh_parameter_value': select.value},
+                        success: function (data) {
+                            $('#search_parameter_<?php echo ($row_search_parameters['id'] + 1) ?>').append('<option value="' + data["value"] + '">' + data["description"] + '</option>');
+                        }
+                    });
+                }
+
             <?php
         } else {
             ?>
