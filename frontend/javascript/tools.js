@@ -215,7 +215,10 @@ function obter_informacoes() {
 }
 
 function formulario(id) {
-    window.open("../views/forms/formularios.php?form=" + id, "_blank", "toolbar=false, scrollbars=yes, resizable=yes, top=200, left=300, width=800, height=500");
+    $("#formularios_div").attr("title", "Formulários");
+    $("#formularios_div").html('<iframe src="../views/forms/formularios.php?form=' + id + '" style="width:100%; height:100%; position:relative; border:none"></iframe>');
+    $("#formularios_div").dialog({width: 800, height: 500});
+    
 }
 function bookmarks() {
     $("#options").load("../tools/_bookmarkform.php", {"page": $.QueryString["page"]});
@@ -634,7 +637,7 @@ function streetview() {
     map.on('click', function (evt) {
         var lonlat = ol.proj.transform([evt.coordinate[0], evt.coordinate[1]], 'EPSG:3763', 'EPSG:4326');
         $("#streetview_div").html('<iframe src="../views/viewer/streetview.php?long=' + lonlat[0] + '&lat=' + lonlat[1] + '" style="width:100%; height:100%; position:relative; border:none"></iframe>');
-        $("#streetview_div").dialog({width: 800,height:500});
+        $("#streetview_div").dialog({width: 800, height: 500});
 
     });
 }

@@ -121,3 +121,4 @@
 </div><!-- /.container-fluid -->
 <div id="search_div" hidden></div>
 <div id="streetview_div" title="Google StreetView"></div>
+<div id="formularios_div" title=""></div>

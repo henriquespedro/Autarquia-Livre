@@ -20,7 +20,6 @@
 <script type="text/javascript" >
     $(document).attr("title", "<?php echo $row['description']; ?>");
     $("#site_name").html('<?php echo $row['description']; ?>');
-    //                var map_resolutions = [69, 30, 17, 5, 2, 1, 0.5, 0.2];
 
     var view_extent = [<?php echo $row['init_extent']; ?>];
     var view_units = '<?php echo $row['units']; ?>';
