@@ -23,10 +23,10 @@ var layers = [
 <?php
 
 while ($row_groups =$load_layer_group->fetchArray(SQLITE3_ASSOC)){
-    $view_group = explode("/", $row_groups['layer_group']);
-    for ($i = count($view_group)-1; $i > 0; $i--) {
-        //checklayer($view_group[$i]);
-    }
+//    $view_group = explode("/", $row_groups['layer_group']);
+//    for ($i = count($view_group)-1; $i > 0; $i--) {
+//        //checklayer($view_group[$i]);
+//    }
     
     ?>
     new ol.layer.Group({
@@ -34,21 +34,27 @@ while ($row_groups =$load_layer_group->fetchArray(SQLITE3_ASSOC)){
                 <?php
                 $load_layers = $connection->query('SELECT * FROM layers WHERE layer_group ="' . $row_groups['layer_group'] . '" order by rowid desc');
                 while ($row_layers = $load_layers->fetchArray(SQLITE3_ASSOC)) {
-                ?>
-                    new ol.layer.Image({
-                        title: '<?php echo $row_layers["name"] ?>',
-                        name: '<?php echo $row_layers["name"] ?>',
-                        layer: '<?php echo $row_layers["layer"] ?>',
-                        visible: <?php echo $row_layers['visible']; ?>,
-                        fields: '<?php echo $row_layers["fields"] ?>',
-                        source: new ol.source.ImageWMS({
-                            url: 'http://sigserver:8080/geoserver/wms',
-                            crs: "<?php echo $row_layers['crs'] ?>",
-                            params: {'LAYERS': '<?php echo $row_layers["layer"] ?>'},
-                            serverType: '<?php echo $row_layers["serverType"] ?>'
-                        })
-                    }),
-                <?php
+                    $load_server = $connection->query('SELECT type, url FROM param_server WHERE id =' . $row_layers['serverType'] . ' LIMIT 1');
+                        if ($server = $load_server->fetchArray(SQLITE3_ASSOC)) {
+                            ?>
+                            new ol.layer.Image({
+                                title: '<?php echo $row_layers["name"] ?>',
+                                name: '<?php echo $row_layers["name"] ?>',
+                                layer: '<?php echo $row_layers["layer"] ?>',
+                                visible: <?php echo $row_layers['visible']; ?>,
+                                show_toc: <?php echo $row_layers['show_toc']; ?>,
+                                opacity: <?php echo $row_layers['opacity']; ?>,
+                                fields: '<?php echo $row_layers["fields"] ?>',
+                                source: new ol.source.ImageWMS({
+                                    url: '<?php echo $server["url"] ?>/wms',
+                                    crs: "<?php echo $row_layers['crs'] ?>",
+                                    params: {'LAYERS': '<?php echo $row_layers["layer"] ?>'},
+                                    serverType: '<?php echo $server["type"] ?>'
+                                })
+                            }),
+                            <?php
+                        }
+                
                 }
                 ?>
                 ],
@@ -59,27 +65,3 @@ while ($row_groups =$load_layer_group->fetchArray(SQLITE3_ASSOC)){
 
 ?>
 ];
-
-<?php
-function checklayer($layers){
-?>
-    var layer = '<?php echo $layers ?>';
-    for (var i=0;i<map.getLayers().getLength();i++) {
-        if (map.getLayers().getArray()[i] === layer) { 
-            alert ('existe');
-        }
-    }
-<?php
-}
-?>
-
-
-function ol3_checkLayer(layer) {
-    var res = false;
-    for (var i=0;i<map.getLayers().getLength();i++) {
-        if (ol3_map.getLayers().getArray()[i] === layer) { //check if layer exists
-            res = true; //if exists, return true
-        }
-    }
-    return res;
-}

@@ -809,7 +809,8 @@ var construnct_legend = jQuery.grep(map.getLayers().getArray(), function (layer)
     if (layer.getLayers) {
         var layers = jQuery.grep(layer.getLayers().getArray(), function (single_layers) {
             if (typeof single_layers.get('name') != "undefined") {
-                var url = "http://websig.cm-ourem.pt/geoserver/wms?TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&EXCEPTIONS=application%2Fvnd.ogc.se_xml&FORMAT=image%2Fjpeg&LAYER=" + single_layers.get('layer') + "&LEGEND_OPTIONS=forceLabels%3Aon%3BfontName%3DVerdana%3BfontSize%3A12";
+                
+                var url = single_layers.getSource().getUrl()+"?TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&EXCEPTIONS=application%2Fvnd.ogc.se_xml&FORMAT=image%2Fjpeg&LAYER=" + single_layers.get('layer') + "&LEGEND_OPTIONS=forceLabels%3Aon%3BfontName%3DVerdana%3BfontSize%3A12";
                 $("#legend").append('<b>' + single_layers.get('name') + '</b><p><img src="' + url + '" title="' + single_layers.get('name') + '"/></p>');
             }
         });

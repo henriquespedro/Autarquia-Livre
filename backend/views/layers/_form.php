@@ -40,7 +40,7 @@ use app\models\Users;
                 <?= $form->field($model, 'fields')->textInput() ?>
 
                 <?php $items_format = ArrayHelper::map(ParamFormat::find()->all(), 'format', 'name'); ?>
-                <?= $form->field($model, 'layer_type')->dropDownList($items_format, ['prompt' => '---- Select Layer Format ----']) ?>
+                <?= $form->field($model, 'layer_type')->dropDownList($items_format) ?>
 
                 <?= $form->field($model, 'visible')->checkbox() ?>
 
@@ -49,15 +49,15 @@ use app\models\Users;
                 <?= $form->field($model, 'opacity')->textInput() ?>
 
                 <?php $items = ArrayHelper::map(ParamCoordinates::find()->all(), 'code', 'name'); ?>
-                <?= $form->field($model, 'crs')->dropDownList($items, ['prompt' => '---- Select Coordinates System ----']) ?>
+                <?= $form->field($model, 'crs')->dropDownList($items)?>
 
                 <?= $form->field($model, 'style')->textInput() ?>
 
-                <?php $items_server = ArrayHelper::map(ParamServer::find()->all(), 'type', 'name'); ?>
-                <?= $form->field($model, 'serverType')->dropDownList($items_server, ['prompt' => '---- Select Server Type ----']) ?>
+                <?php $items_server = ArrayHelper::map(ParamServer::find()->all(), 'id', 'name'); ?>
+                <?= $form->field($model, 'serverType')->dropDownList($items_server) ?>
 
 
-                <?= $form->field($model, 'type')->dropDownList(['operational_layer' => 'Operational Layer', 'baselayer' => 'BaseLayer'], ['prompt' => '---- Select Layer Type ----']) ?>
+                <?= $form->field($model, 'type')->dropDownList(['operational_layer' => 'Operational Layer', 'baselayer' => 'BaseLayer']) ?>
 
                 <?= $form->field($model, 'icon')->textInput() ?>
             </div>
