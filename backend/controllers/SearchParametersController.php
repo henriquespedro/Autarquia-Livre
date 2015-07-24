@@ -8,6 +8,7 @@ use app\models\SearchParametersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * SearchParametersController implements the CRUD actions for SearchParameters model.
@@ -22,6 +23,21 @@ class SearchParametersController extends Controller {
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create', 'index', 'delete', 'update'],
+                        'roles' => ['@'],
+                    ],
+//                    [
+//                        'allow' => false,
+//                        'actions' => ['create'],
+//                        'roles' => ['@'],
+//                    ],
                 ],
             ],
         ];

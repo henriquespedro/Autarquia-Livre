@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = 'Pesquisas';
             ['class' => 'yii\grid\SerialColumn'],
             //'id',
             //'viewer_id',
-            'name:ntext',
+            'search_name:ntext',
             'description:ntext',
             //'sql_search:ntext',
             // 'visible:boolean',

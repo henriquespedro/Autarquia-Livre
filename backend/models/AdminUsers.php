@@ -13,38 +13,38 @@ use Yii;
  * @property string $create_date
  * @property string $last_login
  */
-class AdminUsers extends \yii\db\ActiveRecord
-{
+class AdminUsers extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'admin_users';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['username', 'password'], 'string'],
-            [['create_date', 'last_login'], 'safe']
+            [['status',], 'integer'],
+            [['username', 'password', 'password_hash', 'email'], 'string'],
+            [['create_date'], 'safe']
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'username' => 'Username',
             'password' => 'Password',
-            'create_date' => 'Create Date',
-            'last_login' => 'Last Login',
+            'status' => 'Estado',
+            'email' => 'E-mail',
+            'create_date' => 'Criado em',
         ];
     }
+
 }

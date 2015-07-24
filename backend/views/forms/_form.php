@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
+use app\models\Datasources;
 use app\models\Users;
 
 /* @var $this yii\web\View */
@@ -50,6 +51,9 @@ $dataProviderChield = new ActiveDataProvider([
                 <?= $form->field($model, 'html_template')->textInput() ?>
 
                 <?= $form->field($model, 'icon')->textInput() ?>
+                
+                <?php $items_format = ArrayHelper::map(Datasources::find()->all(), 'id', 'name'); ?>
+                <?= $form->field($model, 'datasource_id')->dropDownList($items_format) ?>
 
                 <?= $form->field($model, 'sql_select')->textarea(['rows' => 3]) ?>
 
@@ -151,7 +155,7 @@ $dataProviderChield = new ActiveDataProvider([
 
             <div id="yw0_tab_5" class="tab-pane">
                 <?php $dataList = ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
-                <?= html::activeCheckBoxList($model, 'name', $dataList); ?>
+                
             </div>
         </div>
     </div>

@@ -16,7 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 ?>
+
 <script>
     $(document).ready(function () {
         $(window).on('resize', function () {
@@ -70,8 +72,8 @@
                 </ul>
                 <div id="content_spinner" class="tab-content">
                     <div id="tree_table" class="tab-pane active tree "></div>
-                    <div id="legend" class="tab-pane"></div>
-                    <div id="options" class="tab-pane"></div>
+                    <div id="legend" style="overflow-y: auto; height:81vh;" class="tab-pane"></div>
+                    <div id="options" style="overflow-y: auto; height:81vh;" class="tab-pane"></div>
                 </div>
             </div>
 
@@ -103,8 +105,6 @@
                     <button class="btn btn-default" type="button" data-placement="bottom" title="Mover Mapa" onclick="arrastar_mapa()"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;</button>
                     <button class="btn btn-default" type="button" data-placement="bottom" title="Aproximar Mapa" onclick="aproximar_map()"><span class="glyphicon glyphicon-zoom-in"></span>&nbsp;</button>
                     <button class="btn btn-default" type="button" data-placement="bottom" title="Afastar Mapa" onclick="afastar_map()"><span class="glyphicon glyphicon-zoom-out"></span>&nbsp;</button>
-                    <!--<button class="btn btn-default" type="button" data-placement="bottom" title="Vista Anterior" onclick="vista_anterior()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;</button>-->
-                    <!--<button class="btn btn-default" type="button" data-placement="bottom" title="Vista Seguinte" onclick="vista_seguinte()"><span class="glyphicon glyphicon-arrow-right"></span>&nbsp;</button>-->
                     <button class="btn btn-default" type="button" data-placement="bottom" title="Obter Informações" onclick="obter_informacoes()"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;</button>
                     <button class="btn btn-default" type="button" data-placement="bottom" title="Imprimir Planta de Localização" onclick="imprimir_plantas()"><span class="glyphicon glyphicon-print"></span>&nbsp;</button>
                     <select class="btn btn-default form-control" data-placement="bottom" id="select_scales" style="width: 110px">
@@ -112,7 +112,10 @@
                     <div><span class="label label-default">Ação corrente: <span id="corrent_action"></span> </span></div>
                 </div>
             </div>
-            <!--<button  onclick='removeTopLayer()'>Remove Top Layer</button>-->
+            <div id="mouse_coordinates_text" class="mouse_coordinates_text">
+                <p style="margin: -2px 0px 2px"><font size="1"><b>&nbsp;ETRS89 / Portugal TM06 </b></font><span id="mouse3763" class="label label-info">0 / 0</span><font size="1"><b> WGS84 </b></font><span id="mouse4326" class="label label-info">0 / 0</span><font size="1"><b> WGS84 Degrees Minutes Seconds (DMS) </b></font><span id="mouse4326_hdms" class="label label-info">0 / 0</span></p>
+            </div>
+
         </div>
     </div>
     <div class="row" id="button">

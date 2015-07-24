@@ -10,16 +10,15 @@ use app\models\Layers;
 /**
  * LayersSearch represents the model behind the search form about `app\models\Layers`.
  */
-class LayersSearch extends Layers
-{
+class LayersSearch extends Layers {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'viewer_id', 'setOrder'], 'integer'],
-            [['name', 'layer', 'layer_type', 'crs', 'style', 'serverType', 'type', 'icon', 'chage_data'], 'safe'],
+            [['name', 'layer', 'fields', 'layer_type', 'crs', 'style', 'serverType', 'type', 'icon', 'chage_data'], 'safe'],
             [['visible', 'show_toc'], 'boolean'],
             [['opacity'], 'number'],
         ];
@@ -28,8 +27,7 @@ class LayersSearch extends Layers
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -41,8 +39,7 @@ class LayersSearch extends Layers
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Layers::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -68,14 +65,16 @@ class LayersSearch extends Layers
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'layer', $this->layer])
-            ->andFilterWhere(['like', 'layer_type', $this->layer_type])
-            ->andFilterWhere(['like', 'crs', $this->crs])
-            ->andFilterWhere(['like', 'style', $this->style])
-            ->andFilterWhere(['like', 'serverType', $this->serverType])
-            ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'icon', $this->icon]);
+                ->andFilterWhere(['like', 'layer', $this->layer])
+                ->andFilterWhere(['like', 'fields', $this->fields])
+                ->andFilterWhere(['like', 'layer_type', $this->layer_type])
+                ->andFilterWhere(['like', 'crs', $this->crs])
+                ->andFilterWhere(['like', 'style', $this->style])
+                ->andFilterWhere(['like', 'serverType', $this->serverType])
+                ->andFilterWhere(['like', 'type', $this->type])
+                ->andFilterWhere(['like', 'icon', $this->icon]);
 
         return $dataProvider;
     }
+
 }

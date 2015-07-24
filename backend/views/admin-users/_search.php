@@ -21,10 +21,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'password') ?>
 
-    <?= $form->field($model, 'create_date') ?>
-
-    <?= $form->field($model, 'last_login') ?>
-
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>

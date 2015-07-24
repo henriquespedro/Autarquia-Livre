@@ -31,7 +31,8 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return 'admin_users';
+//        return '{{%user}}';
     }
 
     /**
@@ -149,7 +150,13 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return Yii::$app->security->validatePassword($password, $this->password_hash);
+        if (sha1($password) === $this->password_hash){
+            return true;
+        } else {
+            return false;
+        }
+        
+//        return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
     /**

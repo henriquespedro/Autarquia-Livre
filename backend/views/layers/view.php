@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'viewer_id',
             'name:ntext',
             'layer:ntext',
+            'fields:ntext',
             'layer_type:ntext',
             'visible:boolean',
             'show_toc:boolean',

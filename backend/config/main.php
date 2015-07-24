@@ -25,6 +25,7 @@ return [
             'charset' => 'utf8',
         ],
         'user' => [
+//            'identityClass' => 'common\models\User',
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
         ],

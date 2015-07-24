@@ -9,7 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property integer $viewer_id
- * @property string $name
+ * @property string $search_name
  * @property string $description
  * @property string $sql_search
  * @property boolean $visible
@@ -42,8 +42,8 @@ class Search extends \yii\db\ActiveRecord
     {
         return [
             [['viewer_id'], 'required'],
-            [['viewer_id', 'setOrder'], 'integer'],
-            [['name', 'description', 'sql_search'], 'string'],
+            [['viewer_id', 'setOrder','datasource_id'], 'integer'],
+            [['search_name', 'description', 'sql_search'], 'string'],
             [['visible'], 'boolean'],
             [['chage_data'], 'safe']
         ];
@@ -57,12 +57,13 @@ class Search extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'viewer_id' => 'Viewer ID',
-            'name' => 'Name',
-            'description' => 'Description',
-            'sql_search' => 'Sql Search',
-            'visible' => 'Visible',
+            'datasource_id' => 'Ligação de Dados',
+            'search_name' => 'Nome',
+            'description' => 'Descrição',
+            'sql_search' => 'Query Pesquisa',
+            'visible' => 'Visível?',
             'chage_data' => 'Chage Data',
-            'setOrder' => 'Set Order',
+            'setOrder' => 'Ordem',
         ];
     }
 

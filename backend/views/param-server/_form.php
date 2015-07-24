@@ -15,6 +15,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'name')->textInput() ?>
 
     <?= $form->field($model, 'type')->textInput() ?>
+    
+    <?= $form->field($model, 'url')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Aplicar Alterações', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -8,6 +8,7 @@ use app\models\FormsParametersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * FormsParametersController implements the CRUD actions for FormsParameters model.
@@ -21,6 +22,21 @@ class FormsParametersController extends Controller {
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create', 'index', 'delete', 'update'],
+                        'roles' => ['@'],
+                    ],
+//                    [
+//                        'allow' => false,
+//                        'actions' => ['create'],
+//                        'roles' => ['@'],
+//                    ],
                 ],
             ],
         ];

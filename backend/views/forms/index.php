@@ -25,6 +25,7 @@ $this->params['breadcrumbs'][] = 'Formulários';
             ['class' => 'yii\grid\SerialColumn'],
             //'id',
             //'viewer_id',
+            //'datasource_id',
             'name:ntext',
             'description:ntext',
             'html_template:ntext',

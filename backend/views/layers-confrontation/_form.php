@@ -18,7 +18,6 @@ use yii\widgets\ActiveForm;
         echo $form->field($model, 'viewer_id')->hiddenInput()->label(false);
     }
     ?>
-    <?= $form->field($model, 'confrontation_id')->textInput() ?>
 
     <?= $form->field($model, 'name')->textInput() ?>
 

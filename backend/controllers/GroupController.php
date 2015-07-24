@@ -8,6 +8,7 @@ use app\models\GroupSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * GroupController implements the CRUD actions for Group model.
@@ -21,6 +22,21 @@ class GroupController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create', 'index', 'delete', 'update'],
+                        'roles' => ['@'],
+                    ],
+//                    [
+//                        'allow' => false,
+//                        'actions' => ['create'],
+//                        'roles' => ['@'],
+//                    ],
                 ],
             ],
         ];

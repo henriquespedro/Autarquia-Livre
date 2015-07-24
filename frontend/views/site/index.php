@@ -1,7 +1,7 @@
 <?php
+include __DIR__ .'/../connections.php';
 /* @var $this yii\web\View */
 $this->title = 'Autarquia Livre - OpenSource WebSIG';
-$connection = new SQLite3(__DIR__ . '/../../../data/data.db');
 $load_config = $connection->query('SELECT * FROM viewers ORDER BY id ASC');
 ?>
 <div class="site-index">

@@ -27,7 +27,7 @@ class ParamServer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'type'], 'string']
+            [['name', 'type', 'url'], 'string']
         ];
     }
 
@@ -38,8 +38,9 @@ class ParamServer extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'type' => 'Type',
+            'name' => 'Nome',
+            'type' => 'Tipo',
+            'url' => 'URL',
         ];
     }
 }

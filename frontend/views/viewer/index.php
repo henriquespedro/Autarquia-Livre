@@ -19,6 +19,9 @@
 
 /* @var $this yii\web\View */
 
+
+
+
 $connection = new SQLite3(__DIR__ . '/../../../data/data.db');
 ?>
 <!--***Library***-->
@@ -31,16 +34,23 @@ $connection = new SQLite3(__DIR__ . '/../../../data/data.db');
 <!--JQuery v1.9.1-->
 <script src="../../vendor/openlayers/resources/jquery.min.js" type="text/javascript"></script>
 
+<!--JQuery UI v1.11.4-->
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 <!--Bootstrap-->
 <script src="../../vendor/bower/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+
+<!--Google API-->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script>google.load("visualization", "1", {packages: ["corechart"]});</script>
 
 <!--OpenLayers 3-->
 <script src="../../vendor/openlayers/build/ol.js" type="text/javascript"></script>
 
 <!--GeoExt 2 -->
 <!--<script type="text/javascript" src="../views/theme/default/loader.js"></script>-->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js" type="text/javascript"></script>
+<script src="../../vendor/proj4/proj4.js" type="text/javascript"></script>
+<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js" type="text/javascript"></script>-->
 <script src="http://epsg.io/3763-1753.js" type="text/javascript"></script>
 <script src="http://epsg.io/27493-1753.js" type="text/javascript"></script>
 <script src="http://epsg.io/20791-1753.js" type="text/javascript"></script>

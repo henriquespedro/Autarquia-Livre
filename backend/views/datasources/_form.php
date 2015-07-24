@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'string')->textInput(['maxlength' => 200]) ?>
 
-    <?= $form->field($model, 'change_data')->textInput() ?>
+    <?= $form->field($model, 'change_data')->hiddenInput()->label(false) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Aplicar Alterações', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

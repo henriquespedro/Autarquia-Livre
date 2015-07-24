@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'viewer_id',
+            'datasource_id',
             'name:ntext',
             'description:ntext',
             'html_template:ntext',

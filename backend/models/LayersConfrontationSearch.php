@@ -10,15 +10,14 @@ use app\models\LayersConfrontation;
 /**
  * LayersConfrontationSearch represents the model behind the search form about `app\models\LayersConfrontation`.
  */
-class LayersConfrontationSearch extends LayersConfrontation
-{
+class LayersConfrontationSearch extends LayersConfrontation {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id', 'confrontation_id'], 'integer'],
+            [['id', 'viewer_id'], 'integer'],
             [['name', 'layer', 'description_field', 'regulement_field'], 'safe'],
         ];
     }
@@ -26,8 +25,7 @@ class LayersConfrontationSearch extends LayersConfrontation
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ class LayersConfrontationSearch extends LayersConfrontation
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = LayersConfrontation::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -58,14 +55,15 @@ class LayersConfrontationSearch extends LayersConfrontation
         $query->andFilterWhere([
             'id' => $this->id,
 //            'viewer_id' => $_GET['viewer_id'],
-            'confrontation_id' => $this->confrontation_id,
+            'viewer_id' => $_GET['viewer_id']
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'layer', $this->layer])
-            ->andFilterWhere(['like', 'description_field', $this->description_field])
-            ->andFilterWhere(['like', 'regulement_field', $this->regulement_field]);
+                ->andFilterWhere(['like', 'layer', $this->layer])
+                ->andFilterWhere(['like', 'description_field', $this->description_field])
+                ->andFilterWhere(['like', 'regulement_field', $this->regulement_field]);
 
         return $dataProvider;
     }
+
 }

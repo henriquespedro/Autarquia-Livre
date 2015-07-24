@@ -85,12 +85,12 @@ $("#corrent_action").text("Mover Mapa");
  * 
  * @description Adicionar Control ScaleLine
  */
-map.addControl(new ol.control.ScaleLine());
+map.addControl(new ol.control.ScaleLine({className: 'ol-scale-line'}));
 /**
  * 
  * @description Adicionar Control FullScreen
  */
-map.addControl(new ol.control.FullScreen());
+//map.addControl(new ol.control.FullScreen());
 /**
  * 
  * @description Adicionar Control Overview
@@ -105,19 +105,19 @@ map.addControl(new ol.control.Rotate());
  * 
  * @description Adicionar control ZoomSlider
  */
-map.addControl(new ol.control.ZoomSlider());
+//map.addControl(new ol.control.ZoomSlider());
 /**
  * 
  * @description Adicionar Control MousePosition
  */
-map.addControl(
-        new ol.control.MousePosition({
-            undefinedHTML: '&nbsp;',
-            projection: 'EPSG:3763',
-            coordinateFormat: function (coordinate) {
-                return ol.coordinate.format(coordinate, '{x}, {y}', 4);
-            }
-        }));
+map.on('pointermove', function (event) {
+    var coord3763 = event.coordinate;
+    var coord4326 = ol.proj.transform(coord3763, 'EPSG:3763', 'EPSG:4326');
+    $('#mouse3763').text(ol.coordinate.toStringXY(coord3763, 4));
+    $('#mouse4326').text(ol.coordinate.toStringXY(coord4326, 4));
+    $('#mouse4326_hdms').text(ol.coordinate.toStringHDMS(ol.proj.transform(coord3763, 'EPSG:3763', 'EPSG:4326')));
+});
+
 /**
  * 
  * @type ol.interaction.DragBox
@@ -216,9 +216,10 @@ function obter_informacoes() {
 
 function formulario(id) {
     $("#formularios_div").attr("title", "Formulários");
-    $("#formularios_div").html('<iframe src="../views/forms/formularios.php?form=' + id + '" style="width:100%; height:100%; position:relative; border:none"></iframe>');
+    $("#formularios_div").load('../views/forms/formularios.php?form=' + id + '');
+//    $("#formularios_div").html('<iframe src="../views/forms/formularios.php?form=' + id + '" style="width:100%; height:100%; position:relative; border:none"></iframe>');
     $("#formularios_div").dialog({width: 800, height: 500});
-    
+
 }
 function bookmarks() {
     $("#options").load("../tools/_bookmarkform.php", {"page": $.QueryString["page"]});
@@ -337,6 +338,14 @@ function apagar_desenhos() {
     }
     map.removeInteraction(draw);
 }
+
+function clear_results_search() {
+    var clear_vector = confirm("Deseja apagar do mapa o(s) resultado(s) da pesquisa?");
+    if (clear_vector === true)
+    {
+        search_vector_result.getSource().clear();
+    }
+}
 function user_layers() {
     $("#options").load("../tools/_userlayersform.php");
     change_active_option();
@@ -361,6 +370,10 @@ function add_kml() {
     change_active_option();
 }
 
+function confrontacao_espacial() {
+    $("#options").load("../tools/_confrontacaoform.php");
+    change_active_option();
+}
 var measureLayer;
 var drawmeasure;
 var source_measure = new ol.source.Vector();
@@ -791,3 +804,16 @@ function getResolutionFromScale(scale, units) {
     var resolution = 1 / (normScale * INCHES_PER_UNIT[units] * DOTS_PER_INCH);
     return resolution;
 }
+
+var construnct_legend = jQuery.grep(map.getLayers().getArray(), function (layer) {
+    if (layer.getLayers) {
+        var layers = jQuery.grep(layer.getLayers().getArray(), function (single_layers) {
+            if (typeof single_layers.get('name') != "undefined") {
+                var url = "http://websig.cm-ourem.pt/geoserver/wms?TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&EXCEPTIONS=application%2Fvnd.ogc.se_xml&FORMAT=image%2Fjpeg&LAYER=" + single_layers.get('layer') + "&LEGEND_OPTIONS=forceLabels%3Aon%3BfontName%3DVerdana%3BfontSize%3A12";
+                $("#legend").append('<b>' + single_layers.get('name') + '</b><p><img src="' + url + '" title="' + single_layers.get('name') + '"/></p>');
+            }
+        });
+    }
+});
+
+

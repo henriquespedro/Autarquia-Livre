@@ -15,11 +15,13 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'username')->textinput() ?>
 
     <?= $form->field($model, 'password')->passwordinput() ?>
-<!--
-    <?= $form->field($model, 'create_date')->textInput() ?>
+    
+    <?= $form->field($model, 'email')->textinput() ?>
+    
+    <?= $form->field($model, 'status')->dropDownList(['10' => 'Ativo', '0' => 'Inativo']) ?>
 
-    <?= $form->field($model, 'last_login')->textInput() ?>
--->
+    <?= $form->field($model, 'create_date')->hiddenInput()->label(false) ?>
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Aplicar Alterações', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

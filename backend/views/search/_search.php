@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'viewer_id') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'search_name') ?>
 
     <?= $form->field($model, 'description') ?>
 

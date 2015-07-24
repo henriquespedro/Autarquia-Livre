@@ -10,24 +10,22 @@ use app\models\ParamServer;
 /**
  * ParamServerSearch represents the model behind the search form about `app\models\ParamServer`.
  */
-class ParamServerSearch extends ParamServer
-{
+class ParamServerSearch extends ParamServer {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id'], 'integer'],
-            [['name', 'type'], 'safe'],
+            [['name', 'type', 'url'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ class ParamServerSearch extends ParamServer
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = ParamServer::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -60,8 +57,10 @@ class ParamServerSearch extends ParamServer
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'type', $this->type]);
+                ->andFilterWhere(['like', 'url', $this->url])
+                ->andFilterWhere(['like', 'type', $this->type]);
 
         return $dataProvider;
     }
+
 }

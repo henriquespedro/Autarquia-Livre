@@ -37,6 +37,8 @@ use app\models\Users;
 
                 <?= $form->field($model, 'layer')->textInput() ?>
 
+                <?= $form->field($model, 'fields')->textInput() ?>
+
                 <?php $items_format = ArrayHelper::map(ParamFormat::find()->all(), 'format', 'name'); ?>
                 <?= $form->field($model, 'layer_type')->dropDownList($items_format, ['prompt' => '---- Select Layer Format ----']) ?>
 
@@ -62,7 +64,7 @@ use app\models\Users;
 
             <div id="yw0_tab_2" class="tab-pane">
                 <?php $dataList = ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
-                <?= html::activeCheckBoxList($model, 'name', $dataList); ?>
+                
             </div>
         </div>
     </div>   

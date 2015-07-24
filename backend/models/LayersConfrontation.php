@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "layers_confrontation".
  *
  * @property integer $id
- * @property integer $confrontation_id
+ * @property integer $viewer_id
  * @property string $name
  * @property string $layer
  * @property string $description_field
@@ -32,8 +32,8 @@ class LayersConfrontation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['confrontation_id'], 'required'],
-            [['confrontation_id'], 'integer'],
+            [['viewer_id'], 'required'],
+            [['viewer_id'], 'integer'],
             [['name', 'layer', 'description_field', 'regulement_field'], 'string']
         ];
     }
@@ -45,7 +45,7 @@ class LayersConfrontation extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'confrontation_id' => 'Confrontation ID',
+            'viewer_id' => 'Viewer ID',
             'name' => 'Name',
             'layer' => 'Layer',
             'description_field' => 'Description Field',
@@ -58,6 +58,6 @@ class LayersConfrontation extends \yii\db\ActiveRecord
      */
     public function getConfrontation()
     {
-        return $this->hasOne(ConfigConfrontation::className(), ['id' => 'confrontation_id']);
+        return $this->hasOne(ConfigConfrontation::className(), ['id' => 'viewer_id']);
     }
 }

@@ -44,7 +44,7 @@ class Layers extends \yii\db\ActiveRecord
         return [
             [['viewer_id'], 'required'],
             [['viewer_id', 'setOrder'], 'integer'],
-            [['name', 'layer', 'layer_type', 'crs', 'style', 'serverType', 'type', 'icon'], 'string'],
+            [['name', 'layer', 'fields', 'layer_type', 'crs', 'style', 'serverType', 'type', 'icon'], 'string'],
             [['visible', 'show_toc'], 'boolean'],
             [['opacity'], 'number'],
             [['chage_data'], 'safe'],
@@ -62,6 +62,7 @@ class Layers extends \yii\db\ActiveRecord
             'viewer_id' => 'Viewer ID',
             'name' => 'Nome',
             'layer' => 'Layer',
+            'fields' => 'Campos',
             'layer_type' => 'Formato',
             'visible' => 'Visível',
             'show_toc' => 'Mostrar na TOC',

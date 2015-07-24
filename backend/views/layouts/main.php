@@ -26,24 +26,23 @@ AppAsset::register($this);
         <div class="wrap">
             <?php
             NavBar::begin([
-                'brandLabel' => 'Autarquia Livre - Administração',
+                'brandLabel' => 'Administração',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
                 ],
             ]);
             $menuItems = [
-                //['label' => 'Home', 'url' => ['/site/index']],
-                ['label' => 'Utilizadores', 'items' => [
+                ['label' => 'Utilizadores', 'visible' => !Yii::$app->user->isGuest,'items' => [
                         ['label' => 'Utilizadores', 'url' => Yii::$app->urlManager->createUrl('users/index')],
                         ['label' => 'Grupos', 'url' => Yii::$app->urlManager->createUrl('group/index')],
                     ]],
-                ['label' => 'Parâmetros', 'visible' => Yii::$app->user->isGuest, 'items' => [
+                ['label' => 'Parâmetros', 'visible' => !Yii::$app->user->isGuest, 'items' => [
                         ['label' => 'Sistemas de Coordenadas', 'url' => ['/param-coordinates/index']],
                         ['label' => 'Formato Layers', 'url' => ['/param-format/index']],
-                        ['label' => 'Tipo de Servidores', 'url' => ['/param-server/index']],
+                        ['label' => 'Servidores', 'url' => ['/param-server/index']],
                     ]],
-                ['label' => 'Configurações', 'visible' => Yii::$app->user->isGuest, 'items' => [
+                ['label' => 'Configurações', 'visible' => !Yii::$app->user->isGuest, 'items' => [
                         ['label' => 'Aplicação', 'url' => ['/appoptions/view', 'id' => '1']],
                         ['label' => 'Fonte de dados', 'url' => ['/datasources/index']],
                         ['label' => 'Administradores', 'url' => ['/admin-users/index']],

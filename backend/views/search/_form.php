@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
+use app\models\Datasources;
 use app\models\Users;
 
 /* @var $this yii\web\View */
@@ -40,12 +41,14 @@ $dataProviderParameters = new ActiveDataProvider([
                     echo $form->field($model, 'viewer_id')->hiddenInput()->label(false);
                 }
                 ?>
-                <?= $form->field($model, 'name')->textInput() ?>
+                <?= $form->field($model, 'search_name')->textInput() ?>
 
                 <?= $form->field($model, 'description')->textInput() ?>
 
                 <?= $form->field($model, 'visible')->checkbox() ?>
-
+                
+                <?= $form->field($model, 'datasource_id')->dropDownList(ArrayHelper::map(Datasources::find()->all(), 'id', 'name')) ?>
+                
                 <?= $form->field($model, 'sql_search')->textarea(['rows' => 3]) ?>
             </div>
             <div id="yw0_tab_2" class="tab-pane">
@@ -95,7 +98,7 @@ $dataProviderParameters = new ActiveDataProvider([
 
                     <div id="yw0_tab_3" class="tab-pane">
                         <?php $dataList = ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
-                        <?= html::activeCheckBoxList($model, 'name', $dataList); ?>
+                        
                     </div>
                 </div>
             </div>

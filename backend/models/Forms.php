@@ -54,7 +54,7 @@ class Forms extends \yii\db\ActiveRecord
     {
         return [
             [['viewer_id'], 'required'],
-            [['viewer_id', 'setOrder'], 'integer'],
+            [['viewer_id', 'setOrder', 'datasource_id'], 'integer'],
             [['name', 'description', 'html_template', 'sql_select', 'sql_insert', 'sql_update', 'sql_delete', 'icon'], 'string'],
             [['chage_data'], 'safe']
         ];
@@ -69,6 +69,7 @@ class Forms extends \yii\db\ActiveRecord
             'id' => 'ID',
             'viewer_id' => 'Viewer ID',
             'name' => 'Name',
+            'datasource_id'=> 'Ligação de dados',
             'description' => 'Description',
             'html_template' => 'Html Template',
             'sql_select' => 'Sql Select',

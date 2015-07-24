@@ -8,6 +8,7 @@ use app\models\LocaladminSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * LocaladminController implements the CRUD actions for Localadmin model.
@@ -21,6 +22,21 @@ class LocaladminController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create', 'index', 'delete', 'update'],
+                        'roles' => ['@'],
+                    ],
+//                    [
+//                        'allow' => false,
+//                        'actions' => ['create'],
+//                        'roles' => ['@'],
+//                    ],
                 ],
             ],
         ];

@@ -10,15 +10,14 @@ use app\models\Forms;
 /**
  * FormsSearch represents the model behind the search form about `app\models\Forms`.
  */
-class FormsSearch extends Forms
-{
+class FormsSearch extends Forms {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id', 'viewer_id', 'setOrder'], 'integer'],
+            [['id', 'viewer_id', 'setOrder', 'datasource_id'], 'integer'],
             [['name', 'description', 'html_template', 'sql_select', 'sql_insert', 'sql_update', 'sql_delete', 'icon', 'chage_data'], 'safe'],
         ];
     }
@@ -26,8 +25,7 @@ class FormsSearch extends Forms
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ class FormsSearch extends Forms
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Forms::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -57,20 +54,22 @@ class FormsSearch extends Forms
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'datasource_id' => $this->datasource_id,
             'viewer_id' => $_GET['viewer_id'],
             'chage_data' => $this->chage_data,
             'setOrder' => $this->setOrder,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'html_template', $this->html_template])
-            ->andFilterWhere(['like', 'sql_select', $this->sql_select])
-            ->andFilterWhere(['like', 'sql_insert', $this->sql_insert])
-            ->andFilterWhere(['like', 'sql_update', $this->sql_update])
-            ->andFilterWhere(['like', 'sql_delete', $this->sql_delete])
-            ->andFilterWhere(['like', 'icon', $this->icon]);
+                ->andFilterWhere(['like', 'description', $this->description])
+                ->andFilterWhere(['like', 'html_template', $this->html_template])
+                ->andFilterWhere(['like', 'sql_select', $this->sql_select])
+                ->andFilterWhere(['like', 'sql_insert', $this->sql_insert])
+                ->andFilterWhere(['like', 'sql_update', $this->sql_update])
+                ->andFilterWhere(['like', 'sql_delete', $this->sql_delete])
+                ->andFilterWhere(['like', 'icon', $this->icon]);
 
         return $dataProvider;
     }
+
 }

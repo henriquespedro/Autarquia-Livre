@@ -10,24 +10,23 @@ use app\models\AdminUsers;
 /**
  * AdminUsersSearch represents the model behind the search form about `app\models\AdminUsers`.
  */
-class AdminUsersSearch extends AdminUsers
-{
+class AdminUsersSearch extends AdminUsers {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id'], 'integer'],
-            [['username', 'password', 'create_date', 'last_login'], 'safe'],
+            [['status',], 'integer'],
+            [['username', 'password', 'password_hash', 'email'], 'string'],
+            [['create_date'], 'safe']
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +38,7 @@ class AdminUsersSearch extends AdminUsers
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = AdminUsers::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -58,12 +56,15 @@ class AdminUsersSearch extends AdminUsers
         $query->andFilterWhere([
             'id' => $this->id,
             'create_date' => $this->create_date,
-            'last_login' => $this->last_login,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'password', $this->password]);
+                ->andFilterWhere(['like', 'password', $this->password])
+                ->andFilterWhere(['like', 'email', $this->email])
+                ->andFilterWhere(['like', 'status', $this->status])
+                ->andFilterWhere(['like', 'password_hash', $this->password_hash]);
 
         return $dataProvider;
     }
+
 }
