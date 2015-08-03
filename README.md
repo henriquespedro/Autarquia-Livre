@@ -14,6 +14,10 @@ About
 -------
 Work Project for Master Degree in Geographic Information Systems and Science from NOVA IMS
 
+Demo
+-------
+http://autarquia-livre.tk
+
 Screenshots
 ================================================================
 Frontend

@@ -1,7 +1,7 @@
 <?php
 
 /* 
- * Copyright (C) 2015 cm0721
+ * Copyright (C) 2015 Autarquia-Livre
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

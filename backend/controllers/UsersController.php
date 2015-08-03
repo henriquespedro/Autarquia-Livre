@@ -22,19 +22,14 @@ class UsersController extends Controller {
                 'actions' => [
                     'delete' => ['post'],
                 ],
-                'access' => [
-                    'class' => AccessControl::className(),
-                    'rules' => [
-                        [
-                            'allow' => true,
-                            'actions' => ['create', 'index', 'delete', 'update'],
-                            'roles' => ['@'],
-                        ],
-//                    [
-//                        'allow' => false,
-//                        'actions' => ['create'],
-//                        'roles' => ['@'],
-//                    ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create', 'index', 'delete', 'update'],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -73,9 +68,14 @@ class UsersController extends Controller {
      */
     public function actionCreate() {
         $model = new Users();
+        $POST_VARIABLE = Yii::$app->request->post('AdminUsers');
+        
+        $salt = uniqid('', true);
+        $model->password = sha1($POST_VARIABLE['password'] . $salt);
+        $model->salt = $salt;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                         'model' => $model,
@@ -93,7 +93,7 @@ class UsersController extends Controller {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                         'model' => $model,

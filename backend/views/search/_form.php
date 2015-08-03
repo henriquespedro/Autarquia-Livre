@@ -30,7 +30,6 @@ $dataProviderParameters = new ActiveDataProvider([
             <?php if (!$model->isNewRecord) { ?>
                 <li><a href="#yw0_tab_2" data-toggle="tab">Parâmetros de Pesquisa</a></li>
             <?php } ?> 
-            <li><a href="#yw0_tab_3" data-toggle="tab">Permissões</a></li>
         </ul>
         <div id="my-tab-content" class="tab-content">
             <div id="yw0_tab_1" class="tab-pane active in">
@@ -46,9 +45,9 @@ $dataProviderParameters = new ActiveDataProvider([
                 <?= $form->field($model, 'description')->textInput() ?>
 
                 <?= $form->field($model, 'visible')->checkbox() ?>
-                
+
                 <?= $form->field($model, 'datasource_id')->dropDownList(ArrayHelper::map(Datasources::find()->all(), 'id', 'name')) ?>
-                
+
                 <?= $form->field($model, 'sql_search')->textarea(['rows' => 3]) ?>
             </div>
             <div id="yw0_tab_2" class="tab-pane">
@@ -59,7 +58,7 @@ $dataProviderParameters = new ActiveDataProvider([
                     function AddParameters() {
                         $.ajax({
                             type: 'POST',
-                            url: 'index.php?r=search-parameters/create&search_id=<?php echo $_GET["id"]?>&viewer_id=<?php $model->viewer_id ?>',
+                            url: 'index.php?r=search-parameters/create&search_id=<?php echo $_GET["id"] ?>&viewer_id=<?php $model->viewer_id ?>',
                             success: function (data)
                             {
                                 $('#parameters_model').html(data);
@@ -87,18 +86,13 @@ $dataProviderParameters = new ActiveDataProvider([
                                     return $url;
                                 }
                                 if ($action === 'delete') {
-                                    $url = array('search-parameters/delete', 'id' => $dataProviderParameters->id, 'search_id'=> $dataProviderParameters->search_id, 'viewer_id' => $_GET['viewer_id']);
+                                    $url = array('search-parameters/delete', 'id' => $dataProviderParameters->id, 'search_id' => $dataProviderParameters->search_id, 'viewer_id' => $_GET['viewer_id']);
                                     return $url;
                                 }
                             }],
                             ],
                         ]);
                         ?>
-                    </div>
-
-                    <div id="yw0_tab_3" class="tab-pane">
-                        <?php $dataList = ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
-                        
                     </div>
                 </div>
             </div>

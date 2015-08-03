@@ -67,17 +67,17 @@ AppAsset::register($this);
 
             <div class="container">
 
-                <?=
-                Breadcrumbs::widget([
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                ])
-                ?>
+<?=
+Breadcrumbs::widget([
+    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+])
+?>
                 <div class="row">
                     <div class="col-lg-3">
-                        <?= $this->render('/menus') ?>
+<?= $this->render('/menus') ?>
                     </div>
                     <div class="col-lg-9">
-                        <?= $content ?>
+<?= $content ?>
                     </div>
                 </div>
 
@@ -93,7 +93,7 @@ AppAsset::register($this);
             </div>
         </footer>
 
-        <?php $this->endBody() ?>
+<?php $this->endBody() ?>
     </body>
 </html>
 <?php $this->endPage() ?>

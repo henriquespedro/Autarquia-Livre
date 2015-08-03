@@ -24,20 +24,20 @@ class ViewerGroupController extends Controller {
                 'actions' => [
                     'delete' => ['post'],
                 ],
-                'access' => [
-                    'class' => AccessControl::className(),
-                    'rules' => [
-                        [
-                            'allow' => true,
-                            'actions' => ['create', 'index', 'delete', 'update'],
-                            'roles' => ['@'],
-                        ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create','index','delete','update'],
+                        'roles' => ['@'],
+                    ],
 //                    [
 //                        'allow' => false,
 //                        'actions' => ['create'],
 //                        'roles' => ['@'],
 //                    ],
-                    ],
                 ],
             ],
         ];

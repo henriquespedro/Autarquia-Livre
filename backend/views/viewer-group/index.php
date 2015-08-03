@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = 'Segurança';
 <div class="viewer-group-index">
 
     <p>
-        <b>ATENÇÃO:</b> Para ativar protecção ás configurações e/ou layers, tem que adicionar os grupos pretendidos. Caso a tabela não possua nenhum grupo indentificado não adicionada segurança ao visualizador.
+        <b>ATENÇÃO:</b> Para ativar protecção ás configurações e/ou layers, tem que adicionar os grupos pretendidos. Caso a tabela não possua nenhum grupo indentificado não será adicionada segurança ao visualizador.
     </p>
     <p>
         <?= Html::a('Novo Grupo', ['create', 'viewer_id' => $_GET['viewer_id']], ['class' => 'btn btn-success']) ?>

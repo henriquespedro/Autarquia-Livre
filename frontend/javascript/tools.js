@@ -371,7 +371,7 @@ function add_kml() {
 }
 
 function confrontacao_espacial() {
-    $("#options").load("../tools/_confrontacaoform.php");
+    $("#options").load("../tools/_confrontacaoform.php", {"page": $.QueryString["page"]});
     change_active_option();
 }
 var measureLayer;
@@ -641,7 +641,7 @@ function locate_coordinates() {
 }
 
 function edit_geo() {
-    $("#options").load("../tools/_editform.php");
+    $("#options").load("../tools/_editform.php", {"page": $.QueryString["page"]});
     change_active_option();
 }
 
@@ -691,10 +691,18 @@ map.getLayerGroup().set('name', 'Lista de Temas');
 function buildLayerTree(layer) {
     var elem;
     var name = layer.get('name') ? layer.get('name') : "Group";
-    var div = "<li data-layerid='" + name + "'>" +
-            "<span><i class='glyphicon glyphicon-check'></i> " + layer.get('name') + "</span>" +
-//            "<i class='glyphicon glyphicon-check'></i> " +
-            "<input style='width:80px;' class='opacity' type='hidden' value='' data-slider-min='0' data-slider-max='1' data-slider-step='0.1' data-slider-tooltip='hide'>";
+    var div = "<li data-layerid='" + name + "'>";
+
+    if (layer.getVisible() === 1) {
+        
+        div += "<i style='font-size: 11px;' class='glyphicon glyphicon-check'></i>"
+    }
+    else {
+        div += "<i style='font-size: 11px;' class='glyphicon glyphicon-unchecked'></i>"
+    }
+    div += "<span title='' style='font-size: 11px;'>" + layer.get('name') + "</span>";
+    div += "<input style='width:80px;' class='opacity' type='hidden' value='' data-slider-min='0' data-slider-max='1' data-slider-step='0.1' data-slider-tooltip='hide'>";
+
     if (layer.getLayers) {
         var sublayersElem = '';
         var layers = layer.getLayers().getArray(),
@@ -809,8 +817,8 @@ var construnct_legend = jQuery.grep(map.getLayers().getArray(), function (layer)
     if (layer.getLayers) {
         var layers = jQuery.grep(layer.getLayers().getArray(), function (single_layers) {
             if (typeof single_layers.get('name') != "undefined") {
-                
-                var url = single_layers.getSource().getUrl()+"?TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&EXCEPTIONS=application%2Fvnd.ogc.se_xml&FORMAT=image%2Fjpeg&LAYER=" + single_layers.get('layer') + "&LEGEND_OPTIONS=forceLabels%3Aon%3BfontName%3DVerdana%3BfontSize%3A12";
+
+                var url = single_layers.getSource().getUrl() + "?TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&EXCEPTIONS=application%2Fvnd.ogc.se_xml&FORMAT=image%2Fjpeg&LAYER=" + single_layers.get('layer') + "&LEGEND_OPTIONS=forceLabels%3Aon%3BfontName%3DVerdana%3BfontSize%3A12";
                 $("#legend").append('<b>' + single_layers.get('name') + '</b><p><img src="' + url + '" title="' + single_layers.get('name') + '"/></p>');
             }
         });

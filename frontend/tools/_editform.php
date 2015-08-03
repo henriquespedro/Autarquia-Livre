@@ -1,6 +1,6 @@
 <?php
-/*
- * Copyright (C) 2015 cm0721
+/* 
+ * Copyright (C) 2015 Autarquia-Livre
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,17 +16,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
+include __DIR__ . '/../views/connections.php';
+$result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE viewer_id = (SELECT id FROM viewers WHERE name = "' . $_POST["page"] . '") ORDER BY setOrder ASC');
 ?>
 
 <div>
     <label for="edit_layers">Layer para Edição:</label>
     <select name="edit_layers" id="edit_layers" class="form-control">
         <option value="-" class="all_layers">-</option>
-        <option value="contentores">Contentores Superficiais</option>
-        <!--        <option value="geoserver" class="all_layers">GeoServer</option>
-                <option value="mapserver" class="all_layers">MapServer</option>
-                <option value="qgis" class="all_layers">QGIS Server</option>
-                <option value="arcgis" class="all_layers">ArcGIS Server</option>-->
+        <?php
+        while ($row_edit_layers = $result_edit_layers->fetchArray(SQLITE3_ASSOC)) {
+            ?>
+            <option value="<?php echo $row_edit_layers['layer'] ?>"><?php echo $row_edit_layers['name'] ?></option>
+            <?php
+        }
+        ?>
     </select>
     <hr>
     <div style="text-align: center">
@@ -40,17 +45,83 @@
             <button class="btn btn-default" id="save" type="button" data-placement="bottom" title="Guardar Alterações" ><span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;</button>
         </div>
     </div>
-    <div id="edit_select_info"></div>
-    <div id="table_info_update" style="display:none"></div>
+    <div id="edit_layers_view">
+        <div id="edit_select_info"></div>
+        <hr>
+        <div style="text-align: right"><div class="btn-group" role="group">
+                <!--<button type="button" class="btn btn-default" data-placement="bottom" title="Ver elemento no mapa" >Ver no mapa</button>-->
+                <button type="button" id="change_to_edit" class="btn btn-default" data-placement="bottom" title="Editar Informações" >Editar Informação</button>
+            </div>
+        </div>
+    </div>
+    <div id="edit_layers_update" style="display:none">
+        <div id="table_info_update"></div>
+        <hr>
+        <button class="btn btn-success" style="float: right;" id="save_properties" type="button" title="Aplicar Alterações">Aplicar Alterações</button>
+    </div>
+
 </div>
 
 <script>
-
-    $('#btn_group_operations_edit').find('*').prop('disabled', true);
-
     var extent = map.getView().calculateExtent(map.getSize());
     var geojsonFormat = new ol.format.GeoJSON();
     var selectedFeatureID;
+    $('#change_to_edit').on('click', function () {
+        $("#edit_layers_view").hide();
+        $("#edit_layers_update").show();
+    });
+
+    $('#save_properties').on('click', function (event) {
+        var features = vectorLayerJsonp.getSource().getFeatures();
+//        var feature_id = $("#update_ID").val();
+        for (x in features) {
+            if (features[x].getId() === selectedFeatureID) {
+                $("#table_info_update input").each(function () {
+                    var string = {};
+                    string[this.id] = $("#" + this.id).val();
+                    features[x].setProperties(string);
+                });
+                var url_ = 'http://autarquia-livre.no-ip.org:8080/geoserver/wfs';
+                var format_ = new ol.format.WFS();
+                var serializer_ = new XMLSerializer();
+                var featureNS_ = 'sigserver.pt';
+                var str = $("#edit_layers").val();
+                var featureType_ = str.substring(str.indexOf(":") + 1);
+
+                var properties = features[x].getProperties();
+                // get rid of bbox which is not a real property
+                delete properties.geometry;
+                delete properties.bbox;
+                var clone = new ol.Feature(properties);
+                clone.setId(selectedFeatureID);
+
+                var node = format_.writeTransaction(null, [clone], null, {
+                    gmlOptions: {srsName: view_projection},
+                    featureNS: featureNS_,
+                    featureType: featureType_
+                });
+                $.ajax({
+                    type: "POST",
+                    url: url_,
+                    data: serializer_.serializeToString(node),
+                    contentType: 'text/xml',
+                    success: function (data) {
+                        var result = readResponse(data);
+                        if (result) {
+                            $("#edit_layers_view").show();
+                            $("#edit_layers_update").hide();
+                            alert('Atualizado com sucesso!')
+//                            delete this.dirty_[fid];
+                        }
+                    },
+                    context: this
+                });
+            }
+        }
+    });
+    $('#btn_group_operations_edit').find('*').prop('disabled', true);
+
+
     var vectorSourceJsonp = new ol.source.Vector({
         strategy: ol.loadingstrategy.createTile(new ol.tilegrid.XYZ({
             maxZoom: 10
@@ -80,13 +151,13 @@
 
             });
     $("#edit_layers").change(function () {
-        $.ajax('http://192.168.1.5:8080/geoserver/wfs', {
+        $.ajax('http://autarquia-livre.no-ip.org:8080/geoserver/wfs', {
             type: 'GET',
             data: {
                 service: 'WFS',
                 version: '1.1.0',
                 request: 'GetFeature',
-                typename: 'topp:' + $("#edit_layers").val(),
+                typename: $("#edit_layers").val(),
                 srsname: view_projection,
                 outputFormat: 'text/javascript',
                 bbox: extent.join(','),
@@ -127,6 +198,10 @@
 //                    var properties = event.element.getProperties();
                     selectedFeatureID = event.element.getId();
 //                    properties.id;
+//                    var feature = event.element;
+//                    feature.on('change', function (event) {
+//                        alert('mudou');
+//                    });
                 });
                 break;
             case "table":
@@ -135,34 +210,94 @@
                     for (x in features) {
                         if (features[x].getId() === selectedFeatureID) {
                             $('#edit_select_info').html('<hr><table id="table_info_edit" style="width:100%" class="table table-condensed table-hover" data-click-to-select="true"><thead><tr><th style="text-align: center;" data-align="center">Campo</th> <th style="text-align: center;" data-align="center">Valor</th></tr></thead><tbody></tbody></table>');
-                            $('#edit_select_info').append('<div style="text-align: right"><div class="btn-group" role="group"><button type="button" class="btn btn-default" data-placement="bottom" title="Ver elemento no mapa" >Ver no mapa</button><button type="button" class="btn btn-default" data-placement="bottom" title="Editar Informações" >Editar Informação</button></div></div>');
-                            features[x].setProperties({designacao: 'Isto dá cabo da mona mas é fixe!!'});
+                            $('#table_info_update').html('');
+//                           features[x].setProperties({designacao: 'Isto dá cabo da mona mas é fixe!!'});
 
-                            console.log(features[x].get('designacao'));
+//                            console.log(features[x].get('designacao'));
                             jQuery.each(features[x].getProperties(), function (index, item) {
                                 if (index !== 'geometry') {
                                     $('#table_info_edit').append('<tr><td style="vertical-align: middle" width="30%"><b>' + index + '</b></td> <td style="vertical-align: middle" width="70%">' + item + '</td>');
                                     $('#table_info_update').append('<div class="form-group"><label for="' + index + '">' + index.toUpperCase() + ':</label><input type="text" class="form-control" id="' + index + '" value="' + item + '"></div>');
-                                    
                                 }
                             });
-//                            for (y in properties) {
-//                                console.log('Campo: ' + properties[y].keys() + ' | Valor: ' + properties[y]);
-//                            }
                         }
 
                     }
                 }
                 break;
+            case "save":
+//                var url_ = 'http://autarquia-livre.no-ip.org:8080/geoserver/wfs';
+//                var format_ = new ol.format.WFS();
+//                var serializer_ = new XMLSerializer();
+//                var featureNS_ = 'sigserver.pt';
+//                var str = $("#edit_layers").val();
+//                var featureType_ = str.substring(str.indexOf(":") + 1);
+//                var feature = vectorLayerJsonp.getSource().getFeatures();
+//
+//                var node = format_.writeTransaction(null, [clone], null, {
+//                    gmlOptions: {srsName: view_projection},
+//                    featureNS: featureNS_,
+//                    featureType: featureType_
+//                });
+//                $.ajax({
+//                    type: "POST",
+//                    url: url_,
+//                    data: serializer_.serializeToString(node),
+//                    contentType: 'text/xml',
+//                    success: function (data) {
+//                        var result = readResponse(data);
+//                        if (result) {
+//                            alert('Atualizado com sucesso!')
+////                            delete this.dirty_[fid];
+//                        }
+//                    },
+//                    context: this
+//                });
+                break;
             case "delete":
                 var features = vectorLayerJsonp.getSource().getFeatures();
                 if (features !== null && features.length > 0) {
                     for (x in features) {
-//                        var properties = features[x].getProperties();
-//                        console.log(properties);
                         var id = features[x].getId();
                         if (id === selectedFeatureID) {
-                            vectorLayerJsonp.getSource().removeFeature(features[x]);
+                            var feature = features[x];
+                            var delete_result = confirm("Tem a certeza que deseja apagar o elemento?");
+                            if (delete_result === true)
+                            {
+                                var url_ = 'http://autarquia-livre.no-ip.org:8080/geoserver/wfs';
+                                var format_ = new ol.format.WFS();
+                                var serializer_ = new XMLSerializer();
+                                var featureNS_ = 'sigserver.pt';
+                                var str = $("#edit_layers").val();
+                                var featureType_ = str.substring(str.indexOf(":") + 1);
+                                var node = format_.writeTransaction(null, null, [feature], {
+                                    featureNS: featureNS_,
+                                    featureType: featureType_
+                                });
+                                $.ajax({
+                                    type: "POST",
+                                    url: url_,
+                                    data: serializer_.serializeToString(node),
+                                    contentType: 'text/xml',
+                                    success: function (data) {
+                                        var result = readResponse(data);
+//                                        if (window.Document && data instanceof Document && data.documentElement && data.documentElement.localName == 'ExceptionReport') {
+//                                            alert(data.getElementsByTagNameNS('http://www.opengis.net/ows', 'ExceptionText').item(0).textContent);
+//                                        } else {
+//                                            result = format_.readTransactionResponse(data);
+//                                        }
+                                        if (result) {
+                                            if (result.transactionSummary.totalDeleted === 1) {
+                                                vectorLayerJsonp.getSource().removeFeature(features[x]);
+                                            } else {
+                                                alert("There was an issue deleting the feature.");
+                                            }
+                                        }
+                                    },
+                                    context: this
+                                });
+
+                            }
                         }
                     }
                 }
@@ -173,15 +308,77 @@
                     source: vectorLayerJsonp.getSource()
                 });
                 map.addInteraction(interaction);
+                interaction.on('drawend', function (evt) {
+                    var feature = evt.feature;
+                    var url_ = 'http://autarquia-livre.no-ip.org:8080/geoserver/wfs';
+                    var format_ = new ol.format.WFS();
+                    var serializer_ = new XMLSerializer();
+                    var featureNS_ = 'sigserver.pt';
+                    var str = $("#edit_layers").val();
+                    var srsName_ = view_projection;
+                    var featureType_ = str.substring(str.indexOf(":") + 1);
+
+                    var node = format_.writeTransaction([feature], null, null, {
+                        gmlOptions: {srsName: srsName_},
+                        featureNS: featureNS_,
+                        featureType: featureType_
+                    });
+
+                    $.ajax({
+                        type: "POST",
+                        url: url_,
+                        data: serializer_.serializeToString(node),
+                        contentType: 'text/xml',
+                        success: function (data) {
+                            var result = readResponse(data);
+                            if (result) {
+                                var insertId = result.insertIds[0];
+                                if (insertId == 'new0') {
+                                    // reload data if we're dealing with a shapefile store
+                                    vectorLayerJsonp.getSource().clear();
+                                } else {
+                                    feature.setId(insertId);
+                                }
+                            }
+                            map.removeInteraction(interaction);
+                        },
+                        error: function (e) {
+                            map.removeInteraction(interaction);
+                            var errorMsg = e ? (e.status + ' ' + e.statusText) : "";
+                            alert('Error saving this feature to GeoServer.<br><br>' + errorMsg);
+                        },
+                        context: this
+                    });
+
+                }, this);
                 break;
             case "modify":
                 interaction = new ol.interaction.Modify({
                     features: new ol.Collection(vectorLayerJsonp.getSource().getFeatures())
                 });
                 map.addInteraction(interaction);
+//                vectorLayerJsonp.getSource().on("changefeature", function (evt) {
+//                    console.log(evt.feature.getGeometry());
+//                });
+                
                 break;
             default:
                 break;
         }
     });
+
+    function readResponse(data) {
+        var result;
+        if (window.Document && data instanceof Document && data.documentElement &&
+                data.documentElement.localName == 'ExceptionReport') {
+            alert(data.getElementsByTagNameNS(
+                    'http://www.opengis.net/ows', 'ExceptionText').item(0).textContent);
+        } else {
+            var format_ = new ol.format.WFS();
+            result = format_.readTransactionResponse(data);
+        }
+        return result;
+    }
+    ;
+
 </script>

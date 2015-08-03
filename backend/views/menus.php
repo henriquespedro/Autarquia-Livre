@@ -19,13 +19,14 @@ echo SideNav::widget([
             ],
         ],
         ['label' => 'Edição Geográfica', 'icon' => 'tags', 'url' => array('geographic-edit/index', 'viewer_id' => $_GET['viewer_id'])],
+        ['label' => 'Confrontação', 'icon' => 'tags', 'url' => array('layers-confrontation/index', 'viewer_id' => $_GET['viewer_id'])],
         ['label' => 'Formulários', 'icon' => 'tags', 'url' => array('forms/index', 'viewer_id' => $_GET['viewer_id'])],
         ['label' => 'Bookmarks', 'icon' => 'tags', 'url' => array('bookmarks/index', 'viewer_id' => $_GET['viewer_id'])],
         [
             'label' => 'Módulos',
             'icon' => 'question-sign',
+            'visible' => false, 
             'items' => [
-                ['label' => 'Confrontação', 'icon' => 'tags', 'url' => array('layers-confrontation/index', 'viewer_id' => $_GET['viewer_id'])],
                 ['label' => 'Sugestões/Ocorrências', 'icon' => 'tags', 'url' => array('sugestions/index', 'viewer_id' => $_GET['viewer_id'])],
 //                            ['label' => 'Confrontação', 'icon' => 'tags', 'items'=> [
 //                                ['label' => 'Configuração', 'url'=> array('config-confrontation/index', 'viewer_id' => $_GET['viewer_id'])],
@@ -37,8 +38,8 @@ echo SideNav::widget([
             'label' => 'Histórico',
             'icon' => 'tags',
             'items' => [
-                ['label' => 'Edições (em desenvolvimento)', 'url' => array('edit_history/index', 'viewer_id' => $_GET['viewer_id'])],
-                ['label' => 'Impressões (em desenvolvimento)', 'url' => array('print_history/index', 'viewer_id' => $_GET['viewer_id'])],
+                ['label' => 'Edições (em desenvolvimento)', 'visible' => false, 'url' => array('edit_history/index', 'viewer_id' => $_GET['viewer_id'])],
+                ['label' => 'Impressões', 'url' => array('print_history/index', 'viewer_id' => $_GET['viewer_id'])],
             ],
         ],
     ],

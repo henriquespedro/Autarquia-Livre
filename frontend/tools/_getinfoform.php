@@ -1,6 +1,6 @@
 <?php
-/*
- * Copyright (C) 2015 cm0721
+/* 
+ * Copyright (C) 2015 Autarquia-Livre
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -113,7 +113,7 @@
             } else {
                 info_layer_select = layer_select;
             }
-            var url = "http://sigserver:8080/geoserver/wms?"
+            var url = "http://autarquia-livre.no-ip.org:8080/geoserver/wms?"
                     + "&LAYERS=" + info_layer_select
                     + "&QUERY_LAYERS=" + info_layer_select
                     + "&SERVICE=WMS"

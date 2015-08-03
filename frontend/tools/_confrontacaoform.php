@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 include __DIR__ .'/../views/connections.php';
-$result_layers = $connection->query('SELECT * FROM layers_confrontation ORDER BY rowid ASC');
+$result_layers = $connection->query('SELECT * FROM layers_confrontation WHERE viewer_id = (SELECT id FROM viewers WHERE name = "' . $_POST["page"] . '") ORDER BY rowid ASC');
 //$resultprint = $connection->query('SELECT * FROM maprint WHERE viewer_id = (SELECT id FROM viewers WHERE name = "' . $_POST["page"] . '") ORDER BY setOrder ASC');
 ?>
 <div id="init_confrontacao">
@@ -184,7 +184,7 @@ map.addInteraction(draw_polygon);
                             var id = Math.floor((Math.random() * 800) + 1); ;
                             $('#result_table').append('<label>' + data[0]["layer"]+ '</label><table id="table_' + id + '" style="width:100%" class="table table-condensed table-hover" data-click-to-select="true"><thead><tr><th style="text-align: center;" data-field="percentagem" data-align="center">%</th><th style="text-align: center;" data-field="area" data-align="center">Área (m2)</th><th style="text-align: center;" data-field="uso" data-align="right">Uso</th><th style="text-align: center;" data-field="regulamento" data-align="">Regulamento</th> </tr></thead><tbody></tbody></table><hr>');
                             for (i = 0; i < data.length; i++) {
-                                $('#table_' + id).append('<tr><td style="vertical-align: middle" width="10%">' + data[i]["percentagem"] + '</td><td style="vertical-align: middle" width="20%">' + data[i]["area"] + '</td><td style="vertical-align: middle" width="50%">' + data[i]["uso"] + '</td><td style="vertical-align: middle" width="20%"><a href="http://www.w3schools.com/' + data[i]["regulamento"] + '.pdf" target="_blank">Abrir</a></td>');
+                                $('#table_' + id).append('<tr><td style="vertical-align: middle" width="10%">' + data[i]["percentagem"] + '</td><td style="vertical-align: middle" width="20%">' + data[i]["area"] + '</td><td style="vertical-align: middle" width="50%">' + data[i]["uso"] + '</td><td style="vertical-align: middle" width="20%"><a href="' + data[i]["regulamento"] + '" target="_blank">Abrir</a></td>');
                                 data_google.addRow([data[i]["uso"], parseFloat(data[i]["percentagem"].slice(0, -1)) ]);     // Same as previous.
                             }
                             var options = {
@@ -196,8 +196,6 @@ map.addInteraction(draw_polygon);
                             chart.draw(data_google, options);
                             $('#list_layers').hide();
                             $('#results_confrontacao').show();
-                        } else {
-                            alert('A pesquisa não devolveu resultados!!');
                         }
                     },
                     error: function () {

@@ -1,6 +1,6 @@
 <?php
-/*
- * Copyright (C) 2015 cm0721
+/* 
+ * Copyright (C) 2015 Autarquia-Livre
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 include __DIR__ .'/../../connections.php';
 ?>
 
@@ -49,52 +50,3 @@ include_once 'formularios.php';
 
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/tools.js'); ?>
 
-
-<!-- Modal -->
-<div id="LoginModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Iniciar Sessão</h4>
-            </div>
-            <div class="modal-body">
-                <form action="" id="login_form" >
-                    <div class="form-group">
-                        <label for="username" class="control-label">Utilizador:</label>
-                        <input type="text" class="form-control" name="username" id="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="control-label">Password:</label>
-                        <input type="Password" class="form-control" name="password" id="password">
-                    </div>
-                    <div class="modal-footer">
-                        <input class="btn btn-success" type="submit" value="Login!" id="login_submit" name="login_submit">
-                        <a href="#" class="btn btn-info" data-dismiss="modal">Cancelar</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    $('#login_form').on('submit', function (e) {
-        e.preventDefault();
-        $.ajax({
-            url: "../views/viewer/login.php",
-            type: "POST",
-            data: $('#login_form').serialize() + '&login_submit=',
-            success: function (data) {
-                if (data === "Sucesso") {
-                    $('#LoginModal').modal('hide');
-                    alert(data);
-                } else {
-                    alert(data);
-                }
-            },
-            error: function () {
-                alert('Ocorreu um erro ao validar o utilizador! Por favor, volte a tentar mais tarde!');
-            }
-        });
-    });
-</script>

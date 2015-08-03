@@ -1,6 +1,6 @@
 <?php
-/*
- * Copyright (C) 2015 cm0721
+/* 
+ * Copyright (C) 2015 Autarquia-Livre
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -32,23 +32,19 @@ while ($row_tabs = $load_tabs->fetchArray(SQLITE3_ASSOC)) {
     }
 }
 ?>
-$('#top_tabs').append('<li title="Ferramentas de Login/Gestão do Utilizador"><a href="#utilizador_tools" data-toggle="tab" id="tab_user">Utilizador</a></li>');
-$('#content_tabs').append('<div id="utilizador_tools" class="tab-pane btn-group"></div>');
+
 <?php
-//$pass = '14003328';
-//$salt = uniqid('', true);
-//$hash = sha1($pass . $salt);
-//$_SESSION['login_username'] = 'pass:'. $hash . ' | salt: '. $salt;
 if (isset($_SESSION['login_username'])) {
     ?>
-    $('#tab_user').text('Utilizador: <?php echo $_SESSION['login_username'] ?>');
+    $('#top_tabs').append('<li title="Ferramentas de Login/Gestão do Utilizador"><a href="#utilizador_tools" data-toggle="tab" id="tab_user">Utilizador: <?php echo $_SESSION['login_username'] ?></a></li>');
+    $('#content_tabs').append('<div id="utilizador_tools" class="tab-pane btn-group"></div>');
     $('#utilizador_tools').html('<button type="button" title="Alterar password"  data-toggle="modal" data-target="#ChangePassword" class="btn btn-default bt_size"> <span class="glyphicon glyphicon-user"/><p>Alterar Password</p></button>');
-    $('#utilizador_tools').append('<button type="button" title="Layers disponíveis para o utilizador" onclick="user_layers( & quot;<?php echo $_SESSION['login_username']; ?> & quot; )" class="btn btn-default bt_size"> <span class="glyphicon glyphicon-user"/><p>Layers do Utilizador</p></button>');
-    $('#utilizador_tools').append('<button type="button" title="Terminar sessão" onclick="end_session()" class="btn btn-default bt_size"> <span class="glyphicon glyphicon-user"/><p>Terminar Sessão</p></button>');
-    <?php
-} else {
-    ?>
-    $('#utilizador_tools').html('<button type="button" title="Iniciar sessão no site"  data-toggle="modal" data-target="#LoginModal" class="btn btn-default bt_size"> <span class="glyphicon glyphicon-user"/><p>Iniciar Sessão</p></button>');
+    $('#utilizador_tools').append('<button type="button" title="Terminar sessão" onclick="destroy_session()" class="btn btn-default bt_size"> <span class="glyphicon glyphicon-user"/><p>Terminar Sessão</p></button>');
+    function destroy_session() {
+        session_destroy();
+        header("Refresh:0");
+        <!--location.reload();-->
+    }
     <?php
 }
 ?>

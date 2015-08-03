@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = 'Lista de Layers';
             //'id',
             //'viewer_id',
             'name:ntext',
-            'layer:ntext',
+            //'layer:ntext',
             //'layer_type:ntext',
             // 'visible:boolean',
             // 'show_toc:boolean',

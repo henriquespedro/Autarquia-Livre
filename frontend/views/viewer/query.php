@@ -17,13 +17,20 @@ if (isset($confrontation_draw)) {
 //    while ($row = $layersconfrontacao->fetchArray(SQLITE3_ASSOC)) {
 //    
 //    , 
-    $sqlwithin = "SELECT IGT." . $description_field . " as uso, " . $regulement_field . " as regulamento, cast(sum(ST_area(ST_Intersection(IGT.geom, ST_GeomFromText('POLYGON((" . $coordinates . "))',3763)))) as decimal(20, 3)) As area, cast(st_area(ST_GeomFromText('POLYGON((" . $coordinates . "))',3763))as decimal(20, 3)) As areatotal, ST_AsText(ST_Union(ST_GeomFromEWKT(ST_Intersection(IGT.geom, ST_GeomFromText('POLYGON((" . $coordinates . "))',3763))))) As geometria from " . $layer . " IGT WHERE st_intersects(ST_GeomFromText('POLYGON((" . $coordinates . "))',3763), IGT.geom) GROUP BY " . $description_field . ", " . $regulement_field . " ORDER BY " . $description_field . " ASC;";
+    if ($regulement_field === '') {
+        $sqlwithin = "SELECT IGT." . $description_field . " as uso, cast(sum(ST_area(ST_Intersection(IGT.geom, ST_GeomFromText('POLYGON((" . $coordinates . "))',3763)))) as decimal(20, 3)) As area, cast(st_area(ST_GeomFromText('POLYGON((" . $coordinates . "))',3763))as decimal(20, 3)) As areatotal, ST_AsText(ST_Union(ST_GeomFromEWKT(ST_Intersection(IGT.geom, ST_GeomFromText('POLYGON((" . $coordinates . "))',3763))))) As geometria from " . $layer . " IGT WHERE st_intersects(ST_GeomFromText('POLYGON((" . $coordinates . "))',3763), IGT.geom) GROUP BY " . $description_field . " ORDER BY " . $description_field . " ASC;";
+    } else {
+        $sqlwithin = "SELECT IGT." . $description_field . " as uso, " . $regulement_field . " as regulamento, cast(sum(ST_area(ST_Intersection(IGT.geom, ST_GeomFromText('POLYGON((" . $coordinates . "))',3763)))) as decimal(20, 3)) As area, cast(st_area(ST_GeomFromText('POLYGON((" . $coordinates . "))',3763))as decimal(20, 3)) As areatotal, ST_AsText(ST_Union(ST_GeomFromEWKT(ST_Intersection(IGT.geom, ST_GeomFromText('POLYGON((" . $coordinates . "))',3763))))) As geometria from " . $layer . " IGT WHERE st_intersects(ST_GeomFromText('POLYGON((" . $coordinates . "))',3763), IGT.geom) GROUP BY " . $description_field . ", " . $regulement_field . " ORDER BY " . $description_field . " ASC;";
+    }
 //     echo json_encode($sqlwithin);
     $querywithin = pg_query($conn, $sqlwithin);
     /* Verifica se existem resultados para o intersect, se sim, mostra */
     if (pg_num_rows($querywithin) !== 0) {
         while ($rowIntersect = pg_fetch_assoc($querywithin)) {
             $rowIntersect['percentagem'] = number_format(($rowIntersect['area'] / $rowIntersect['areatotal']) * 100, 2, '.', '') . "%";
+            if ($regulement_field === '') {
+                $rowIntersect['regulamento'] = '#';
+            }
             $rowIntersect['layer'] = $name;
             $resultQuery[] = $rowIntersect;
         }
