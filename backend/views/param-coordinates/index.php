@@ -29,7 +29,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'name:ntext',
             'code:ntext',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'update') {
+                        $url = array('update', 'id' => $model->id);
+                        return $url;
+                    }
+                    if ($action === 'delete') {
+                        $url = array('delete', 'id' => $model->id);
+                        return $url;
+                    }
+                }],
         ],
     ]); ?>
 

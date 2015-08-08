@@ -44,7 +44,7 @@ class Layers extends \yii\db\ActiveRecord
         return [
             [['viewer_id'], 'required'],
             [['viewer_id', 'setOrder'], 'integer'],
-            [['name', 'layer', 'fields', 'layer_type', 'crs', 'style', 'serverType', 'type', 'icon'], 'string'],
+            [['name', 'layer', 'fields', 'layer_type', 'crs', 'style', 'serverType', 'type', 'layer_group'], 'string'],
             [['visible', 'show_toc'], 'boolean'],
             [['opacity'], 'number'],
             [['chage_data'], 'safe'],
@@ -71,7 +71,7 @@ class Layers extends \yii\db\ActiveRecord
             'style' => 'Style',
             'serverType' => 'Tipo de Server',
             'type' => 'Tipo',
-            'icon' => 'Icon',
+            'layer_group' => 'Grupo',
             'chage_data' => 'Chage Data',
             'setOrder' => 'Ordem',
         ];

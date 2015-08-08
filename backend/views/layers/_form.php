@@ -29,7 +29,9 @@ use app\models\Users;
     <?= $form->field($model, 'layer')->textInput() ?>
 
     <?= $form->field($model, 'fields')->textInput() ?>
-
+    
+    <?= $form->field($model, 'layer_group')->textInput() ?>
+    
     <?php $items_format = ArrayHelper::map(ParamFormat::find()->all(), 'format', 'name'); ?>
     <?= $form->field($model, 'layer_type')->dropDownList($items_format) ?>
 
@@ -50,8 +52,8 @@ use app\models\Users;
 
     <?= $form->field($model, 'type')->dropDownList(['operational_layer' => 'Operational Layer', 'baselayer' => 'BaseLayer']) ?>
 
-    <?= $form->field($model, 'icon')->textInput() ?>
-    <
+
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Aplicar Alterações', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

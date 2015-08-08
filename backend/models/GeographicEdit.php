@@ -35,7 +35,7 @@ class GeographicEdit extends \yii\db\ActiveRecord
         return [
             [['viewer_id'], 'required'],
             [['viewer_id', 'setOrder'], 'integer'],
-            [['name', 'layer', 'type'], 'string'],
+            [['name', 'layer', 'type','featureNS', 'serverType'], 'string'],
             [['chage_data'], 'safe']
         ];
     }
@@ -53,6 +53,8 @@ class GeographicEdit extends \yii\db\ActiveRecord
             'type' => 'Type',
             'chage_data' => 'Chage Data',
             'setOrder' => 'Set Order',
+            'featureNS' => 'Feature Name Server',
+            'serverType' => 'Server',
         ];
     }
 

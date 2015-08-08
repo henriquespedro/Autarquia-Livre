@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Users;
+use app\models\ParamServer;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\GeographicEdit */
@@ -14,33 +15,21 @@ use app\models\Users;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <!-- ?= $form->field($model, 'viewer_id')->textInput() ?> -->
-    <div class="container" style="width:auto;">
-        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-            <li class="active"><a href="#yw0_tab_1" data-toggle="tab">Informação Geral</a></li>
-            <li><a href="#yw0_tab_2" data-toggle="tab">Utilizadores</a></li>
-        </ul>
-        <div id="my-tab-content" class="tab-content">
-            <div id="yw0_tab_1" class="tab-pane active in">
-                <?php
-                if ($model->isNewRecord) {
-                    echo $form->field($model, 'viewer_id')->hiddenInput(array('value' => $_GET['viewer_id']))->label(false);
-                } else {
-                    echo $form->field($model, 'viewer_id')->hiddenInput()->label(false);
-                }
-                ?>
-                <?= $form->field($model, 'name')->textInput() ?>
+    <?php
+    if ($model->isNewRecord) {
+        echo $form->field($model, 'viewer_id')->hiddenInput(array('value' => $_GET['viewer_id']))->label(false);
+    } else {
+        echo $form->field($model, 'viewer_id')->hiddenInput()->label(false);
+    }
+    ?>
+    <?= $form->field($model, 'name')->textInput() ?>
 
-                <?= $form->field($model, 'layer')->textInput() ?>
+    <?= $form->field($model, 'layer')->textInput() ?>
 
-                <?= $form->field($model, 'type')->dropDownList(['line' => 'Line', 'polygon' => 'Polygon', 'point' => 'Point'], ['prompt' => '---- Select geometry layer ----']) ?>
-            </div>
-            <div id="yw0_tab_2" class="tab-pane">
-                <?php $dataList = ArrayHelper::map(Users::find()->asArray()->all(), 'id', 'username'); ?>
-                <?= html::activeCheckBoxList($model, 'name', $dataList); ?>
-            </div>
-        </div>
-    </div>
+    <?= $form->field($model, 'featureNS')->textInput() ?>
+
+    <?php $items_server = ArrayHelper::map(ParamServer::find()->all(), 'id', 'name'); ?>
+    <?= $form->field($model, 'serverType')->dropDownList($items_server) ?>
 
 
     <div class="form-group">

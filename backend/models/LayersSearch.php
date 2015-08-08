@@ -18,7 +18,7 @@ class LayersSearch extends Layers {
     public function rules() {
         return [
             [['id', 'viewer_id', 'setOrder'], 'integer'],
-            [['name', 'layer', 'fields', 'layer_type', 'crs', 'style', 'serverType', 'type', 'icon', 'chage_data'], 'safe'],
+            [['name', 'layer', 'fields', 'layer_type', 'crs', 'style', 'serverType', 'type', 'layer_group', 'chage_data'], 'safe'],
             [['visible', 'show_toc'], 'boolean'],
             [['opacity'], 'number'],
         ];
@@ -72,7 +72,7 @@ class LayersSearch extends Layers {
                 ->andFilterWhere(['like', 'style', $this->style])
                 ->andFilterWhere(['like', 'serverType', $this->serverType])
                 ->andFilterWhere(['like', 'type', $this->type])
-                ->andFilterWhere(['like', 'icon', $this->icon]);
+                ->andFilterWhere(['like', 'layer_group', $this->layer_group]);
 
         return $dataProvider;
     }

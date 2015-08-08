@@ -29,8 +29,19 @@ $this->params['breadcrumbs'][] = $this->title;
             //'email:ntext',
             //'create_date',
             // 'last_login',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'update') {
+                        $url = array('update', 'id' => $model->id);
+                        return $url;
+                    }
+                    if ($action === 'delete') {
+                        $url = array('delete', 'id' => $model->id);
+                        return $url;
+                    }
+                }],
         ],
     ]); ?>
 

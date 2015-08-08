@@ -5,27 +5,28 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Users;
+use app\models\UsersGroup;
 
 /**
- * UsersSearch represents the model behind the search form about `app\models\Users`.
+ * UsersGroupSearch represents the model behind the search form about `app\models\UsersGroup`.
  */
-class UsersSearch extends Users {
-
+class UsersGroupSearch extends UsersGroup
+{
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-            [['id'], 'integer'],
-            [['name', 'username', 'email', 'create_date', 'last_login', 'password'], 'safe'],
+            [['id', 'id_user', 'id_group'], 'integer'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -37,8 +38,9 @@ class UsersSearch extends Users {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
-        $query = Users::find();
+    public function search($params)
+    {
+        $query = UsersGroup::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,16 +56,10 @@ class UsersSearch extends Users {
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'create_date' => $this->create_date,
-            'last_login' => $this->last_login,
+            'id_user' => $this->id_user,
+            'id_group' => $this->id_group,
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name])
-                ->andFilterWhere(['like', 'username', $this->username])
-                ->andFilterWhere(['like', 'password', $this->password])
-                ->andFilterWhere(['like', 'email', $this->email]);
 
         return $dataProvider;
     }
-
 }

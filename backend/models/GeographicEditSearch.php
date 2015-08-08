@@ -19,7 +19,7 @@ class GeographicEditSearch extends GeographicEdit
     {
         return [
             [['id', 'viewer_id', 'setOrder'], 'integer'],
-            [['name', 'layer', 'type', 'chage_data'], 'safe'],
+            [['name', 'layer', 'type', 'chage_data','featureNS', 'serverType'], 'safe'],
         ];
     }
 
@@ -60,6 +60,8 @@ class GeographicEditSearch extends GeographicEdit
             'viewer_id' => $_GET['viewer_id'],
             'chage_data' => $this->chage_data,
             'setOrder' => $this->setOrder,
+            'featureNS' => $this->featureNS,
+            'serverType' => $this->serverType,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

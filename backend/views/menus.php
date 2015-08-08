@@ -25,18 +25,14 @@ echo SideNav::widget([
         [
             'label' => 'Módulos',
             'icon' => 'question-sign',
-            'visible' => false, 
             'items' => [
-                ['label' => 'Sugestões/Ocorrências', 'icon' => 'tags', 'url' => array('sugestions/index', 'viewer_id' => $_GET['viewer_id'])],
-//                            ['label' => 'Confrontação', 'icon' => 'tags', 'items'=> [
-//                                ['label' => 'Configuração', 'url'=> array('config-confrontation/index', 'viewer_id' => $_GET['viewer_id'])],
-//                                ['label' => 'Planos', 'url'=> array('layers-confrontation/index', 'viewer_id' => $_GET['viewer_id'])],
-//                            ]],
+                ['label' => 'Sugestões/Ocorrências', 'visible' => false, 'icon' => 'tags', 'url' => array('sugestions/index', 'viewer_id' => $_GET['viewer_id'])],
             ],
         ],
         [
             'label' => 'Histórico',
             'icon' => 'tags',
+            'visible' => false,
             'items' => [
                 ['label' => 'Edições (em desenvolvimento)', 'visible' => false, 'url' => array('edit_history/index', 'viewer_id' => $_GET['viewer_id'])],
                 ['label' => 'Impressões', 'url' => array('print_history/index', 'viewer_id' => $_GET['viewer_id'])],

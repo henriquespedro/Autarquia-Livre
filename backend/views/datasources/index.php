@@ -12,9 +12,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="datasources-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+    <?= Html::a('Nova Ligação', ['create'], ['class' => 'btn btn-success']) ?>
     
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -27,13 +26,22 @@ $this->params['breadcrumbs'][] = $this->title;
             /*'string',
             'change_data',*/
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'update') {
+                        $url = array('update', 'id' => $model->id);
+                        return $url;
+                    }
+                    if ($action === 'delete') {
+                        $url = array('delete', 'id' => $model->id);
+                        return $url;
+                    }
+                }],
         ],
     ]); ?>
 
-    <p>
-        <?= Html::a('Nova', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
 
 </div>

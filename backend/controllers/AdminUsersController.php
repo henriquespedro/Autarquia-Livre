@@ -73,14 +73,13 @@ class AdminUsersController extends Controller {
      */
     public function actionCreate() {
         $model = new AdminUsers();
-//        $model->attributes['password_hash'] = sha1($model->attributes['password']);
-        $POST_VARIABLE = Yii::$app->request->post('AdminUsers');
-//        $request = $POST_VARIABLE['password'];
-        $model->password_hash = sha1($POST_VARIABLE['password']);
-//        $model->password_hash = sha1($model->password);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->password_hash = sha1($model->password);
+            $model->password = sha1($model->password);
+            if ($model->save()) {
+                return $this->redirect(['index']);
+            }
         } else {
             return $this->render('create', [
                         'model' => $model,
@@ -96,9 +95,13 @@ class AdminUsersController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-        $model->password_hash = sha1($model->password);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->password_hash = sha1($model->password);
+            $model->password = sha1($model->password);
+            if ($model->save()) {
+                return $this->redirect(['index']);
+            }
         } else {
             return $this->render('update', [
                         'model' => $model,

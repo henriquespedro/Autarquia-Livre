@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
     <div class="modal-content">
         <div class="modal-header our-modal-header">
             <button type="button" class="close" data-dismiss="modal" ><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title our-modal-title" id="myModalLabel">Adicionar Novo Parâmetro</h4>
+            <h4 class="modal-title our-modal-title" id="myModalLabel">Adicionar Novo Grupo</h4>
         </div>
         <div class="modal-body our-modal-body">
             <!--<div class="forms-parameters-form">-->
