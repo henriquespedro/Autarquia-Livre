@@ -270,7 +270,7 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                 interaction.on('drawend', function (evt) {
                     var feature = evt.feature;
                     var srsName_ = view_projection;
-
+                    feature.set('geometry', feature.getGeometry());
                     var node = format_.writeTransaction([feature], null, null, {
                         gmlOptions: {srsName: srsName_},
                         featureNS: featureNS_,
@@ -287,7 +287,6 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                             if (result) {
                                 var insertId = result.insertIds[0];
                                 if (insertId == 'new0') {
-                                    // reload data if we're dealing with a shapefile store
                                     vectorLayerJsonp.getSource().clear();
                                 } else {
                                     feature.setId(insertId);
@@ -310,9 +309,51 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                     features: new ol.Collection(vectorLayerJsonp.getSource().getFeatures())
                 });
                 map.addInteraction(interaction);
-//                vectorLayerJsonp.getSource().on("changefeature", function (evt) {
-//                    console.log(evt.feature.getGeometry());
-//                });
+                vectorLayerJsonp.getSource().on("changefeature", function (evt) {
+ 
+                    var feature = evt.feature;
+                    var fid = feature.getId();
+                    var srsName_ = view_projection;
+                    
+                    // do a WFS transaction to update the geometry
+                    var properties = feature.getProperties();
+                    // get rid of bbox which is not a real property
+                    delete properties.geometry;
+                   
+                    var clone = new ol.Feature(properties);
+//                    clone.setGeometry(feature.getGeometry());
+                    clone.set('geom', feature.getGeometry());
+//                    feature.set('geometry', feature.getGeometry());
+                    clone.setId(fid);
+                    
+                    var node = format_.writeTransaction(null,[clone], null, {
+//                        gmlOptions: {srsName: srsName_},
+                        featureNS: featureNS_,
+                        featureType: featureType_,
+                        srsName: srsName_
+                    });
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: url_,
+                        processData: false,
+                        dataType: 'xml',
+                        data: serializer_.serializeToString(node),
+                        contentType: 'text/xml',
+                        success: function (data) {
+                            var result = readResponse(data);
+                            if (result && result.transactionSummary.totalUpdated === 1) {
+                            }
+                            map.removeInteraction(interaction);
+                        },
+                        error: function (e) {
+                            map.removeInteraction(interaction);
+                            var errorMsg = e ? (e.status + ' ' + e.statusText) : "";
+                            alert('Error saving this feature to GeoServer.<br><br>' + errorMsg);
+                        },
+                        context: this
+                    });
+                });
 
                 break;
             default:
