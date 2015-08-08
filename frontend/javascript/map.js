@@ -16,12 +16,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-//var map_resolutions = [69, 30, 17, 5, 2, 1, 0.5, 0.2];
-//var view_extent = [-48857.1, -14583.2, -24876.8, 18984.3];
-//var view_units = 'm';
-//var view_projection = 'EPSG:3763';
-//var view_center = [-37842.6789966098, 2765.38006416833];
-var view_center = [0, 0];
+var x = view_extent[0] + (view_extent[2] - view_extent[0]) / 2;
+var y = view_extent[1] + (view_extent[3] - view_extent[1]) / 2;
+var view_center = [x, y];
+
 var view_zoom = 0;
 var map = new ol.Map({
     controls: ol.control.defaults({
@@ -32,7 +30,7 @@ var map = new ol.Map({
     layers: layers,
     target: 'map',
     view: new ol.View({
-        //extent: view_extent,
+//        extent: view_extent,
         projection: view_projection,
         resolutions: map_resolutions,
         units: view_units,

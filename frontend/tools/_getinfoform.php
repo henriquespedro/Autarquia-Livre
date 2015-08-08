@@ -41,13 +41,7 @@
 <script>
     map.getLayers().forEach(function (lyr) {
         if (lyr.get('show_layer') !== false) {
-            if (lyr instanceof ol.layer.Group) {
-                lyr.getLayers().forEach(function (lyr_group) {
-                    $('#info_list_layers').append('<option fields="' + lyr_group.get('fields') + '" value="' + lyr_group.get('layer') + '">' + lyr_group.get('name') + '</option>');
-                });
-            } else {
-                $('#info_list_layers').append('<option fields="' + lyr_group.get('fields') + '" value="' + lyr.get('layer') + '">' + lyr.get('name') + '</option>');
-            }
+            $('#info_list_layers').append('<option fields="' + lyr.get('fields') + '" value="' + lyr.get('layer') + '">' + lyr.get('name') + '</option>');
         }
     });
     var count = 0;
@@ -140,14 +134,23 @@
                         $("#indentify_result_div").show();
                         for (x in features) {
                             $('#identify_result').append('<div id="div_identify_results_' + x + '" class="identify_results" style="display:none"><table id="table_identify_result_' + x + '" style="width:100%" class="table table-condensed table-hover" data-click-to-select="true"><thead><tr><th style="text-align: center;" data-align="center">Campo</th> <th style="text-align: center;" data-align="center">Valor</th></tr></thead><tbody></tbody></table></div>');
+                            if (field_string !== '') {
+                                field_array = field_string.split(',');
+                                $('#result_selector').append('<option value="div_identify_results_' + x + '">' + features[x].get(field_array[0]) + '</option>');
+                            
+                                for (value in field_array) {
+                                    $('#table_identify_result_' + x).append('<tr><td style="vertical-align: middle" width="30%"><b>' + field_array[value] + '</b></td> <td style="vertical-align: middle" width="70%">' + features[x].get(field_array[value]) + '</td>');
+                                }
+                            } else {
+                                $('#result_selector').append('<option value="div_identify_results_' + x + '">' + x + '</option>');
+                                jQuery.each(features[x].getProperties(), function (index, item) {
+                                    if (index !== 'geometry') {
+                                        $('#table_identify_result_' + x).append('<tr><td style="vertical-align: middle" width="30%"><b>' + index + '</b></td> <td style="vertical-align: middle" width="70%">' + item + '</td>')
 
-                            field_array = field_string.split(',');
-
-                            $('#result_selector').append('<option value="div_identify_results_' + x + '">' + features[x].get(field_array[0]) + '</option>');
-
-                            for (value in field_array) {
-                                $('#table_identify_result_' + x).append('<tr><td style="vertical-align: middle" width="30%"><b>' + field_array[value] + '</b></td> <td style="vertical-align: middle" width="70%">' + features[x].get(field_array[value]) + '</td>');
+                                    }
+                                });
                             }
+                            
 
                         }
                         $('.identify_results:first').show();

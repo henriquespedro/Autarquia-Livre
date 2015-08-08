@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * Copyright (C) 2015 Autarquia-Livre
  *
  * This program is free software; you can redistribute it and/or
@@ -27,9 +27,12 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
         <option value="-" class="all_layers">-</option>
         <?php
         while ($row_edit_layers = $result_edit_layers->fetchArray(SQLITE3_ASSOC)) {
-            ?>
-            <option value="<?php echo $row_edit_layers['layer'] ?>"><?php echo $row_edit_layers['name'] ?></option>
-            <?php
+            $load_server = $connection->query('SELECT url FROM param_server WHERE id =' . $row_edit_layers['serverType'] . ' LIMIT 1');
+            if ($server = $load_server->fetchArray(SQLITE3_ASSOC)) {
+                ?>
+                <option fns="<?php echo $row_edit_layers['featureNS'] ?>" server="<?php echo $server['url'] ?>" value="<?php echo $row_edit_layers['layer'] ?>"><?php echo $row_edit_layers['name'] ?></option>
+                <?php
+            }
         }
         ?>
     </select>
@@ -66,6 +69,11 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
     var extent = map.getView().calculateExtent(map.getSize());
     var geojsonFormat = new ol.format.GeoJSON();
     var selectedFeatureID;
+    var url_;
+    var featureNS_;
+    var featureType_;
+    var format_ = new ol.format.WFS();
+    var serializer_ = new XMLSerializer();
     $('#change_to_edit').on('click', function () {
         $("#edit_layers_view").hide();
         $("#edit_layers_update").show();
@@ -73,7 +81,6 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
 
     $('#save_properties').on('click', function (event) {
         var features = vectorLayerJsonp.getSource().getFeatures();
-//        var feature_id = $("#update_ID").val();
         for (x in features) {
             if (features[x].getId() === selectedFeatureID) {
                 $("#table_info_update input").each(function () {
@@ -81,12 +88,6 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                     string[this.id] = $("#" + this.id).val();
                     features[x].setProperties(string);
                 });
-                var url_ = 'http://autarquia-livre.no-ip.org:8080/geoserver/wfs';
-                var format_ = new ol.format.WFS();
-                var serializer_ = new XMLSerializer();
-                var featureNS_ = 'sigserver.pt';
-                var str = $("#edit_layers").val();
-                var featureType_ = str.substring(str.indexOf(":") + 1);
 
                 var properties = features[x].getProperties();
                 // get rid of bbox which is not a real property
@@ -110,8 +111,7 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                         if (result) {
                             $("#edit_layers_view").show();
                             $("#edit_layers_update").hide();
-                            alert('Atualizado com sucesso!')
-//                            delete this.dirty_[fid];
+                            alert('Atualizado com sucesso!');
                         }
                     },
                     context: this
@@ -151,7 +151,12 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
 
             });
     $("#edit_layers").change(function () {
-        $.ajax('http://autarquia-livre.no-ip.org:8080/geoserver/wfs', {
+        url_ = $("#edit_layers option:selected").attr('server') + '/wfs';
+        featureNS_ = $("#edit_layers option:selected").attr('fns');
+        var str = $("#edit_layers").val();
+        featureType_ = str.substring(str.indexOf(":") + 1);
+        
+        $.ajax(url_, {
             type: 'GET',
             data: {
                 service: 'WFS',
@@ -195,13 +200,7 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                 interaction = new ol.interaction.Select();
                 map.addInteraction(interaction);
                 interaction.getFeatures().on('add', function (event) {
-//                    var properties = event.element.getProperties();
                     selectedFeatureID = event.element.getId();
-//                    properties.id;
-//                    var feature = event.element;
-//                    feature.on('change', function (event) {
-//                        alert('mudou');
-//                    });
                 });
                 break;
             case "table":
@@ -211,9 +210,6 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                         if (features[x].getId() === selectedFeatureID) {
                             $('#edit_select_info').html('<hr><table id="table_info_edit" style="width:100%" class="table table-condensed table-hover" data-click-to-select="true"><thead><tr><th style="text-align: center;" data-align="center">Campo</th> <th style="text-align: center;" data-align="center">Valor</th></tr></thead><tbody></tbody></table>');
                             $('#table_info_update').html('');
-//                           features[x].setProperties({designacao: 'Isto dá cabo da mona mas é fixe!!'});
-
-//                            console.log(features[x].get('designacao'));
                             jQuery.each(features[x].getProperties(), function (index, item) {
                                 if (index !== 'geometry') {
                                     $('#table_info_edit').append('<tr><td style="vertical-align: middle" width="30%"><b>' + index + '</b></td> <td style="vertical-align: middle" width="70%">' + item + '</td>');
@@ -226,33 +222,7 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                 }
                 break;
             case "save":
-//                var url_ = 'http://autarquia-livre.no-ip.org:8080/geoserver/wfs';
-//                var format_ = new ol.format.WFS();
-//                var serializer_ = new XMLSerializer();
-//                var featureNS_ = 'sigserver.pt';
-//                var str = $("#edit_layers").val();
-//                var featureType_ = str.substring(str.indexOf(":") + 1);
-//                var feature = vectorLayerJsonp.getSource().getFeatures();
-//
-//                var node = format_.writeTransaction(null, [clone], null, {
-//                    gmlOptions: {srsName: view_projection},
-//                    featureNS: featureNS_,
-//                    featureType: featureType_
-//                });
-//                $.ajax({
-//                    type: "POST",
-//                    url: url_,
-//                    data: serializer_.serializeToString(node),
-//                    contentType: 'text/xml',
-//                    success: function (data) {
-//                        var result = readResponse(data);
-//                        if (result) {
-//                            alert('Atualizado com sucesso!')
-////                            delete this.dirty_[fid];
-//                        }
-//                    },
-//                    context: this
-//                });
+
                 break;
             case "delete":
                 var features = vectorLayerJsonp.getSource().getFeatures();
@@ -264,12 +234,6 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                             var delete_result = confirm("Tem a certeza que deseja apagar o elemento?");
                             if (delete_result === true)
                             {
-                                var url_ = 'http://autarquia-livre.no-ip.org:8080/geoserver/wfs';
-                                var format_ = new ol.format.WFS();
-                                var serializer_ = new XMLSerializer();
-                                var featureNS_ = 'sigserver.pt';
-                                var str = $("#edit_layers").val();
-                                var featureType_ = str.substring(str.indexOf(":") + 1);
                                 var node = format_.writeTransaction(null, null, [feature], {
                                     featureNS: featureNS_,
                                     featureType: featureType_
@@ -281,11 +245,6 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                                     contentType: 'text/xml',
                                     success: function (data) {
                                         var result = readResponse(data);
-//                                        if (window.Document && data instanceof Document && data.documentElement && data.documentElement.localName == 'ExceptionReport') {
-//                                            alert(data.getElementsByTagNameNS('http://www.opengis.net/ows', 'ExceptionText').item(0).textContent);
-//                                        } else {
-//                                            result = format_.readTransactionResponse(data);
-//                                        }
                                         if (result) {
                                             if (result.transactionSummary.totalDeleted === 1) {
                                                 vectorLayerJsonp.getSource().removeFeature(features[x]);
@@ -310,13 +269,7 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                 map.addInteraction(interaction);
                 interaction.on('drawend', function (evt) {
                     var feature = evt.feature;
-                    var url_ = 'http://autarquia-livre.no-ip.org:8080/geoserver/wfs';
-                    var format_ = new ol.format.WFS();
-                    var serializer_ = new XMLSerializer();
-                    var featureNS_ = 'sigserver.pt';
-                    var str = $("#edit_layers").val();
                     var srsName_ = view_projection;
-                    var featureType_ = str.substring(str.indexOf(":") + 1);
 
                     var node = format_.writeTransaction([feature], null, null, {
                         gmlOptions: {srsName: srsName_},
@@ -360,7 +313,7 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
 //                vectorLayerJsonp.getSource().on("changefeature", function (evt) {
 //                    console.log(evt.feature.getGeometry());
 //                });
-                
+
                 break;
             default:
                 break;

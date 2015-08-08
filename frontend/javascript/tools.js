@@ -679,113 +679,6 @@ function about_app() {
     change_active_option();
 }
 
-// Name the root layer group
-map.getLayerGroup().set('name', 'Lista de Temas');
-/**
- * Build a tree layer from the map layers with visible and opacity 
- * options.
- * 
- * @param {type} layer
- * @returns {String}
- */
-function buildLayerTree(layer) {
-    var elem;
-    var name = layer.get('name') ? layer.get('name') : "Group";
-    var div = "<li data-layerid='" + name + "'>";
-
-    if (layer.getVisible() === 1) {
-        
-        div += "<i style='font-size: 11px;' class='glyphicon glyphicon-check'></i>"
-    }
-    else {
-        div += "<i style='font-size: 11px;' class='glyphicon glyphicon-unchecked'></i>"
-    }
-    div += "<span title='' style='font-size: 11px;'>" + layer.get('name') + "</span>";
-    div += "<input style='width:80px;' class='opacity' type='hidden' value='' data-slider-min='0' data-slider-max='1' data-slider-step='0.1' data-slider-tooltip='hide'>";
-
-    if (layer.getLayers) {
-        var sublayersElem = '';
-        var layers = layer.getLayers().getArray(),
-                len = layers.length;
-        for (var i = len - 1; i >= 0; i--) {
-            sublayersElem += buildLayerTree(layers[i]);
-        }
-        elem = div + " <ul>" + sublayersElem + "</ul></li>";
-    } else {
-        elem = div + " </li>";
-    }
-    return elem;
-}
-/**
- * Initialize the tree from the map layers
- * @returns {undefined}
- */
-function initializeTree() {
-
-    var elem = buildLayerTree(map.getLayerGroup());
-    $('#tree_table').empty().append(elem);
-    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
-    $('.tree li.parent_li > span').on('click', function (e) {
-        var children = $(this).parent('li.parent_li').find(' > ul > li');
-        if (children.is(":visible")) {
-            children.hide('fast');
-            $(this).attr('title', 'Expand this branch').find(' > i').addClass('glyphicon-plus').removeClass('glyphicon-minus');
-        } else {
-            children.show('fast');
-            $(this).attr('title', 'Collapse this branch').find(' > i').addClass('glyphicon-minus').removeClass('glyphicon-plus');
-        }
-        e.stopPropagation();
-    });
-}
-
-/**
- * Finds recursively the layer with the specified key and value.
- * @param {ol.layer.Base} layer
- * @param {String} key
- * @param {any} value
- * @returns {ol.layer.Base}
- */
-function findBy(layer, key, value) {
-
-    if (layer.get(key) === value) {
-        return layer;
-    }
-
-    // Find recursively if it is a group
-    if (layer.getLayers) {
-        var layers = layer.getLayers().getArray(),
-                len = layers.length, result;
-        for (var i = 0; i < len; i++) {
-            result = findBy(layers[i], key, value);
-            if (result) {
-                return result;
-            }
-        }
-    }
-
-    return null;
-}
-
-initializeTree();
-//// Handle opacity slider control
-//$('input.opacity').slider().on('slide', function (ev) {
-//    var layername = $(this).closest('li').data('layerid');
-//    var layer = findBy(map.getLayerGroup(), 'name', layername);
-//
-//    layer.setOpacity(ev.value);
-//});
-
-// Handle visibility control
-$('i').on('click', function () {
-    var layername = $(this).closest('li').data('layerid');
-    var layer = findBy(map.getLayerGroup(), 'name', layername);
-    layer.setVisible(!layer.getVisible());
-    if (layer.getVisible()) {
-        $(this).removeClass('glyphicon-unchecked').addClass('glyphicon-check');
-    } else {
-        $(this).removeClass('glyphicon-check').addClass('glyphicon-unchecked');
-    }
-});
 INCHES_PER_UNIT = {
     'inches': 1.0,
     'ft': 12.0,
@@ -813,16 +706,15 @@ function getResolutionFromScale(scale, units) {
     return resolution;
 }
 
-var construnct_legend = jQuery.grep(map.getLayers().getArray(), function (layer) {
-    if (layer.getLayers) {
-        var layers = jQuery.grep(layer.getLayers().getArray(), function (single_layers) {
-            if (typeof single_layers.get('name') != "undefined") {
-
+var construnct_legend = jQuery.grep(map.getLayers().getArray(), function (single_layers) {
+//    if (layer.getLayers) {
+//        var layers = jQuery.grep(layer.getLayers().getArray(), function (single_layers) {
+            if (typeof single_layers.get('name') !== "undefined") {
                 var url = single_layers.getSource().getUrl() + "?TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&EXCEPTIONS=application%2Fvnd.ogc.se_xml&FORMAT=image%2Fjpeg&LAYER=" + single_layers.get('layer') + "&LEGEND_OPTIONS=forceLabels%3Aon%3BfontName%3DVerdana%3BfontSize%3A12";
                 $("#legend").append('<b>' + single_layers.get('name') + '</b><p><img src="' + url + '" title="' + single_layers.get('name') + '"/></p>');
             }
-        });
-    }
+//        });
+//    }
 });
 
 

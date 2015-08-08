@@ -16,21 +16,35 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 ?>
 
 <script>
     $(document).ready(function () {
+        $("#map").height($(window).height() - 130);
+        $("#layer_tree").height($(window).height() - 200);
+        $("#legend").height($(window).height() - 200);
+        $("#options").height($(window).height() - 200);
         $(window).on('resize', function () {
             if ($(window).width() >= 1024) {
+
+                $("#map").height($(window).height() - 130);
+                $("#layer_tree").height($(window).height() - 200);
+                $("#legend").height($(window).height() - 200);
+                $("#options").height($(window).height() - 200);
                 show_slider();
             } else {
+                $("#map").height($(window).height() - 130);
+                
+                $("#layer_tree").height($(window).height() - 200);
+                $("#legend").height($(window).height() - 200);
+                $("#options").height($(window).height() - 200);
+                
                 $("#sidebar-hide-btn").click();
             }
         }).trigger('resize');
     });</script>
 <div>
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default top" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <!--                <div>
                             <a class="navbar-brand" id="site_name" href="#"></a>
@@ -45,7 +59,7 @@
             <a class="navbar-brand" id="site_name" href="#"></a>
 
         </div>
-        <div class="collapse navbar-collapse top" id="top_options">
+        <div class="collapse navbar-collapse" id="top_options">
             <ul class="nav navbar-nav">
                 <div class="container" style="width:auto;">
                     <ul id="top_tabs" class="nav nav-tabs" data-tabs="tabs">
@@ -65,15 +79,15 @@
         <div id="panel" class="col-md-3" >
             <div style="width:auto;">
                 <ul id="options_list" class="nav nav-tabs">
-                    <li class="active" title="Lista de Temas" id="tree_list"><a href="#tree_table" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span></a></li>
+                    <li class="active" title="Lista de Temas" id="tree_list"><a href="#layer_tree" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span></a></li>
                     <li title="Legenda" id="legend_list" ><a href="#legend" data-toggle="tab"><span class="glyphicon glyphicon-bookmark"></span> </a></li>
                     <li  title="Opções" id="option_list"><a href="#options" data-toggle="tab"><span class="glyphicon glyphicon-cog"></span></a></li>
                     <button type="button" class="btn btn-xs btn-default pull-right" title="Esconder painel" id="sidebar-hide-btn"><span class="glyphicon glyphicon-chevron-left"></span></button>
                 </ul>
                 <div id="content_spinner" class="tab-content">
-                    <div id="tree_table" class="tab-pane active tree "></div>
-                    <div id="legend" style="overflow-y: auto; height:81vh;" class="tab-pane"></div>
-                    <div id="options" style="overflow-y: auto; height:81vh;" class="tab-pane"></div>
+                    <div id="layer_tree" style="overflow-y: auto;" class="tab-pane active tree"></div>
+                    <div id="legend" style="overflow-y: auto;" class="tab-pane"></div>
+                    <div id="options" style="overflow-y: auto;" class="tab-pane"></div>
                 </div>
             </div>
 
@@ -86,7 +100,7 @@
                 <!-- create the menu -->
                 <menu type="context" id="menu_options">
                     <menuitem label="Refresh" onclick="window.location.reload();" icon="ico_reload.png"></menuitem>
-                    <menuitem label="Export Map" onclick="exportar_mapa()" icon="ico_export_map.png"></menuitem>
+                    <!--<menuitem label="Export Map" onclick="exportar_mapa()" icon="ico_export_map.png"></menuitem>-->
                     <menuitem label="Print" onclick="imprimir_plantas()" icon="ico_print.png"></menuitem>
                     <menuitem label="Open StreetView" onclick="" icon="ico_streetview.png"></menuitem>
                     <menuitem label="Get Informations" onclick="obter_informacoes()" icon="ico_info.png"></menuitem>

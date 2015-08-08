@@ -20,7 +20,6 @@
 /* @var $this yii\web\View */
 session_start();
 $connection = new SQLite3(__DIR__ . '/../../../data/data.db');
-
 ?>
 <!--***Library***-->
 <!-- ExtJS -->
@@ -34,6 +33,12 @@ $connection = new SQLite3(__DIR__ . '/../../../data/data.db');
 
 <!--JQuery UI v1.11.4-->
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<!--Tooltipster-->
+<script src="../../vendor/tooltipster/js/jquery.tooltipster.min.js" type="text/javascript"></script>
+
+<!--jsTree-->
+<script src="../../vendor/jstree/jstree.min.js" type="text/javascript"></script>
 
 <!--Bootstrap-->
 <script src="../../vendor/bower/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
@@ -55,6 +60,15 @@ $connection = new SQLite3(__DIR__ . '/../../../data/data.db');
 <script src="http://epsg.io/20790-1753.js" type="text/javascript"></script>
 
 <script src="../views/viewer/epsg.js" type="text/javascript"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.tooltip').tooltipster({
+            contentAsHTML: true,
+            theme: 'tooltipster-shadow'
+        });
+    });
+</script>
 
 <div class="site-index">
     <?php
@@ -81,7 +95,7 @@ $connection = new SQLite3(__DIR__ . '/../../../data/data.db');
                 } else {
                     ?>
                     <script>
-                    $(document).attr("title", "Login - <?php echo $row['description']; ?>");
+                        $(document).attr("title", "Login - <?php echo $row['description']; ?>");
                     </script>
                     <h1 style="text-align: center">Iniciar Sessão</h1><br><br>
                     <!--border:3px dotted #CCC; background-color:#00BFFF;-->
@@ -99,6 +113,7 @@ $connection = new SQLite3(__DIR__ . '/../../../data/data.db');
                                 <label><input type="checkbox" name="remember" value="1"> Lembrar-me</label>
                             </div>
                             <input style="float:right;" type="submit" class="btn btn-success" value=" Login "/>
+                            <input type="hidden" class="form-control" name="viewer_id" id="viewer_id" value="<?php echo $row['id']; ?>">
                         </form>
                     </div>
                     <?php
@@ -112,34 +127,6 @@ $connection = new SQLite3(__DIR__ . '/../../../data/data.db');
     ?>
 </div>
 
-
-<!-- Modal -->
-<!--<div id="LoginModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Iniciar Sessão</h4>
-            </div>
-            <div class="modal-body">
-                <form action="" id="login_form" >
-                    <div class="form-group">
-                        <label for="username" class="control-label">Utilizador:</label>
-                        <input type="text" class="form-control" name="username" id="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="control-label">Password:</label>
-                        <input type="Password" class="form-control" name="password" id="password">
-                    </div>
-                    <div class="modal-footer">
-                        <input class="btn btn-success" type="submit" value="Login!" id="login_submit" name="login_submit">
-                        <a href="#" class="btn btn-info" data-dismiss="modal">Cancelar</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>-->
 <script>
     $('#login_form').on('submit', function (e) {
         e.preventDefault();

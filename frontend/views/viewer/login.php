@@ -1,5 +1,6 @@
 <?php
-/* 
+
+/*
  * Copyright (C) 2015 Autarquia-Livre
  *
  * This program is free software; you can redistribute it and/or
@@ -33,32 +34,45 @@ if ($usernameResult) {
         $validate_login = $connection->query('SELECT name FROM users WHERE username = "' . $username . '" and password = "' . $password_hash . '" LIMIT 1');
         if ($validate_login) {
             if ($valid = $validate_login->fetchArray(SQLITE3_ASSOC)) {
-                $_SESSION['login_username'] = $username;
-                $connection->query('UPDATE users SET last_login=CURRENT_TIMESTAMP WHERE username = "' . $username . '"');
-                if ($_POST['remember']) {
-                    $year = time() + 31536000;
-                    setcookie('remember_me', $username, $year);
-                } else {
-                    if (isset($_COOKIE['remember_me'])) {
-                        $past = time() - 100;
-                        setcookie(remember_me, gone, $past);
+                $validate_group = $connection->query('SELECT viewer_id FROM viewer_group JOIN users_group ON viewer_group.group_id = users_group.id_group WHERE users_group.id_user = (SELECT id FROM users WHERE username = "' . $username . '") and viewer_id =' . $_POST["viewer_id"]);
+                if ($validate_group) {
+                    if ($valid_group = $validate_group->fetchArray(SQLITE3_ASSOC)) {
+                        $_SESSION['login_username'] = $username;
+                        $connection->query('UPDATE users SET last_login=CURRENT_TIMESTAMP WHERE username = "' . $username . '"');
+                        if ($_POST['remember']) {
+                            $year = time() + 31536000;
+                            setcookie('remember_me', $username, $year);
+                        } else {
+                            if (isset($_COOKIE['remember_me'])) {
+                                $past = time() - 100;
+                                setcookie(remember_me, gone, $past);
+                            }
+                        }
+                        header("Location: {$_SERVER['HTTP_REFERER']}");
+                        exit;
+                    } else {
+                        echo 'O utilizador n&atilde;o tem permiss&otilde;es para o visualizador!';
+                        header('Refresh: 2; URL=' . $_SERVER["HTTP_REFERER"]);
+                        exit;
                     }
                 }
-                header("Location: {$_SERVER['HTTP_REFERER']}");
-                exit;
             } else {
-                echo 'A password inserida não é valida!';
+                echo 'A password inserida n&atilde;o &eacute; valida!';
+                header('Refresh: 2; URL=' . $_SERVER["HTTP_REFERER"]);
                 exit;
             }
         } else {
             echo "<p>Ocorreu um erro ao validar o utilizador: $connection->lastErrorMsg()</p>";
+            header('Refresh: 2; URL=' . $_SERVER["HTTP_REFERER"]);
             exit;
         }
     } else {
-        echo 'O utilizador inserido não é valido!';
+        echo 'O utilizador inserido n&atilde;o &eacute; valido!';
+        header('Refresh: 2; URL=' . $_SERVER["HTTP_REFERER"]);
         exit;
     }
 } else {
     echo "<p>Ocorreu um erro ao validar o utilizador: $connection->lastErrorMsg()</p>";
+    header('Refresh: 2; URL=' . $_SERVER["HTTP_REFERER"]);
     exit;
 }

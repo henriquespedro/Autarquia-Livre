@@ -31,8 +31,14 @@ use frontend\assets\AppAsset;
         <?php $this->registerCssFile(Yii::$app->request->baseUrl . '/../../vendor/bower/bootstrap/dist/css/bootstrap.css'); ?>
 
         <!--OpenLayers 3-->
-        <!--<link rel="stylesheet" src="../../vendor/openlayers/css/ol.css"/>-->
         <?php $this->registerCssFile(Yii::$app->request->baseUrl . '/../../vendor/openlayers/css/ol.css'); ?>
+        
+        <!--Tooltipster->
+        <?php $this->registerCssFile(Yii::$app->request->baseUrl . '/../../vendor/tooltipster/css/tooltipster.css'); ?>
+        <?php $this->registerCssFile(Yii::$app->request->baseUrl . '/../../vendor/tooltipster/css/themes/tooltipster-shadow.css'); ?>
+        
+        <!--jsTree-->
+        <?php $this->registerCssFile(Yii::$app->request->baseUrl . '/../../vendor/jstree/themes/default/style.min.css'); ?>
 
         <!--Default Project CSS-->
         <?php $this->registerCssFile(Yii::$app->request->baseUrl . '/../css/default.css'); ?>
