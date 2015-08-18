@@ -214,6 +214,11 @@ function obter_informacoes() {
     $("#corrent_action").text("Obter Informações");
 }
 
+function change_password() {
+    $("#options").load("../tools/_changepasswordform.php");
+    change_active_option();
+}
+
 function formulario(id) {
     $("#formularios_div").attr("title", "Formulários");
     $("#formularios_div").load('../views/forms/formularios.php?form=' + id + '');

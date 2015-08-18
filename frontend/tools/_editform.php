@@ -270,7 +270,7 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                 interaction.on('drawend', function (evt) {
                     var feature = evt.feature;
                     var srsName_ = view_projection;
-                    feature.set('geometry', feature.getGeometry());
+//                    feature.set('geometry', feature.getGeometry());
                     var node = format_.writeTransaction([feature], null, null, {
                         gmlOptions: {srsName: srsName_},
                         featureNS: featureNS_,

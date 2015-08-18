@@ -8,6 +8,7 @@ echo SideNav::widget([
     'encodeLabels' => false,
     'items' => [
         ['label' => 'Permissões', 'icon' => 'user', 'url' => array('viewer-group/index', 'viewer_id' => $_GET['viewer_id'])],
+        ['label' => 'Módulos', 'icon' => 'tags', 'url' => array('viewer-tabs/index', 'viewer_id' => $_GET['viewer_id'])],
         ['label' => 'Layers', 'icon' => 'book', 'url' => array('layers/index', 'viewer_id' => $_GET['viewer_id'])],
         ['label' => 'Pesquisas', 'icon' => 'search', 'url' => array('search/index', 'viewer_id' => $_GET['viewer_id'])],
         [
@@ -23,7 +24,7 @@ echo SideNav::widget([
         ['label' => 'Formulários', 'icon' => 'tags', 'url' => array('forms/index', 'viewer_id' => $_GET['viewer_id'])],
         ['label' => 'Bookmarks', 'icon' => 'tags', 'url' => array('bookmarks/index', 'viewer_id' => $_GET['viewer_id'])],
         [
-            'label' => 'Módulos',
+            'label' => 'Ferramentas',
             'icon' => 'question-sign',
             'items' => [
                 ['label' => 'Sugestões/Ocorrências', 'visible' => false, 'icon' => 'tags', 'url' => array('sugestions/index', 'viewer_id' => $_GET['viewer_id'])],

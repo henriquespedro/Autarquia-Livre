@@ -30,9 +30,9 @@ $dataProviderGroups = new ActiveDataProvider([
                 <?= $form->field($model, 'name')->textinput() ?>
 
                 <?= $form->field($model, 'username')->textinput() ?>
-
+                <?php if ($model->isNewRecord) { ?>
                 <?= $form->field($model, 'password')->passwordinput() ?>
-
+                <?php } ?> 
                 <?= $form->field($model, 'email')->textinput() ?>
 
             </div>
@@ -45,7 +45,7 @@ $dataProviderGroups = new ActiveDataProvider([
                     function AddGroups() {
                         $.ajax({
                             type: 'POST',
-                            url: 'index.php?r=users-group/create&id_user=<?php echo $_GET["id"] ?>',
+                            url: 'index.php?r=users-group/create&id_user=<?php echo $model->id ?>',
                             success: function (data)
                             {
                                 $('#parameters_model').html(data);

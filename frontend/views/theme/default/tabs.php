@@ -38,13 +38,8 @@ if (isset($_SESSION['login_username'])) {
     ?>
     $('#top_tabs').append('<li title="Ferramentas de Login/Gestão do Utilizador"><a href="#utilizador_tools" data-toggle="tab" id="tab_user">Utilizador: <?php echo $_SESSION['login_username'] ?></a></li>');
     $('#content_tabs').append('<div id="utilizador_tools" class="tab-pane btn-group"></div>');
-    $('#utilizador_tools').html('<button type="button" title="Alterar password"  data-toggle="modal" data-target="#ChangePassword" class="btn btn-default bt_size"> <span class="glyphicon glyphicon-user"/><p>Alterar Password</p></button>');
-    $('#utilizador_tools').append('<button type="button" title="Terminar sessão" onclick="destroy_session()" class="btn btn-default bt_size"> <span class="glyphicon glyphicon-user"/><p>Terminar Sessão</p></button>');
-    function destroy_session() {
-        session_destroy();
-        header("Refresh:0");
-        <!--location.reload();-->
-    }
+    $('#utilizador_tools').html('<button type="button" title="Alterar password"  data-toggle="modal" onclick="change_password()" class="btn btn-default bt_size"> <span class="glyphicon glyphicon-user"/><p>Alterar Password</p></button>');
+    $('#utilizador_tools').append('<button type="button" title="Terminar sessão" onclick="document.location.href=&#39;../views/viewer/logout.php&#39;" class="btn btn-default bt_size"> <span class="glyphicon glyphicon-user"/><p>Terminar Sessão</p></button>');
     <?php
 }
 ?>
