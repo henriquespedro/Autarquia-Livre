@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
     
     <?= $form->field($model, 'label')->textInput() ?>
 
-    <?= $form->field($model, 'type')->dropDownList(['values_list'=>'Lista de Valores', 'text'=>'Texto Livre'],['prompt' => '---- Select Type of Parameter ----'])  ?>
+    <?= $form->field($model, 'type')->dropDownList(['lista_valores'=>'Lista de Valores', 'text'=>'Texto Livre'],['prompt' => '---- Select Type of Parameter ----'])  ?>
 
     <?= $form->field($model, 'parameter')->textInput() ?>
 

@@ -652,12 +652,13 @@ function edit_geo() {
 
 function streetview() {
 
-    map.on('click', function (evt) {
+    var click_street_view = map.on('click', function (evt) {
         var lonlat = ol.proj.transform([evt.coordinate[0], evt.coordinate[1]], 'EPSG:3763', 'EPSG:4326');
         $("#streetview_div").html('<iframe src="../views/viewer/streetview.php?long=' + lonlat[0] + '&lat=' + lonlat[1] + '" style="width:100%; height:100%; position:relative; border:none"></iframe>');
         $("#streetview_div").dialog({width: 800, height: 500});
-
+        map.unByKey(click_street_view);
     });
+
 }
 
 function exportar_mapa() {
@@ -714,10 +715,10 @@ function getResolutionFromScale(scale, units) {
 var construnct_legend = jQuery.grep(map.getLayers().getArray(), function (single_layers) {
 //    if (layer.getLayers) {
 //        var layers = jQuery.grep(layer.getLayers().getArray(), function (single_layers) {
-            if (typeof single_layers.get('name') !== "undefined") {
-                var url = single_layers.getSource().getUrl() + "?TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&EXCEPTIONS=application%2Fvnd.ogc.se_xml&FORMAT=image%2Fjpeg&LAYER=" + single_layers.get('layer') + "&LEGEND_OPTIONS=forceLabels%3Aon%3BfontName%3DVerdana%3BfontSize%3A12";
-                $("#legend").append('<b>' + single_layers.get('name') + '</b><p><img src="' + url + '" title="' + single_layers.get('name') + '"/></p>');
-            }
+    if (typeof single_layers.get('name') !== "undefined") {
+        var url = single_layers.getSource().getUrl() + "?TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&EXCEPTIONS=application%2Fvnd.ogc.se_xml&FORMAT=image%2Fjpeg&LAYER=" + single_layers.get('layer') + "&LEGEND_OPTIONS=forceLabels%3Aon%3BfontName%3DVerdana%3BfontSize%3A12";
+        $("#legend").append('<b>' + single_layers.get('name') + '</b><p><img src="' + url + '" title="' + single_layers.get('name') + '"/></p>');
+    }
 //        });
 //    }
 });

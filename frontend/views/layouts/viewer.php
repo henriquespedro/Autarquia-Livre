@@ -14,7 +14,6 @@ use frontend\assets\AppAsset;
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>
-        <title><?= Html::encode($this->title) ?></title>
         <meta http-equiv="content-type" charset="UTF-8" content="text/html">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Autarquia Livre">
