@@ -22,7 +22,6 @@ Frontend
 http://autarquia-livre.tk
 
 Backtend
-
 http://autarquia-livre.no-ip.org/Autarquia-Livre/backend
 
 Estrutura Base de Dados
