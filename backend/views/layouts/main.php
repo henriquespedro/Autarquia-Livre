@@ -33,7 +33,7 @@ AppAsset::register($this);
                 ],
             ]);
             $menuItems = [
-                ['label' => 'Utilizadores', 'visible' => !Yii::$app->user->isGuest,'items' => [
+                ['label' => 'Utilizadores', 'visible' => !Yii::$app->user->isGuest, 'items' => [
                         ['label' => 'Utilizadores', 'url' => Yii::$app->urlManager->createUrl('users/index')],
                         ['label' => 'Grupos', 'url' => Yii::$app->urlManager->createUrl('group/index')],
                     ]],
@@ -41,6 +41,7 @@ AppAsset::register($this);
                         ['label' => 'Sistemas de Coordenadas', 'url' => ['/param-coordinates/index']],
                         ['label' => 'Formato Layers', 'url' => ['/param-format/index']],
                         ['label' => 'Servidores', 'url' => ['/param-server/index']],
+                        ['label' => 'Ferramentas', 'url' => ['/tools/index']],
                     ]],
                 ['label' => 'Configurações', 'visible' => !Yii::$app->user->isGuest, 'items' => [
                         ['label' => 'Aplicação', 'url' => ['/appoptions/view', 'id' => '1']],
@@ -66,13 +67,13 @@ AppAsset::register($this);
 
             <div class="container">
 
-                    <?=
-                    Breadcrumbs::widget([
-                        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                    ])
-                    ?>
+                <?=
+                Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ])
+                ?>
 
-                        <?= $content ?>
+                <?= $content ?>
 
 
             </div>

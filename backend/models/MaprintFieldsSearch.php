@@ -57,7 +57,7 @@ class MaprintFieldsSearch extends MaprintFields
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'viewer_id' => $this->viewer_id,
+            'viewer_id' => $_GET['viewer_id'],
             'setOrder' => $this->setOrder,
         ]);
 

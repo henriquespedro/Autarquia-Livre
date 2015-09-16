@@ -4,11 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
-use yii\helpers\ArrayHelper;
+use app\models\Tools;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ViewerTabs */
 /* @var $form yii\widgets\ActiveForm */
+$dataProviderTools = new ActiveDataProvider([
+    'query' => $model->getTools(),
+        ]);
 ?>
 
 <div class="viewer-tabs-form">
@@ -37,30 +40,59 @@ use yii\helpers\ArrayHelper;
             </div>
             <div id="yw0_tab_2" class="tab-pane">
                 <?= Html::button('Novo', [ 'class' => 'btn btn-success', 'onclick' => 'AddTools();']); ?>
-                <div class="modal fade" id="parameters_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+                <div class="modal fade" id="tabs_tools_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
 
                 <script>
                     function AddTools() {
                         $.ajax({
                             type: 'POST',
-                            url: 'index.php?r=search-parameters/create&search_id=<?php echo $_GET["id"] ?>&viewer_id=<?php $model->viewer_id ?>',
+                            url: 'index.php?r=viewer-tabs-tools/create&tabs_id=<?php echo $_GET["id"] ?>&viewer_id=<?php $model->viewer_id ?>',
                             success: function (data)
                             {
-                                $('#parameters_model').html(data);
-                                $('#parameters_model').modal();
+                                $('#tabs_tools_model').html(data);
+                                $('#tabs_tools_model').modal();
                             }
                         });
                     }
                 </script>
 
-                
+                <?=
+                GridView::widget([
+                    'dataProvider' => $dataProviderTools,
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        [
+                            'attribute' => 'tools_id',
+                            'label' => 'Ferramenta',
+                            'format' => 'text', //raw, html
+                            'content' => function($data) {
+                                return Tools::find()->where("id=".$data->tools_id)->one()->name;
+                            }
+                        ],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{update} {delete}',
+                            'urlCreator' => function ($action, $dataProviderTools, $key, $index) {
+                                if ($action === 'update') {
+                                    $url = array('viewer-tabs-tools/update', 'id' => $dataProviderTools->id, 'viewer_id' => $_GET['viewer_id']);
+                                    return $url;
+                                }
+                                if ($action === 'delete') {
+                                    $url = array('viewer-tabs-tools/delete', 'id' => $dataProviderTools->id, 'tabs_id' => $dataProviderTools->tabs_id, 'viewer_id' => $_GET['viewer_id']);
+                                    return $url;
+                                }
+                            }],
+                            ],
+                        ]);
+                        ?>
+
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Aplicar Alterações', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Guardar' : 'Aplicar Alterações', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
 
-            <?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
 
 </div>

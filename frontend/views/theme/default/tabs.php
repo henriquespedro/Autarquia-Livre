@@ -24,7 +24,7 @@ while ($row_tabs = $load_tabs->fetchArray(SQLITE3_ASSOC)) {
     $('#top_tabs').append('<li title="<?php echo $row_tabs['name']; ?>"><a href="#<?php echo $row_tabs['code']; ?>" data-toggle="tab"><?php echo $row_tabs['name']; ?></a></li>');
     $('#content_tabs').append('<div id="<?php echo $row_tabs['code']; ?>" class="tab-pane btn-group"></div>');
     <?php
-    $load_tools = $connection->query('SELECT * FROM tools WHERE tabs_id ="' . $row_tabs['code'] . '"');
+    $load_tools = $connection->query('SELECT tools.* FROM viewer_tabs_tools INNER JOIN viewer_tabs ON viewer_tabs_tools .tabs_id=viewer_tabs.id LEFT JOIN tools ON tools.id = viewer_tabs_tools.tools_id WHERE viewer_tabs.id ="' . $row_tabs['id'] . '"');
     while ($row_tools = $load_tools->fetchArray(SQLITE3_ASSOC)) {
         ?>
         $('#<?php echo $row_tabs['code']; ?>').append('<button type="button" onclick="<?php echo $row_tools['code']; ?>()" title="<?php echo $row_tools['description']; ?>" class="btn btn-default bt_size"> <span class="glyphicon" style="background-image:url(../images/<?php echo $row_tools['icon']; ?>);background-repeat:no-repeat;background-position:center;width:26px;height:26px;" aria-hidden="true"></span><p ><?php echo $row_tools['name']; ?></p></button>');

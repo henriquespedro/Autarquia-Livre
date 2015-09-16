@@ -45,10 +45,10 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
             <button class="btn btn-default" id="modify" type="button" data-placement="bottom" title="Editar Elemento" ><span class="glyphicon glyphicon-move"></span>&nbsp;</button>
             <button class="btn btn-default" id="delete" type="button" data-placement="bottom" title="Apagar Elemento" ><span class="glyphicon glyphicon-trash"></span>&nbsp;</button>
             <button class="btn btn-default" id="table" type="button" data-placement="bottom" title="Abrir Tabela" ><span class="glyphicon glyphicon-folder-open"></span>&nbsp;</button>
-            <button class="btn btn-default" id="save" type="button" data-placement="bottom" title="Guardar Alterações" ><span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;</button>
+<!--            <button class="btn btn-default" id="save" type="button" data-placement="bottom" title="Guardar Alterações" ><span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;</button>-->
         </div>
     </div>
-    <div id="edit_layers_view">
+    <div id="edit_layers_view" style="display:none">
         <div id="edit_select_info"></div>
         <hr>
         <div style="text-align: right"><div class="btn-group" role="group">
@@ -155,7 +155,7 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
         featureNS_ = $("#edit_layers option:selected").attr('fns');
         var str = $("#edit_layers").val();
         featureType_ = str.substring(str.indexOf(":") + 1);
-        
+
         $.ajax(url_, {
             type: 'GET',
             data: {
@@ -216,6 +216,8 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                                     $('#table_info_update').append('<div class="form-group"><label for="' + index + '">' + index.toUpperCase() + ':</label><input type="text" class="form-control" id="' + index + '" value="' + item + '"></div>');
                                 }
                             });
+                            $("#edit_layers_view").show();
+                            $("#edit_layers_update").hide();
                         }
 
                     }
@@ -310,29 +312,29 @@ $result_edit_layers = $connection->query('SELECT * FROM geographic_edit WHERE vi
                 });
                 map.addInteraction(interaction);
                 vectorLayerJsonp.getSource().on("changefeature", function (evt) {
- 
+
                     var feature = evt.feature;
                     var fid = feature.getId();
                     var srsName_ = view_projection;
-                    
+
                     // do a WFS transaction to update the geometry
                     var properties = feature.getProperties();
                     // get rid of bbox which is not a real property
                     delete properties.geometry;
-                   
+
                     var clone = new ol.Feature(properties);
 //                    clone.setGeometry(feature.getGeometry());
                     clone.set('geom', feature.getGeometry());
 //                    feature.set('geometry', feature.getGeometry());
                     clone.setId(fid);
-                    
-                    var node = format_.writeTransaction(null,[clone], null, {
+
+                    var node = format_.writeTransaction(null, [clone], null, {
 //                        gmlOptions: {srsName: srsName_},
                         featureNS: featureNS_,
                         featureType: featureType_,
                         srsName: srsName_
                     });
-                    
+
                     $.ajax({
                         type: "POST",
                         url: url_,

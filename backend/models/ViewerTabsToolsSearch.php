@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Maprint;
+use app\models\ViewerTabsTools;
 
 /**
- * MaprintSearch represents the model behind the search form about `app\models\Maprint`.
+ * ViewerTabsToolsSearch represents the model behind the search form about `app\models\ViewerTabsTools`.
  */
-class MaprintSearch extends Maprint
+class ViewerTabsToolsSearch extends ViewerTabsTools
 {
     /**
      * @inheritdoc
@@ -18,8 +18,7 @@ class MaprintSearch extends Maprint
     public function rules()
     {
         return [
-            [['id', 'viewer_id', 'setOrder'], 'integer'],
-            [['name', 'description', 'description_font', 'layer', 'chage_data'], 'safe'],
+            [['id', 'tabs_id', 'tools_id'], 'integer'],
         ];
     }
 
@@ -41,7 +40,7 @@ class MaprintSearch extends Maprint
      */
     public function search($params)
     {
-        $query = Maprint::find();
+        $query = ViewerTabsTools::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,15 +56,10 @@ class MaprintSearch extends Maprint
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'viewer_id' => $_GET['viewer_id'],
-            'chage_data' => $this->chage_data,
-            'setOrder' => $this->setOrder,
+            'tabs_id' => $_GET['id'],
+//            'tabs_id' => $this->tabs_id,
+            'tools_id' => $this->tools_id,
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'description_font', $this->description_font])
-            ->andFilterWhere(['like', 'layer', $this->layer]);
 
         return $dataProvider;
     }

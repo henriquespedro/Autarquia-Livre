@@ -40,7 +40,7 @@ class ViewerGroup extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'viewer_id' => 'Id Viewer',
-            'group_id' => 'Id Grupo',
+            'group_id' => 'Grupo',
         ];
     }
     

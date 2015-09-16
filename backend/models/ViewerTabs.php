@@ -21,7 +21,15 @@ class ViewerTabs extends \yii\db\ActiveRecord
     {
         return 'viewer_tabs';
     }
-
+    
+     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTools(){
+        return $this->hasMany(ViewerTabsTools::className(), ['tabs_id' => 'id']);
+    }
+    
+    
     /**
      * @inheritdoc
      */
@@ -41,7 +49,7 @@ class ViewerTabs extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'viewer_id' => 'Viewer ID',
-            'code' => 'Codigo',
+            'code' => 'Código HTML',
             'name' => 'Nome',
         ];
     }
