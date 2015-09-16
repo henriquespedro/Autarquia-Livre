@@ -15,33 +15,25 @@ About
 -------
 Work Project for Master Degree in Geographic Information Systems and Science from NOVA IMS
 
-Apresentation Page
--------
-http://henriquespedro.github.io/Autarquia-Livre
-
-
 Demo
-================================================================
-Frontend
 -------
+
+Frontend
 http://autarquia-livre.tk
 
 Backtend
--------
+
 http://autarquia-livre.no-ip.org/Autarquia-Livre/backend
 
 Estrutura Base de Dados
-================================================================
-[Ver](autarquia_livre.sql)
+-------
+[Ver mais!](autarquia_livre.sql)
+
 
 Screenshots
-================================================================
-Frontend
 -------
 ![frontend](http://zoomto.pt/github/frontend.png)
 
-Backend
--------
 ![backend](http://zoomto.pt/github/backend.png)
 
 Authors
