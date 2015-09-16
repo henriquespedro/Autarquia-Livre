@@ -1,0 +1,83 @@
+CREATE TABLE "admin_users" ("id" INTEGER PRIMARY KEY  NOT NULL ,"username" VARCHAR(45) DEFAULT (null) ,"password" VARCHAR(45) DEFAULT (null) ,"create_date" DATETIME DEFAULT (CURRENT_TIMESTAMP) ,"status" INTEGER, "auth_key" VARCHAR(32), "password_hash" VARCHAR(255), "password_reset_token" VARCHAR(255), "email" VARCHAR(100), "role" INTEGER, "create_at" INTEGER, "update_at" INTEGER);
+CREATE TABLE bookmarks (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , viewer_id INTEGER NOT NULL , name TEXT, description TEXT, x_coordinate TEXT, y_coordinate TEXT, chage_data DATETIME DEFAULT CURRENT_TIMESTAMP, setOrder INTEGER,  FOREIGN KEY(viewer_id) REFERENCES viewers(id));
+CREATE TABLE "config" ("id" INTEGER PRIMARY KEY  NOT NULL ,"server_url" VARCHAR(150),"manual_url" VARCHAR(150),"proxy" VARCHAR(150),"domain" VARCHAR(50),"ldap" VARCHAR(150),"ldap_port" INTEGER,"smtp_host" VARCHAR(150),"smtp_port" INTEGER,"smtp_username" VARCHAR(100),"smtp_password" VARCHAR(100) DEFAULT (null) );
+CREATE TABLE config_confrontation (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , viewer_id INTEGER NOT NULL, layer TEXT, name TEXT, search_field TEXT,  FOREIGN KEY(viewer_id) REFERENCES viewers(id));
+CREATE TABLE "datasources" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "name" VARCHAR(100), "type" VARCHAR(50), "string" VARCHAR(200), "change_data" DATETIME DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE forms (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , viewer_id INTEGER NOT NULL , name TEXT, description TEXT, html_template TEXT, sql_select TEXT, sql_insert TEXT, sql_update TEXT, sql_delete TEXT,  icon TEXT, chage_data DATETIME DEFAULT CURRENT_TIMESTAMP, setOrder INTEGER, "datasource_id" INTEGER,  FOREIGN KEY(viewer_id) REFERENCES viewers(id));
+CREATE TABLE forms_chield (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , form_id INTEGER NOT NULL, template TEXT, sqlselect TEXT, sqlinsert TEXT,  sqlupdate TEXT, sqldelete TEXT, FOREIGN KEY(form_id) REFERENCES forms(id));
+CREATE TABLE forms_parameters (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , form_id INTEGER NOT NULL, type TEXT, parameter TEXT,  label TEXT, description_field TEXT,  sqlquery TEXT, FOREIGN KEY(form_id) REFERENCES forms(id));
+CREATE TABLE geographic_edit (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , viewer_id INTEGER NOT NULL , name TEXT, layer TEXT, type TEXT, chage_data DATETIME DEFAULT CURRENT_TIMESTAMP, setOrder INTEGER, "featureNS" TEXT, "serverType" TEXT,  FOREIGN KEY(viewer_id) REFERENCES viewers(id));
+CREATE TABLE "group" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "group" TEXT, "description" TEXT);
+CREATE TABLE layers (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , viewer_id INTEGER NOT NULL , name TEXT, layer TEXT, layer_type TEXT, visible BOOL, show_toc BOOL, opacity DOUBLE, crs TEXT, style TEXT, serverType TEXT, type TEXT, icon TEXT, chage_data DATETIME DEFAULT CURRENT_TIMESTAMP, setOrder INTEGER, "layer_group" TEXT, "fields" TEXT,  FOREIGN KEY(viewer_id) REFERENCES viewers(id));
+CREATE TABLE "layers_confrontation" ("id" INTEGER PRIMARY KEY  NOT NULL ,"viewer_id" INTEGER NOT NULL  ,"name" TEXT,"layer" TEXT,"description_field" TEXT,"regulement_field" TEXT, FOREIGN KEY (viewer_id) REFERENCES viewers(id) ON DELETE CASCADE);
+CREATE TABLE "localadmin" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "username" TEXT, "password" TEXT, "create_data" DATETIME DEFAULT CURRENT_TIMESTAMP, "last_login" DATETIME DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE maprint (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , viewer_id INTEGER NOT NULL , name TEXT, description TEXT, description_font TEXT, layer TEXT, chage_data DATETIME DEFAULT CURRENT_TIMESTAMP, setOrder INTEGER,  FOREIGN KEY(viewer_id) REFERENCES viewers(id));
+CREATE TABLE "maprint_fields" ("id" INTEGER PRIMARY KEY  NOT NULL ,"viewer_id" INTEGER NOT NULL ,"name" TEXT,"code_field" TEXT,"type" TEXT,"validation" TEXT,"required" TEXT DEFAULT (null) ,"setOrder" INTEGER);
+CREATE TABLE maprint_layouts (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , maprint_id INTEGER NOT NULL , layout TEXT, label TEXT,  FOREIGN KEY(maprint_id) REFERENCES maprint(id));
+CREATE TABLE maprint_scales (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , maprint_id INTEGER NOT NULL , scale TEXT, label TEXT,  FOREIGN KEY(maprint_id) REFERENCES maprint(id));
+CREATE TABLE "param_coordinates" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "name" TEXT, "code" TEXT);
+CREATE TABLE "param_format" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "name" TEXT, "format" TEXT);
+CREATE TABLE "param_server" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "name" CHAR, "type" TEXT, "url" TEXT);
+CREATE TABLE "search" ("id" INTEGER PRIMARY KEY  NOT NULL ,"viewer_id" INTEGER NOT NULL ,"search_name" TEXT DEFAULT (null) ,"description" TEXT,"sql_search" TEXT,"visible" BOOL,"chage_data" DATETIME DEFAULT (CURRENT_TIMESTAMP) ,"setOrder" INTEGER,"datasource_id" INTEGER);
+CREATE TABLE search_parameters (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , search_id INTEGER NOT NULL, name TEXT, require bool,  type TEXT, sqlquery TEXT, value_field TEXT, description_field TEXT, FOREIGN KEY(search_id) REFERENCES search(id));
+CREATE TABLE "tools" ("id" INTEGER PRIMARY KEY  NOT NULL ,"tabs_id" TEXT DEFAULT (null) ,"name" TEXT,"description" TEXT,"code" TEXT, "icon" TEXT);
+CREATE TABLE "users" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "name" TEXT, "username" TEXT, "password" TEXT, "salt" TEXT, "email" TEXT, "create_date" DATETIME DEFAULT CURRENT_TIMESTAMP, "last_login" DATETIME DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE "users_group" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "id_user" INTEGER NOT NULL, "id_group" INTEGER NOT NULL,   FOREIGN KEY(id_user) REFERENCES users(id) );
+CREATE TABLE viewer_group (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , group_id INTEGER, viewer_id INTEGER, FOREIGN KEY(viewer_id) REFERENCES viewers(id));
+CREATE TABLE "viewer_tabs" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "viewer_id" INTEGER, "code" VARCHAR, "name" VARCHAR);
+CREATE TABLE viewer_tabs_tools (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , tabs_id INTEGER, tools_id INTEGER, FOREIGN KEY(tabs_id) REFERENCES viewer_tabs(id), FOREIGN KEY(tools_id) REFERENCES tools(id));
+CREATE TABLE "viewers" ("id" INTEGER PRIMARY KEY  NOT NULL ,"description" VARCHAR(200),"name" VARCHAR(100),"scales" VARCHAR(250),"init_extent" VARCHAR(250),"max_extent" VARCHAR(250),"projection" VARCHAR(50),"units" VARCHAR(50),"active" BOOL,"author" VARCHAR(50),"theme" VARCHAR(50),"create_data" DATETIME DEFAULT (CURRENT_TIMESTAMP) ,"modified_dat" DATETIME DEFAULT (CURRENT_TIMESTAMP) ,"image" VARCHAR(250),"comments" VARCHAR(250) DEFAULT (null) );
+INSERT INTO "admin_users" VALUES(1,'admin','d033e22ae348aeb5660fc2140aec35850c4da997','2015-07-23 11:56:40',10,NULL,'d033e22ae348aeb5660fc2140aec35850c4da997',NULL,'',NULL,NULL,NULL);
+INSERT INTO "param_coordinates" VALUES(1,'ETRS89 / Portugal TM06','EPSG:3763');
+INSERT INTO "param_coordinates" VALUES(2,'Datum 73 / Modified Portuguese Grid','EPSG:27493');
+INSERT INTO "param_coordinates" VALUES(3,'WGS 84','EPSG:4326');
+INSERT INTO "param_coordinates" VALUES(4,'Lisboa Hayford Gauss IPCC','EPSG:102165');
+INSERT INTO "param_coordinates" VALUES(5,'Lisboa Hayford Gauss IGeoE','EPSG:102164');
+INSERT INTO "param_format" VALUES(1,'PNG','image/png');
+INSERT INTO "param_format" VALUES(2,'JPEG','image/jpeg');
+INSERT INTO "param_format" VALUES(3,'GIF','image/gif');
+INSERT INTO "param_server" VALUES(1,'GeoServer','GEOSERVER','http://autarquia-livre.no-ip.org:8080/geoserver');
+INSERT INTO "param_server" VALUES(2,'MapServer','MAPSERVER',NULL);
+INSERT INTO "param_server" VALUES(3,'QGis Server','QGIS',NULL);
+INSERT INTO "tools" VALUES(1,'tools','Adicionar Shapefile','Adicionar Shapefile(s)','add_shp','appbar.layer.svg');
+INSERT INTO "tools" VALUES(2,'tools','Adicionar WMS','Adicionar WMS Services','add_wms','appbar.map.gps.svg');
+INSERT INTO "tools" VALUES(3,'tools','Adicionar WFS','Adicionar WFS Services','add_wfs','appbar.map.location.add.svg');
+INSERT INTO "tools" VALUES(4,'tools','Adicionar KML','Adicionar KML Services','add_kml','appbar.map.folds.svg');
+INSERT INTO "tools" VALUES(5,'tools','Obter Informações','Obter Informações dos Temas do Mapa','obter_informacoes','appbar.information.svg');
+INSERT INTO "tools" VALUES(6,'tools','Bookmarks','Consultar Bookmarks ','bookmarks','appbar.book.hardcover.open.writing.svg');
+INSERT INTO "tools" VALUES(7,'tools','Obter Coordenadas','Obter Coordenadas no mapa','obter_coordenadas','appbar.map.location.add.svg');
+INSERT INTO "tools" VALUES(8,'tools','Localizar Coordenadas','Localizar Coordenadas no mapa','locate_coordinates','appbar.map.gps.svg');
+INSERT INTO "tools" VALUES(9,'draw_measure','Gerir Estilos','Gerir Estilos para Desenho','gerir_estilos','appbar.cog.svg');
+INSERT INTO "tools" VALUES(10,'draw_measure','Desenhar Ponto','Desenhar Ponto(s) no Mapa','desenhar_ponto','appbar.edit.svg');
+INSERT INTO "tools" VALUES(11,'draw_measure','Desenhar Linha','Desenhar Linha(s) no Mapa','desenhar_linha','appbar.draw.marker.svg');
+INSERT INTO "tools" VALUES(12,'draw_measure','Desenhar Polígono','Desenhar Polígono(s) no Mapa','desenhar_poligono','appbar.edit.box.svg');
+INSERT INTO "tools" VALUES(13,'draw_measure','Desenhar Círculo','Desenhar Círculo(s) no Mapa','desenhar_circulo','appbar.crosshair.svg');
+INSERT INTO "tools" VALUES(14,'draw_measure','Escrever Anotações','Escrever Anotações no Mapa','escrever_anotacoes','appbar.grade.a.svg');
+INSERT INTO "tools" VALUES(15,'draw_measure','Apagar Desenhos','Apagar todos os desenhos existentes no mapa','apagar_desenhos','appbar.close.svg');
+INSERT INTO "tools" VALUES(16,'draw_measure','Calcular Distâncias','Calcular Distâncias','calcular_distancias','appbar.protractor.svg');
+INSERT INTO "tools" VALUES(17,'draw_measure','Calcular Áreas','Calcular Áreas','calcular_areas','appbar.ruler.svg');
+INSERT INTO "tools" VALUES(18,'print','Imprimir Plantas','Imprimir Plantas de Localização','imprimir_plantas','appbar.printer.text.svg');
+INSERT INTO "tools" VALUES(19,'print','Exportar Mapa','Exportar Mapa','exportar_mapa','appbar.page.download.svg');
+INSERT INTO "tools" VALUES(20,'help','Manual de Utilização','Manuel de Utilização da Aplicação','manual_utilizacao','appbar.page.text.svg');
+INSERT INTO "tools" VALUES(21,'help','Reportar Problemas','Reportar Erros/Problemas','report_problems','appbar.email.minimal.svg');
+INSERT INTO "tools" VALUES(22,'help','Sobre a Aplicação','Informações sobre a Aplicação','about_app','appbar.question.svg');
+INSERT INTO "tools" VALUES(29,'tools','Google StreetView','Abrir Google StreetView','streetview','google-streets-icon2.png');
+INSERT INTO "tools" VALUES(30,'modulos','Edição Geográfica','Edição Geográfica','edit_geo','appbar.cell.align.svg');
+INSERT INTO "tools" VALUES(31,'modulos','Confrontação Espacial','Confrontação Espacial com diferentes temas','confrontacao_espacial','appbar.pie.quarter.svg');
+
+CREATE TRIGGER new_viewer
+AFTER INSERT ON viewers
+BEGIN
+INSERT INTO viewer_tabs (viewer_id, code, name) VALUES (NEW.id, "tools", "Ferramentas");
+INSERT INTO viewer_tabs (viewer_id, code, name) VALUES (NEW.id, "draw_measure", "Desenho e Medição");
+INSERT INTO viewer_tabs (viewer_id, code, name) VALUES (NEW.id, "search", "Pesquisas");
+INSERT INTO viewer_tabs (viewer_id, code, name) VALUES (NEW.id, "print", "Impressão");
+INSERT INTO viewer_tabs (viewer_id, code, name) VALUES (NEW.id, "modulos", "Módulos");
+INSERT INTO viewer_tabs (viewer_id, code, name) VALUES (NEW.id, "help", "Ajuda");
+UPDATE viewers SET create_data=CURRENT_TIMESTAMP WHERE id = NEW.id;
+END;
+CREATE TRIGGER update_viewer
+AFTER UPDATE ON viewers
+BEGIN
+UPDATE viewers SET modified_dat=CURRENT_TIMESTAMP WHERE id = NEW.id;
+END;
