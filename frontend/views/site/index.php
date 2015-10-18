@@ -1,5 +1,5 @@
 <?php
-include __DIR__ .'/../connections.php';
+include __DIR__ . '/../connections.php';
 /* @var $this yii\web\View */
 $this->title = 'Autarquia Livre - OpenSource WebSIG';
 $load_config = $connection->query('SELECT * FROM viewers ORDER BY id ASC');
@@ -12,7 +12,16 @@ $load_config = $connection->query('SELECT * FROM viewers ORDER BY id ASC');
                 ?>
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
-                        <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['description']; ?>">
+                        <?php if (file_exists('../images/' . $row['name'] . '.jpg')) {
+                            ?>
+                        <img src="../images/<?php echo $row['image']; ?>"  width="200" height="200" alt="<?php echo $row['description']; ?>">
+                            <?php
+                        } else {
+                            ?>
+                            <img src="../images/default_viewer.png" alt="<?php echo $row['description']; ?>">
+                            <?php
+                        }
+                        ?>
                         <div class="caption">
                             <h3 style="text-align: center;"><?php echo $row['description']; ?></h3>
                             <p style="text-align: justify;"><?php echo $row['comments']; ?></p>

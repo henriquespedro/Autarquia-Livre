@@ -16,12 +16,56 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
-$load_layers = $connection->query('SELECT * FROM layers WHERE viewer_id =' . $row['id'] . ' order by rowid asc');
 ?>
 var data_tree = [];
 var layers = [];
+var projection = ol.proj.get('EPSG:3763');
+var projectionExtent = projection.getExtent();
+var size = ol.extent.getWidth(projectionExtent) / 256;
+var resolutions = new Array(14);
+var matrixIds = new Array(14);
+for (var z = 0; z < 14; ++z) {
+  // generate resolutions and matrixIds arrays for this WMTS
+  resolutions[z] = size / Math.pow(2, z);
+  matrixIds[z] = z;
+}
 <?php
+
+$load_baselayers = $connection->query('SELECT * FROM layers WHERE viewer_id =' . $row['id'] . ' AND type = "baselayer" order by rowid asc');
+
+ while ($row_baselayers = $load_baselayers->fetchArray(SQLITE3_ASSOC)) {
+    $load_base_server = $connection->query('SELECT type, url FROM param_server WHERE id =' . $row_baselayers['serverType'] . ' LIMIT 1');
+    if ($base_server = $load_base_server->fetchArray(SQLITE3_ASSOC)) {
+     ?>
+    layers.push(
+        new ol.layer.Tile({
+            <!--extent: map.getView().calculateExtent(map.getSize()),-->
+            title: '<?php echo $row_baselayers["name"] ?>',
+            layer: '<?php echo $row_baselayers["layer"] ?>',
+            visible: <?php echo $row_baselayers['visible']; ?>,
+            show_toc: <?php echo $row_baselayers['show_toc']; ?>,
+            opacity: <?php echo $row_baselayers['opacity']; ?>,
+            type: 'base',
+            source: new ol.source.TileWMS({
+                url: '<?php echo $base_server["url"] ?>/wms',
+                <!--crossOrigin: 'anonymous',-->
+                params: {
+                    'LAYERS': '<?php echo $row_baselayers["layer"] ?>',
+                    'FORMAT': 'image/png',
+                    <!--'TILED': true-->
+                }
+            })
+        })
+
+    );
+
+    <?php
+    }
+ }
+
+
+$load_layers = $connection->query('SELECT * FROM layers WHERE viewer_id =' . $row['id'] . ' AND type = "operational_layer" order by rowid asc');
+
 
  while ($row_layers = $load_layers->fetchArray(SQLITE3_ASSOC)) {
     $load_server = $connection->query('SELECT type, url FROM param_server WHERE id =' . $row_layers['serverType'] . ' LIMIT 1');

@@ -43,3 +43,4 @@ var format = new ol.format.WKT();
 var search_vector_result = new ol.layer.Vector({
     source: new ol.source.Vector()
 });
+

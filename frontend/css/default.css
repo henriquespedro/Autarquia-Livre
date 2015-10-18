@@ -56,9 +56,20 @@ body{
     min-height: 80vh !important;
 }
 
+.btn-default {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.btn-default_toolbar {
+    background-color: #FFF !important;
+    border-color: #ccc;
+}
+
 .bt_size * {
     width: 70px;
     white-space: wrap;
+    
     /*word-wrap: break-word;*/
     height: 21px  !important;
     max-height: 21px !important;
@@ -108,10 +119,10 @@ a {
 
 .ol-custom-overviewmap,
 .ol-custom-overviewmap.ol-uncollapsible {
-    bottom: auto;
+    bottom: 0;
     left: auto;
     right: 0;
-    top: 0;
+    top: auto;
 }
 
 .ol-custom-overviewmap:not(.ol-collapsed)  {
@@ -128,10 +139,10 @@ a {
 }
 
 .ol-custom-overviewmap:not(.ol-collapsed) button{
-    bottom: auto;
+    bottom: 1px;
     left: auto;
     right: 1px;
-    top: 1px;
+    top: auto;
 }
 
 .tooltip {

@@ -50,14 +50,17 @@ $connection = new SQLite3(__DIR__ . '/../../../data/data.db');
 <!--OpenLayers 3-->
 <script src="../../vendor/openlayers/build/ol.js" type="text/javascript"></script>
 
+<!-- OpenLayers 3 Layerswitcher -->
+<script src="../../vendor/openlayers/layerswitcher/ol3-layerswitcher.js" type="text/javascript"></script>
+
 <!--GeoExt 2 -->
 <!--<script type="text/javascript" src="../views/theme/default/loader.js"></script>-->
 <script src="../../vendor/proj4/proj4.js" type="text/javascript"></script>
 <!--<script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js" type="text/javascript"></script>-->
-<script src="http://epsg.io/3763-1753.js" type="text/javascript"></script>
-<script src="http://epsg.io/27493-1753.js" type="text/javascript"></script>
-<script src="http://epsg.io/20791-1753.js" type="text/javascript"></script>
-<script src="http://epsg.io/20790-1753.js" type="text/javascript"></script>
+<script src="http://epsg.io/3763.js" type="text/javascript"></script>
+<script src="http://epsg.io/27493.js" type="text/javascript"></script>
+<script src="http://epsg.io/20791.js" type="text/javascript"></script>
+<script src="http://epsg.io/20790.js" type="text/javascript"></script>
 
 <script src="../views/viewer/epsg.js" type="text/javascript"></script>
 

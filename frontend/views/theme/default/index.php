@@ -96,7 +96,7 @@
         <div class="col-md-9"  id="map_panel">
             <div id="map" class="map content_border" contextmenu="menu_options">
                 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/map.js'); ?>
-                <!--<script src="javascript/map.js" type="text/javascript"></script>-->
+                <!--<script src="../javascript/map.js" type="text/javascript"></script>-->
                 <!-- create the menu -->
                 <menu type="context" id="menu_options">
                     <menuitem label="Refresh" onclick="window.location.reload();" icon="ico_reload.png"></menuitem>
@@ -115,13 +115,13 @@
             </div>
             <div class="btn-toolbar" style="position:absolute; left: 60px; top:10px" role="toolbar" aria-label="...">
                 <div class="btn-group" role="group"><!--data-toggle="button" --> 
-                    <button class="btn btn-default" id="btn_vista_inicial" type="button" data-placement="bottom" title="Vista Inicial" onclick="extensao_total()"><span class="glyphicon glyphicon-globe"></span>&nbsp;</button>
-                    <button class="btn btn-default" type="button" data-placement="bottom" title="Mover Mapa" onclick="arrastar_mapa()"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;</button>
-                    <button class="btn btn-default" type="button" data-placement="bottom" title="Aproximar Mapa" onclick="aproximar_map()"><span class="glyphicon glyphicon-zoom-in"></span>&nbsp;</button>
-                    <button class="btn btn-default" type="button" data-placement="bottom" title="Afastar Mapa" onclick="afastar_map()"><span class="glyphicon glyphicon-zoom-out"></span>&nbsp;</button>
-                    <button class="btn btn-default" type="button" data-placement="bottom" title="Obter Informações" onclick="obter_informacoes()"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;</button>
-                    <button class="btn btn-default" type="button" data-placement="bottom" title="Imprimir Planta de Localização" onclick="imprimir_plantas()"><span class="glyphicon glyphicon-print"></span>&nbsp;</button>
-                    <select class="btn btn-default form-control" data-placement="bottom" id="select_scales" style="width: 110px">
+                    <button class="btn btn-default_toolbar" id="btn_vista_inicial" type="button" data-placement="bottom" title="Vista Inicial" onclick="extensao_total()"><span class="glyphicon glyphicon-globe"></span>&nbsp;</button>
+                    <button class="btn btn-default_toolbar" type="button" data-placement="bottom" title="Mover Mapa" onclick="arrastar_mapa()"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;</button>
+                    <button class="btn btn-default_toolbar" type="button" data-placement="bottom" title="Aproximar Mapa" onclick="aproximar_map()"><span class="glyphicon glyphicon-zoom-in"></span>&nbsp;</button>
+                    <button class="btn btn-default_toolbar" type="button" data-placement="bottom" title="Afastar Mapa" onclick="afastar_map()"><span class="glyphicon glyphicon-zoom-out"></span>&nbsp;</button>
+                    <button class="btn btn-default_toolbar" type="button" data-placement="bottom" title="Obter Informações" onclick="obter_informacoes()"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;</button>
+                    <button class="btn btn-default_toolbar" type="button" data-placement="bottom" title="Imprimir Planta de Localização" onclick="imprimir_plantas()"><span class="glyphicon glyphicon-print"></span>&nbsp;</button>
+                    <select class="btn btn-default_toolbar form-control" data-placement="bottom" id="select_scales" style="width: 110px">
                     </select>
                     <div><span class="label label-default">Ação corrente: <span id="corrent_action"></span> </span></div>
                 </div>

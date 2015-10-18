@@ -32,6 +32,9 @@ use frontend\assets\AppAsset;
         <!--OpenLayers 3-->
         <?php $this->registerCssFile(Yii::$app->request->baseUrl . '/../../vendor/openlayers/css/ol.css'); ?>
         
+        <!--OpenLayers 3 Layerswitcher-->
+        <?php $this->registerCssFile(Yii::$app->request->baseUrl . '/../../vendor/openlayers/layerswitcher/ol3-layerswitcher.css'); ?>
+        
         <!--Tooltipster->
         <?php $this->registerCssFile(Yii::$app->request->baseUrl . '/../../vendor/tooltipster/css/tooltipster.css'); ?>
         <?php $this->registerCssFile(Yii::$app->request->baseUrl . '/../../vendor/tooltipster/css/themes/tooltipster-shadow.css'); ?>

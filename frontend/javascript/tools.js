@@ -25,6 +25,30 @@
 //        })
 //    })];
 
+//
+//map.addLayer(
+//        new ol.layer.Tile({
+//            title: 'OpenStreetMap',
+//            name: 'OpenStreetMap',
+//            layer: 'osm',
+//            visible: 1,
+//            show_toc: 1,
+//            opacity: 1,
+//            source: new ol.source.WMTS({
+//                url: 'http://vps207957.ovh.net/mapproxy',
+//                layer: 'osm',
+//                matrixSet: 'EPSG:3763',
+//                format: 'image/png',
+//                projection: 'EPSG:3763',
+//            })
+//        })
+//        );
+
+var layerSwitcher = new ol.control.LayerSwitcher({
+    tipLabel: 'Temas Base'
+});
+map.addControl(layerSwitcher);
+
 $("#select_scales").change(function () {
     map.getView().setResolution(getResolutionFromScale($("#select_scales").val(), 'm'));
 });
