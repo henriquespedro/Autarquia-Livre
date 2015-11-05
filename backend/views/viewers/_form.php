@@ -16,7 +16,9 @@ use app\models\ParamCoordinates;
     <?= $form->field($model, 'description')->textInput(['maxlength' => 200]) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 100]) ?>
-
+    
+    <?= $form->field($model, 'comments')->textInput(['maxlength' => 700]) ?>
+    
     <?= $form->field($model, 'scales')->textInput(['maxlength' => 250]) ?>
 
     <?= $form->field($model, 'init_extent')->textInput(['maxlength' => 250]) ?>
@@ -30,7 +32,7 @@ use app\models\ParamCoordinates;
 
     <?= $form->field($model, 'active')->checkbox() ?>
 
-    <?= $form->field($model, 'theme')->dropDownList(['default'=>'Default', 'mobile'=>'Mobile'], ['prompt' => '---- Select Theme ----'])  ?>
+    <?= $form->field($model, 'theme')->dropDownList(['default'=>'Default', 'mobile'=>'Mobile', 'sugestoes'=>'Sugestões'], ['prompt' => '---- Select Theme ----'])  ?>
 
 
     <div class="form-group">

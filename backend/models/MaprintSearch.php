@@ -10,24 +10,22 @@ use app\models\Maprint;
 /**
  * MaprintSearch represents the model behind the search form about `app\models\Maprint`.
  */
-class MaprintSearch extends Maprint
-{
+class MaprintSearch extends Maprint {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'viewer_id', 'setOrder'], 'integer'],
-            [['name', 'description', 'description_font', 'layer', 'chage_data'], 'safe'],
+            [['name', 'description', 'description_font', 'layer', 'chage_data', 'serverType'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ class MaprintSearch extends Maprint
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Maprint::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -60,13 +57,15 @@ class MaprintSearch extends Maprint
             'viewer_id' => $_GET['viewer_id'],
             'chage_data' => $this->chage_data,
             'setOrder' => $this->setOrder,
+            'serverType' => $this->serverType,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'description_font', $this->description_font])
-            ->andFilterWhere(['like', 'layer', $this->layer]);
+                ->andFilterWhere(['like', 'description', $this->description])
+                ->andFilterWhere(['like', 'description_font', $this->description_font])
+                ->andFilterWhere(['like', 'layer', $this->layer]);
 
         return $dataProvider;
     }
+
 }

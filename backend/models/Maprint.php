@@ -36,7 +36,7 @@ class Maprint extends \yii\db\ActiveRecord {
         return [
             [['viewer_id'], 'required'],
             [['viewer_id', 'setOrder'], 'integer'],
-            [['name', 'description', 'description_font', 'layer'], 'string'],
+            [['name', 'description', 'description_font', 'layer', 'serverType'], 'string'],
             [['chage_data'], 'safe']
         ];
     }
@@ -54,6 +54,7 @@ class Maprint extends \yii\db\ActiveRecord {
             'layer' => 'Layer',
             'chage_data' => 'Chage Data',
             'setOrder' => 'Set Order',
+            'serverType' => 'Servidor de Impressão',
         ];
     }
 

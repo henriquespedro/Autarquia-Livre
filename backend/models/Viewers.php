@@ -40,6 +40,7 @@ class Viewers extends \yii\db\ActiveRecord
             [['active'], 'boolean'],
             [['create_data', 'modified_dat'], 'safe'],
             [['description'], 'string', 'max' => 200],
+            [['comments'], 'string', 'max' => 750],
             [['name'], 'string', 'max' => 100],
             [['scales', 'init_extent', 'max_extent'], 'string', 'max' => 250],
             [['projection', 'units', 'author', 'theme'], 'string', 'max' => 50]
@@ -65,6 +66,7 @@ class Viewers extends \yii\db\ActiveRecord
             'theme' => 'Tema',
             'create_data' => 'Criado em',
             'modified_dat' => 'Modificado em',
+            'comments' => 'Breve Comentário',
         ];
     }
 }

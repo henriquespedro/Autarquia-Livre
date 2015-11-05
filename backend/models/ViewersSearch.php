@@ -19,7 +19,7 @@ class ViewersSearch extends Viewers
     {
         return [
             [['id'], 'integer'],
-            [['description', 'name', 'scales', 'init_extent', 'max_extent', 'projection', 'units', 'author', 'theme', 'create_data', 'modified_dat'], 'safe'],
+            [['description', 'name', 'scales', 'init_extent', 'max_extent', 'projection', 'units', 'author', 'theme', 'create_data', 'modified_dat','comments'], 'safe'],
             [['active'], 'boolean'],
         ];
     }
@@ -61,10 +61,12 @@ class ViewersSearch extends Viewers
             'active' => $this->active,
             'create_data' => $this->create_data,
             'modified_dat' => $this->modified_dat,
+//            'comments' => $this->comments,
         ]);
 
         $query->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'comments', $this->comments])
             ->andFilterWhere(['like', 'scales', $this->scales])
             ->andFilterWhere(['like', 'init_extent', $this->init_extent])
             ->andFilterWhere(['like', 'max_extent', $this->max_extent])

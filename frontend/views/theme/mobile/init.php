@@ -39,11 +39,11 @@ for ($i = 0; $i < count($view_scales); $i++) {
         $('#select_scales').append('<option value="<?php echo $view_scales[$i]; ?>">1:<?php echo $view_scales[$i]; ?></option>');
     <?php
 }
+
 include_once __DIR__.'/../common/layers.php';
-//include_once 'layers.php';d
 include_once 'tabs.php';
 include_once 'pesquisas.php';
-include_once 'formularios.php';
+include_once __DIR__.'/../common/formularios.php';
 ?>
 
 </script>

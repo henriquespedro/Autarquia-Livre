@@ -40,11 +40,16 @@ $load_baselayers = $connection->query('SELECT * FROM layers WHERE viewer_id =' .
  while ($row_baselayers = $load_baselayers->fetchArray(SQLITE3_ASSOC)) {
     $load_base_server = $connection->query('SELECT type, url FROM param_server WHERE id =' . $row_baselayers['serverType'] . ' LIMIT 1');
     if ($base_server = $load_base_server->fetchArray(SQLITE3_ASSOC)) {
-     ?>
-    
-
-    layers.push(    
-        new ol.layer.Tile({
+        if ($base_server['type'] === 'Mapproxy') {
+        ?>
+        var NESource = new ol.source.XYZ({
+            projection: 'EPSG:3763',
+            url: '<?php echo $base_server["url"] ?>/tms/<?php echo $row_baselayers["layer"] ?>/{z}/{x}/{-y}.png',
+            <!--crossOrigin: 'null'-->
+        });
+        layers.push(
+        
+            new ol.layer.Tile({
             <!--extent: map.getView().calculateExtent(map.getSize()),-->
             title: '<?php echo $row_baselayers["name"] ?>',
             layer: '<?php echo $row_baselayers["layer"] ?>',
@@ -52,27 +57,33 @@ $load_baselayers = $connection->query('SELECT * FROM layers WHERE viewer_id =' .
             show_toc: <?php echo $row_baselayers['show_toc']; ?>,
             opacity: <?php echo $row_baselayers['opacity']; ?>,
             type: 'base',
-            extent: view_extent,
-            source: new ol.source.WMTS({
-            <!--source: new ol.source.TileWMS({-->
-                url: '<?php echo $base_server["url"] ?>/wmts/osm/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}.png',
-                layer: '<?php echo $row_baselayers["layer"] ?>',
-                matrixSet: 'etrs89',
-                format: 'png',
-                style: 'default',
-                isBaseLayer: true,
-                requestEncoding: 'REST',
-                tileGrid: new ol.tilegrid.WMTS({
-                    origin: ol.extent.getTopLeft(view_extent),
-                    resolutions: resolutions,
-                    matrixIds: matrixIds
-                }),
+            <!--extent: view_extent,-->
+            source: NESource,
+            isBaseLayer: true
             })
-        })
-
-    );
+        );
+        <?php 
+        } else {
+            ?>
+        layers.push(
+            new ol.layer.Image({
+                title: <?php echo $row_baselayers["name"] ?>,
+                layer: <?php echo $row_baselayers["layer"] ?>,
+                shwo_toc: '<?php echo $row_baselayers["shwo_toc"] ?>',
+                opacity: <?php echo $row_baselayers['opacity']; ?>,
+                tiled: 'yes',
+                visible: <?php echo $row_baselayers['visible']; ?>,
+                source: new ol.source.ImageWMS({
+                    url: <?php echo $base_server["url"] ?> + '/wms',
+                    crs: <?php echo $row_baselayers["crs"] ?>,
+                    params: {'LAYERS': <?php echo $row_baselayers["layer"] ?>},
+                })
+            })
+        );
 
     <?php
+        }
+     
     }
  }
 

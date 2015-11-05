@@ -19,10 +19,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     Created on : 5/Mar/2015, 14:29:40
     Author     : Pedro Henriques
 */
-.ol-overviewmap button {
-    background-color: #5BC0DE !important;
-}
-
 body{
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
@@ -57,9 +53,9 @@ body{
 .map {
     width: 100%;
     /*height: 86vh !important;*/
-    min-height: 80vh !important;
+    min-height: 85vh !important;
 }
-
+/*
 .btn-default {
     background-color: transparent !important;
     border-color: transparent !important;
@@ -74,7 +70,7 @@ body{
     width: 70px;
     white-space: wrap;
     
-    /*word-wrap: break-word;*/
+    word-wrap: break-word;
     height: 21px  !important;
     max-height: 21px !important;
     font-size: 11px;
@@ -111,7 +107,7 @@ body{
     padding-left: 5px;
     margin-right: auto;
     margin-left: auto;
-}
+}*/
 
 .zoom-in {
     background-image:url(../images/zoom_in.png);background-repeat:no-repeat;background-position:center;width:24px;height:24px;

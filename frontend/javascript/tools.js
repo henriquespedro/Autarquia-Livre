@@ -71,7 +71,7 @@ $("#sidebar-hide-btn").click(function () {
     $("#map_panel").addClass("col-md-12");
     if (!$('#sidebar-show-btn').length)
     {
-        $("<button class='btn btn-default' type='button' data-placement='bottom' title='Mostrar painel' onclick='show_slider()' id='sidebar-show-btn'><span class='glyphicon glyphicon-chevron-right'></span></button>").insertBefore("#btn_vista_inicial");
+        $("<button class='btn btn-info' type='button' data-placement='bottom' title='Mostrar painel' onclick='show_slider()' id='sidebar-show-btn'><span class='glyphicon glyphicon-chevron-right'></span></button>").insertBefore("#btn_vista_inicial");
     }
     map.updateSize();
 });
@@ -149,6 +149,7 @@ map.on('pointermove', function (event) {
 
 
 function change_active_option() {
+    show_slider();
     if (!$('options').hasClass('active')) {
         $('#options_list li').removeClass('active');
         $('#content_spinner div').removeClass('active');
@@ -748,3 +749,45 @@ var construnct_legend = jQuery.grep(map.getLayers().getArray(), function (single
 });
 
 
+/**
+ * Registar Ocorrência
+ */
+function add_sugestao() {
+    $("#modal_sugestoes").load("../tools/_sugestionsform.php");
+//    change_active_option();
+//    map.unByKey(single_click);
+    var mapVectorSource = new ol.source.Vector({
+        features: []
+    });
+
+    var mapVectorLayer = new ol.layer.Vector({
+        source: mapVectorSource
+    });
+    map.addLayer(mapVectorLayer);
+
+    var key = map.on('click', function (evt) {
+        var coordinate = evt.coordinate;
+
+        mapVectorLayer.getSource().clear();
+        var iconStyle = new ol.style.Style({
+            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                anchor: [0.5, 1],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'fraction',
+                src: 'http://localhost/websig/imagens/icon.png',
+            }))
+        });
+        var iconFeature = new ol.Feature({
+            geometry: new ol.geom.Point(coordinate)
+        });
+
+        iconFeature.setStyle(iconStyle);
+        mapVectorSource.addFeature(iconFeature);
+        var hdms = 'POINT(' + coordinate[0] + ' ' + coordinate[1] + ')';
+        $("#ocorrencias_coordinates").val(hdms);
+
+        $('#add_registo').modal('show');
+    });
+    
+    
+}

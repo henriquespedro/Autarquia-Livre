@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
+use app\models\ParamServer;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Maprint */
@@ -46,6 +47,9 @@ $dataProviderLayouts = new ActiveDataProvider([
                 <?= $form->field($model, 'description_font')->textInput() ?>
 
                 <?= $form->field($model, 'layer')->textInput() ?>
+
+                <?php $items_server = ArrayHelper::map(ParamServer::find()->all(), 'id', 'name'); ?>
+                <?= $form->field($model, 'serverType')->dropDownList($items_server) ?>
 
                 <?= $form->field($model, 'chage_data')->hiddenInput()->label(false) ?>
 

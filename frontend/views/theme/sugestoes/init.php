@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * Copyright (C) 2015 Autarquia-Livre
  *
  * This program is free software; you can redistribute it and/or
@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-include __DIR__ .'/../../connections.php';
+include __DIR__ . '/../../connections.php';
 ?>
 
 <script type="text/javascript" >
@@ -39,14 +39,13 @@ for ($i = 0; $i < count($view_scales); $i++) {
         $('#select_scales').append('<option value="<?php echo $view_scales[$i]; ?>">1:<?php echo $view_scales[$i]; ?></option>');
     <?php
 }
-include_once __DIR__.'/../common/layers.php';
-//include_once 'layers.php';d
-include_once 'tabs.php';
-include_once 'pesquisas.php';
-include_once 'formularios.php';
+
+include_once __DIR__ . '/../common/layers.php';
+
 ?>
 
 </script>
 
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/tools.js'); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/sugestoes.js'); ?>
 

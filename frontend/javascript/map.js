@@ -19,8 +19,8 @@
 var x = view_extent[0] + (view_extent[2] - view_extent[0]) / 2;
 var y = view_extent[1] + (view_extent[3] - view_extent[1]) / 2;
 var view_center = [x, y];
-
 var view_zoom = 0;
+//console.log(view_center);
 var map = new ol.Map({
     controls: ol.control.defaults({
 //        attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
@@ -30,7 +30,7 @@ var map = new ol.Map({
     layers: layers,
     target: 'map',
     view: new ol.View({
-//        extent: view_extent,
+        extent: view_extent,
         projection: view_projection,
         resolutions: map_resolutions,
         units: view_units,

@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-include __DIR__ .'/../views/connections.php';
+include __DIR__ . '/../views/connections.php';
 $resultprint = $connection->query('SELECT * FROM maprint WHERE viewer_id = (SELECT id FROM viewers WHERE name = "' . $_POST["page"] . '") ORDER BY setOrder ASC');
 $printfields = $connection->query('SELECT * FROM maprint_fields WHERE viewer_id = (SELECT id FROM viewers WHERE name = "' . $_POST["page"] . '") ORDER BY setOrder ASC');
 ?>
@@ -66,6 +66,15 @@ $printfields = $connection->query('SELECT * FROM maprint_fields WHERE viewer_id 
                     <td style="display:none;"><?php echo $row['description'] ?></td>
                     <td style="display:none;"><?php echo $row['description_font'] ?></td>
                     <td style="display:none;"><?php echo $row['layer'] ?></td>
+                    <?php
+                    $load_print_server = $connection->query('SELECT url FROM param_server WHERE id =' . $row['serverType'] . ' LIMIT 1');
+                    if ($print_server = $load_print_server->fetchArray(SQLITE3_ASSOC)) {
+                        ?>
+                        <td style="display:none;"><?php echo $print_server['url'] ?></td>
+                        <?php
+                    }
+                    ?>
+
                 </tr>
                 <?php
             }
@@ -117,7 +126,7 @@ $printfields = $connection->query('SELECT * FROM maprint_fields WHERE viewer_id 
     function next_fields() {
         $('table input:checked').each(function () {
             var row = $(this).parents('tr');
-            list_layouts.push({planta: row.find('td:nth-child(2)').text(), escala: row.find('td:nth-child(3) select').val(), layout: row.find('td:nth-child(4) select').val(), description_font: row.find('td:nth-child(5)').text(), description: row.find('td:nth-child(6)').text(), layer: row.find('td:nth-child(7)').text()});
+            list_layouts.push({planta: row.find('td:nth-child(2)').text(), escala: row.find('td:nth-child(3) select').val(), layout: row.find('td:nth-child(4) select').val(), description_font: row.find('td:nth-child(5)').text(), description: row.find('td:nth-child(6)').text(), layer: row.find('td:nth-child(7)').text(), print_server: row.find('td:nth-child(8)').text()});
         });
 
         if (list_layouts.length === 0) {
@@ -141,16 +150,37 @@ $printfields = $connection->query('SELECT * FROM maprint_fields WHERE viewer_id 
         });
         $('#fields_print').hide();
         $('#results_print').show();
-        var date = new Date();
-        var milliseconds = date.getTime();
-        var seconds = milliseconds / 10000;
-        var server_url = 'http://websig.cm-ourem.pt/geoserver';
-        var geoserver_url = server_url + '/pdf/print.pdf';
+
+
         var MapCenter = null;
         MapCenter = map.getView().getCenter();
 
         for (i = 0; i < list_layouts.length; i++) {
-            var layers = '{type:%22WMS%22,format:%22image/png%22,layers:[%22' + list_layouts[i].layer + '%22], baseURL:%22' + server_url + '/wms%22,styles:[%22%22], customParams :{BUFFER:0,TRANSPARENT:true}}';
+            var geoserver_url = list_layouts[i].print_server + '/pdf/print.pdf';
+            var date = new Date();
+            var milliseconds = date.getTime();
+            var seconds = milliseconds / 10000;
+
+            var layers = '{type:%22WMS%22,format:%22image/png%22,layers:[%22' + list_layouts[i].layer + '%22], baseURL:%22' + list_layouts[i].print_server + '/wms%22,styles:[%22%22], customParams :{BUFFER:0,TRANSPARENT:true}}';
+
+
+//            var features_origin = drawLayer.getSource().getArray();
+//            var format_print = new ol.format.GeoJSON({projection: 'EPSG:3763'});
+//            var results_geojson = format_print.writeFeatures(features_origin);
+//
+//            function replaceByValue() {
+//                var results_geojson_obj = JSON.parse(results_geojson);
+//                for (var k = 0; k < results_geojson_obj.features.length; ++k) {
+//                    results_geojson_obj.features[k].properties = {"name": "EPSG:3763"};
+//                }
+//                results_geojson = JSON.stringify(results_geojson_obj);
+//            }
+//            
+//            replaceByValue();
+//            var vectorsLayers = '{type:"Vector",styles:{"":{fill: false, fillColor:"#FF0000",stroke-width:"3",strokeWidth: 3, strokeColor: "#FF0000",fillOpacity: 0.0}},geoJson:' + results_geojson + '}';
+            
+            
+
             var print_url = geoserver_url + '?spec={%22outputFilename%22:%22Planta_SIG' + seconds + '%22,'
                     + '%22layout%22: %22' + $.trim(list_layouts[i].layout) + '%22,'
                     + '%22dpi%22:300,'
@@ -160,6 +190,7 @@ $printfields = $connection->query('SELECT * FROM maprint_fields WHERE viewer_id 
                     + '%22srs%22: %22EPSG:3763%22, '
                     + '%22units%22: %22m%22 ,'
                     + '%22layers%22:[' + layers + '], '
+//                    + '%22layers%22:[' + layers + ',' + escape(vectorsLayers) + '], '
                     + '%22pages%22: [ '
                     + '{ '
                     + '%22center%22: [' + MapCenter[0] + ',' + MapCenter[1] + '],'

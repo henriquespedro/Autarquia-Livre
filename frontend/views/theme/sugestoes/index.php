@@ -17,38 +17,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 ?>
-
-<script>
-    $(document).ready(function () {
-        $("#map").height($(window).height() - 70);
-        $("#layer_tree").height($(window).height() - 120);
-        $("#legend").height($(window).height() - 120);
-        $("#options").height($(window).height() - 120);
-        $(window).on('resize', function () {
-            if ($(window).width() >= 1024) {
-
-                $("#map").height($(window).height() - 70);
-                $("#layer_tree").height($(window).height() - 120);
-                $("#legend").height($(window).height() - 120);
-                $("#options").height($(window).height() - 120);
-                show_slider();
-            } else {
-                $("#map").height($(window).height() - 70);
-                
-                $("#layer_tree").height($(window).height() - 120);
-                $("#legend").height($(window).height() - 120);
-                $("#options").height($(window).height() - 120);
-                
-                $("#sidebar-hide-btn").click();
-            }
-        }).trigger('resize');
-    });</script>
 <div>
     <nav class="navbar navbar-default" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <!--                <div>
-                            <a class="navbar-brand" id="site_name" href="#"></a>
-                        </div>-->
+
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#top_options">
                 <span class="sr-only">Ferramentas</span>
@@ -60,50 +31,27 @@
 
         </div>
         <div class="collapse navbar-collapse" id="top_options">
-            <ul class="nav navbar-nav" id="top_tabs" >
-<!--                <div class="container" style="width:auto;">
-                    <ul id="top_tabs" class="nav nav-tabs" data-tabs="tabs">
+            <div class="navbar-form navbar-right" id="top_tabs" >
+                <button class="btn btn-info" onclick="add_sugestao()" id="bt_registar_ocorrencia">Registar Sugestão</button>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="codigo_ocorrencia" placeholder="Código da Ocorrência">
+                </div>
+                <button class="btn btn-success" id="bt_search_ocorrencias">Pesquisar</button>
 
-                    </ul>
-                    <div id="content_tabs" class="tab-content">
-
-                    </div>
-                </div>-->
-            </ul>
+            </div>
         </div>
     </nav>
 </div>
-<!--<div class="container-fluid fill">-->
 <div class="container-fluid fill">
     <div class="row">
-        <div id="panel" class="col-md-3" >
-            <div style="width:auto;">
-                <ul id="options_list" class="nav nav-tabs">
-                    <li class="active" title="Lista de Temas" id="tree_list"><a href="#layer_tree" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span></a></li>
-                    <li title="Legenda" id="legend_list" ><a href="#legend" data-toggle="tab"><span class="glyphicon glyphicon-bookmark"></span> </a></li>
-                    <li  title="Opções" id="option_list"><a href="#options" data-toggle="tab"><span class="glyphicon glyphicon-cog"></span></a></li>
-                    <button type="button" class="btn btn-xs btn-default pull-right" title="Esconder painel" id="sidebar-hide-btn"><span class="glyphicon glyphicon-chevron-left"></span></button>
-                </ul>
-                <div id="content_spinner" class="tab-content">
-                    <div id="layer_tree" style="overflow-y: auto;" class="tab-pane active tree"></div>
-                    <div id="legend" style="overflow-y: auto;" class="tab-pane"></div>
-                    <div id="options" style="overflow-y: auto;" class="tab-pane"></div>
-                </div>
-            </div>
 
-
-        </div>
-        <div class="col-md-9"  id="map_panel">
-            <div id="map" class="map content_border" contextmenu="menu_options">
+        <div class="col-md-12"  id="map_panel">
+            <div id="map" style="height: 93vh" class="map content_border" contextmenu="menu_options">
                 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/map.js'); ?>
-                <!--<script src="../javascript/map.js" type="text/javascript"></script>-->
                 <!-- create the menu -->
                 <menu type="context" id="menu_options">
                     <menuitem label="Refresh" onclick="window.location.reload();" icon="ico_reload.png"></menuitem>
-                    <!--<menuitem label="Export Map" onclick="exportar_mapa()" icon="ico_export_map.png"></menuitem>-->
-                    <menuitem label="Print" onclick="imprimir_plantas()" icon="ico_print.png"></menuitem>
-                    <menuitem label="Open StreetView" onclick="" icon="ico_streetview.png"></menuitem>
-                    <menuitem label="Get Informations" onclick="obter_informacoes()" icon="ico_info.png"></menuitem>
+                    <menuitem label="Open StreetView" onclick="streetview()" icon="ico_streetview.png"></menuitem>
                     <menu label="Share on...">
                         <menuitem label="Twitter" icon="ico_twitter.png" onclick="window.open('//twitter.com/intent/tweet?text=' + window.location.href);"></menuitem>
                         <menuitem label="Facebook" icon="ico_facebook.png" onclick="window.open('//facebook.com/sharer/sharer.php?u=' + window.location.href);"></menuitem>
@@ -119,8 +67,6 @@
                     <button class="btn btn-default_toolbar" type="button" data-placement="bottom" title="Mover Mapa" onclick="arrastar_mapa()"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;</button>
                     <button class="btn btn-default_toolbar" type="button" data-placement="bottom" title="Aproximar Mapa" onclick="aproximar_map()"><span class="glyphicon glyphicon-zoom-in"></span>&nbsp;</button>
                     <button class="btn btn-default_toolbar" type="button" data-placement="bottom" title="Afastar Mapa" onclick="afastar_map()"><span class="glyphicon glyphicon-zoom-out"></span>&nbsp;</button>
-                    <button class="btn btn-default_toolbar" type="button" data-placement="bottom" title="Obter Informações" onclick="obter_informacoes()"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;</button>
-                    <button class="btn btn-default_toolbar" type="button" data-placement="bottom" title="Imprimir Planta de Localização" onclick="imprimir_plantas()"><span class="glyphicon glyphicon-print"></span>&nbsp;</button>
                     <select class="btn btn-default_toolbar form-control" data-placement="bottom" id="select_scales" style="width: 110px">
                     </select>
                     <div><span class="label label-default">Ação corrente: <span id="corrent_action"></span> </span></div>
@@ -131,6 +77,7 @@
             </div>
 
         </div>
+
     </div>
     <div class="row" id="button">
 
@@ -139,3 +86,44 @@
 <div id="search_div" hidden></div>
 <div id="streetview_div" title="Google StreetView"></div>
 <div id="formularios_div" title=""></div>
+<div id="modal_sugestoes"></div>
+
+<div class="modal fade"  id="modal_sugestoes_info" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: auto;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p class="modal-title" id="myModal_info_search_lLabel" style="font-family:Helvetica; font-size:x-large; color:#0099CC; font-weight:bold;"><span id="codigo_ocorrencia_view"></span> - <span id="situacao_ocorencia_view"></span></p>
+                <span style="font-family:Helvetica; font-size:large; color:#0099CC; font-weight:bold;"  id="categoria_ocorrencias_view"></span>
+            </div>
+            <div class="modal-body" id="myModal_info_search">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td> <p style="font-family:Helvetica; font-size:12px; font-weight:bold; color: gray;">Coordenadas: <span style="font-family: Helvetica Neue; font-size: 12px; font-weight: normal; color: #555" id="coordenadas_ocorrencias_view"></span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  width="550px"  style="max-width: 550px"> 
+                                <p style="font-family:Helvetica; font-size:12px; font-weight:bold; color: gray;">Descrição:</p>
+                                <textarea class="form-control input-sm" rows="4" cols="15" style="max-width: 550px; background-color: #FFF" id="descricao_ocorrencia_view" readonly></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> 
+                                <br>
+                                <p style="font-family:Helvetica; font-size:12px; font-weight:bold; color: gray;">Data Registo: <span style="font-family: Helvetica Neue; font-size: 12px; font-weight: normal; color: #555" id="data_registo_ocorrencias_view"></span></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> <p style="font-family:Helvetica; font-size:12px; font-weight:bold; color: gray;">Data Ultima Atualização: <span style="font-family: Helvetica Neue; font-size: 12px; font-weight: normal; color: #555" id="ultima_atualizacao_ocorrencias_view"></span></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
