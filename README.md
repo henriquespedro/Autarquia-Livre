@@ -1,5 +1,5 @@
 
-![logo](http://www.novaims.unl.pt/images/Logo.png "Autarquia-Livre") Autarquia-Livre V1
+![logo](http://www.novaims.unl.pt/images/Logo.png "Autarquia Livre") Autarquia Livre V1
 ================================================================
 
 Autarquia-Livre, by Pedro Henriques.
