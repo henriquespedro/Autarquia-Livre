@@ -710,6 +710,11 @@ function about_app() {
     change_active_option();
 }
 
+function opacity_form() {
+    $("#options").load("../tools/_opacityform.php");
+    change_active_option();
+}
+
 INCHES_PER_UNIT = {
     'inches': 1.0,
     'ft': 12.0,
