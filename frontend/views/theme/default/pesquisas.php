@@ -25,7 +25,7 @@ while ($row_search = $load_search->fetchArray(SQLITE3_ASSOC)) {
     $connection_param = $row_search['datasource_id'];
     include __DIR__ .'/../../connections.php';
     ?>
-        $('#search').append('<button type="button" onclick="search_<?php echo $row_search['id']; ?>()" title="<?php echo $row_search['description']; ?>" class="btn btn-default bt_size "> <span class="glyphicon" style="background-image:url(../images/appbar.map.folds.svg);background-repeat:no-repeat;background-position:center;width:26px;height:26px;" aria-hidden="true"></span><p ><?php echo $row_search['search_name']; ?></p></button>');
+        $('#search').append('<button type="button" onclick="search_<?php echo $row_search['id']; ?>()" title="<?php echo $row_search['description']; ?>" class="btn btn-default btn-default-menu bt_size "> <span class="glyphicon" style="background-image:url(../images/appbar.map.folds.svg);background-repeat:no-repeat;background-position:center;width:26px;height:26px;" aria-hidden="true"></span><p ><?php echo $row_search['search_name']; ?></p></button>');
         $('#search_div').append('<div id="all_param_search<?php echo $row_search['id']; ?>"><form id="search_div_<?php echo $row_search['id']; ?>"></form></div>');
         function search_<?php echo $row_search['id']; ?>() {
             change_active_option();
@@ -123,7 +123,7 @@ while ($row_search = $load_search->fetchArray(SQLITE3_ASSOC)) {
     <?php
 }
 ?>
-                $('#search').append('<button type="button" onclick="clear_results_search()" title="Apagar Resultados" class="btn btn-default bt_size "> <span class="glyphicon" style="background-image:url(../images/appbar.close.svg);background-repeat:no-repeat;background-position:center;width:26px;height:26px;" aria-hidden="true"></span><p>Apagar Resultados</p></button>');
+                $('#search').append('<button type="button" onclick="clear_results_search()" title="Apagar Resultados" class="btn btn-default btn-default-menu bt_size "> <span class="glyphicon" style="background-image:url(../images/appbar.close.svg);background-repeat:no-repeat;background-position:center;width:26px;height:26px;" aria-hidden="true"></span><p>Apagar Resultados</p></button>');
 
                 <!--<script>-->
 function function_get_result (form_id, search_id, connection_param) {

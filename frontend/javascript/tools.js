@@ -56,7 +56,6 @@ map.getView().on('propertychange', function (e) {
     switch (e.key) {
         case 'resolution':
             var escala_int = Math.round(getScaleFromResolution(map.getView().getResolution(), 'm'));
-//            console.log(escala_int);
             $("#select_scales").val(escala_int);
 
             break;

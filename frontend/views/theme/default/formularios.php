@@ -22,6 +22,6 @@ $load_formularios = $connection->query('SELECT * FROM forms WHERE viewer_id =' .
 
 while ($row_forms = $load_formularios->fetchArray(SQLITE3_ASSOC)) {
     ?>
-        $('#modulos').append('<button type="button" onclick="formulario(<?php echo $row_forms['id']; ?>)" title="<?php echo $row_forms['description']; ?>" class="btn btn-default bt_size"> <span class="glyphicon" style="background-image:url(../images/<?php echo $row_forms['icon']; ?>);background-repeat:no-repeat;background-position:center;width:26px;height:26px;" aria-hidden="true"></span><p ><?php echo $row_forms['name']; ?></p></button>');
+        $('#modulos').append('<button type="button" onclick="formulario(<?php echo $row_forms['id']; ?>)" title="<?php echo $row_forms['description']; ?>" class="btn btn-default btn-default-menu bt_size"> <span class="glyphicon" style="background-image:url(../images/<?php echo $row_forms['icon']; ?>);background-repeat:no-repeat;background-position:center;width:26px;height:26px;" aria-hidden="true"></span><p ><?php echo $row_forms['name']; ?></p></button>');
     <?php
 }
