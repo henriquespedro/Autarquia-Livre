@@ -46,10 +46,10 @@
     <div class="row">
 
         <div class="col-md-12"  id="map_panel">
-            <div id="map" style="height: 93vh" class="map content_border" contextmenu="menu_options">
+            <div id="map" style="height: 92.5vh" class="map content_border" contextmenu="menu_options">
                 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/map.js'); ?>
-                <!-- create the menu -->
-                <menu type="context" id="menu_options">
+            </div>
+            <menu type="context" id="menu_options">
                     <menuitem label="Refresh" onclick="window.location.reload();" icon="ico_reload.png"></menuitem>
                     <menuitem label="Open StreetView" onclick="streetview()" icon="ico_streetview.png"></menuitem>
                     <menu label="Share on...">
@@ -59,8 +59,6 @@
                     </menu>
 
                 </menu>
-
-            </div>
             <div class="btn-toolbar" style="position:absolute; left: 60px; top:10px" role="toolbar" aria-label="...">
                 <div class="btn-group" role="group"><!--data-toggle="button" --> 
                     <button class="btn btn-default_toolbar" id="btn_vista_inicial" type="button" data-placement="bottom" title="Vista Inicial" onclick="extensao_total()"><span class="glyphicon glyphicon-globe"></span>&nbsp;</button>

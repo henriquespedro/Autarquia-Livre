@@ -146,7 +146,7 @@ $printfields = $connection->query('SELECT * FROM maprint_fields WHERE viewer_id 
     function next_results() {
         var params = '';
         $('#form_fields_print').find('div >input').each(function () {
-            params += '%22' + $(this).attr('id') + '%22:%22' + $(this).val() + '%22,';
+            params += '%22' + $(this).attr('id') + '%22:%22' + escape($(this).val()) + '%22,';
         });
         $('#fields_print').hide();
         $('#results_print').show();
@@ -160,11 +160,9 @@ $printfields = $connection->query('SELECT * FROM maprint_fields WHERE viewer_id 
             var date = new Date();
             var milliseconds = date.getTime();
             var seconds = milliseconds / 10000;
-
             var layers = '{type:%22WMS%22,format:%22image/png%22,layers:[%22' + list_layouts[i].layer + '%22], baseURL:%22' + list_layouts[i].print_server + '/wms%22,styles:[%22%22], customParams :{BUFFER:0,TRANSPARENT:true}}';
 
-
-//            var features_origin = drawLayer.getSource().getArray();
+//            var features_origin = featureOverlay.getFeatures().getArray();
 //            var format_print = new ol.format.GeoJSON({projection: 'EPSG:3763'});
 //            var results_geojson = format_print.writeFeatures(features_origin);
 //
@@ -173,20 +171,19 @@ $printfields = $connection->query('SELECT * FROM maprint_fields WHERE viewer_id 
 //                for (var k = 0; k < results_geojson_obj.features.length; ++k) {
 //                    results_geojson_obj.features[k].properties = {"name": "EPSG:3763"};
 //                }
-//                results_geojson = JSON.stringify(results_geojson_obj);
+//                results_geojson = JSON.stringify(results_geojson_obj); //convert to JSON string
 //            }
-//            
+//
 //            replaceByValue();
+//
 //            var vectorsLayers = '{type:"Vector",styles:{"":{fill: false, fillColor:"#FF0000",stroke-width:"3",strokeWidth: 3, strokeColor: "#FF0000",fillOpacity: 0.0}},geoJson:' + results_geojson + '}';
-            
-            
 
             var print_url = geoserver_url + '?spec={%22outputFilename%22:%22Planta_SIG' + seconds + '%22,'
                     + '%22layout%22: %22' + $.trim(list_layouts[i].layout) + '%22,'
                     + '%22dpi%22:300,'
-                    + '%22titulo%22:%22' + list_layouts[i].planta + '%22,'
+                    + '%22titulo%22:%22' + escape(list_layouts[i].planta) + '%22,'
                     + params
-                    + '%22fonte%22:%22' + list_layouts[i].description_font + '%22,'
+                    + '%22fonte%22:%22' + escape(list_layouts[i].description_font) + '%22,'
                     + '%22srs%22: %22EPSG:3763%22, '
                     + '%22units%22: %22m%22 ,'
                     + '%22layers%22:[' + layers + '], '
@@ -194,7 +191,7 @@ $printfields = $connection->query('SELECT * FROM maprint_fields WHERE viewer_id 
                     + '%22pages%22: [ '
                     + '{ '
                     + '%22center%22: [' + MapCenter[0] + ',' + MapCenter[1] + '],'
-                    + '%22scale%22: ' + $.trim(list_layouts[i].escala) + ','
+                    + '%22scale%22: ' + list_layouts[i].escala + ','
                     + '%22rotation%22: 0,'
                     + ' }'
                     + '],}"';

@@ -50,6 +50,7 @@ $load_baselayers = $connection->query('SELECT * FROM layers WHERE viewer_id =' .
         layers.push(
         
             new ol.layer.Tile({
+            id: <?php echo $row_baselayers["id"] ?>,
             <!--extent: map.getView().calculateExtent(map.getSize()),-->
             title: '<?php echo $row_baselayers["name"] ?>',
             layer: '<?php echo $row_baselayers["layer"] ?>',
@@ -67,6 +68,7 @@ $load_baselayers = $connection->query('SELECT * FROM layers WHERE viewer_id =' .
             ?>
         layers.push(
             new ol.layer.Image({
+                id: <?php echo $row_baselayers["id"] ?>,
                 title: <?php echo $row_baselayers["name"] ?>,
                 layer: <?php echo $row_baselayers["layer"] ?>,
                 shwo_toc: '<?php echo $row_baselayers["shwo_toc"] ?>',
@@ -96,6 +98,7 @@ $load_layers = $connection->query('SELECT * FROM layers WHERE viewer_id =' . $ro
     if ($server = $load_server->fetchArray(SQLITE3_ASSOC)) {
      ?>
         layers.push(new ol.layer.Image({
+            id: '<?php echo $row_layers["id"] ?>',
             title: '<?php echo $row_layers["name"] ?>',
             name: '<?php echo $row_layers["name"] ?>',
             layer: '<?php echo $row_layers["layer"] ?>',
@@ -198,25 +201,13 @@ $load_layers = $connection->query('SELECT * FROM layers WHERE viewer_id =' . $ro
             });
 
             $('#layer_tree').bind("uncheck_node.jstree", function (e, data) {
-                var array = data.instance.get_bottom_checked(data);
-                map.getLayers().forEach(function (lyr) {  
-                    var result = validate_exist_layer(lyr.get('layer'));
-                    if (result === '') {
+                var layer_unchecked = data.node.li_attr.layer;
+                map.getLayers().forEach(function (lyr) {
+                    if ( layer_unchecked === lyr.get('layer')) {
                         lyr.setVisible(false);
-                    }
+                    }            
                 });
-                function validate_exist_layer(layer) {
-
-                    var result = ''
-                    for(k = 0; k < array.length; k++) {
-                        var id_layer = array[k].li_attr.layer;
-                        if  (id_layer === layer) {
-                            result = 'yes';
-                            return false;
-                        }
-                    }
-                    return result;
-                }
+           
             });
 
             $("#layer_tree").bind("hover_node.jstree", function (e, data)

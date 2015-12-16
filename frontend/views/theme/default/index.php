@@ -94,11 +94,10 @@
 
         </div>
         <div class="col-md-9"  id="map_panel">
-            <div id="map" class="map content_border" contextmenu="menu_options">
+            <div id="map" class="map content_border" style="max-height: 86vh" contextmenu="menu_options">
                 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/map.js'); ?>
-                <!--<script src="../javascript/map.js" type="text/javascript"></script>-->
-                <!-- create the menu -->
-                <menu type="context" id="menu_options">
+            </div>
+            <menu type="context" id="menu_options">
                     <menuitem label="Refresh" onclick="window.location.reload();" icon="ico_reload.png"></menuitem>
                     <!--<menuitem label="Export Map" onclick="exportar_mapa()" icon="ico_export_map.png"></menuitem>-->
                     <menuitem label="Print" onclick="imprimir_plantas()" icon="ico_print.png"></menuitem>
@@ -109,10 +108,7 @@
                         <menuitem label="Facebook" icon="ico_facebook.png" onclick="window.open('//facebook.com/sharer/sharer.php?u=' + window.location.href);"></menuitem>
                         <menuitem label="Email This Page" icon="ico_email.png" onclick="window.location = 'mailto:?body=' + window.location.href;"></menuitem>
                     </menu>
-
                 </menu>
-
-            </div>
             <div class="btn-toolbar" style="position:absolute; left: 60px; top:10px" role="toolbar" aria-label="...">
                 <div class="btn-group" role="group"><!--data-toggle="button" --> 
                     <button class="btn btn-default_toolbar" id="btn_vista_inicial" type="button" data-placement="bottom" title="Vista Inicial" onclick="extensao_total()"><span class="glyphicon glyphicon-globe"></span>&nbsp;</button>

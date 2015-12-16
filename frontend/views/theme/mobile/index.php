@@ -20,25 +20,25 @@
 
 <script>
     $(document).ready(function () {
-        $("#map").height($(window).height() - 70);
+        $("#map").height($(window).height() - 75);
         $("#layer_tree").height($(window).height() - 120);
         $("#legend").height($(window).height() - 120);
         $("#options").height($(window).height() - 120);
         $(window).on('resize', function () {
             if ($(window).width() >= 1024) {
 
-                $("#map").height($(window).height() - 70);
+                $("#map").height($(window).height() - 75);
                 $("#layer_tree").height($(window).height() - 120);
                 $("#legend").height($(window).height() - 120);
                 $("#options").height($(window).height() - 120);
                 show_slider();
             } else {
-                $("#map").height($(window).height() - 70);
-                
+                $("#map").height($(window).height() - 75);
+
                 $("#layer_tree").height($(window).height() - 120);
                 $("#legend").height($(window).height() - 120);
                 $("#options").height($(window).height() - 120);
-                
+
                 $("#sidebar-hide-btn").click();
             }
         }).trigger('resize');
@@ -61,14 +61,14 @@
         </div>
         <div class="collapse navbar-collapse" id="top_options">
             <ul class="nav navbar-nav" id="top_tabs" >
-<!--                <div class="container" style="width:auto;">
-                    <ul id="top_tabs" class="nav nav-tabs" data-tabs="tabs">
-
-                    </ul>
-                    <div id="content_tabs" class="tab-content">
-
-                    </div>
-                </div>-->
+                <!--                <div class="container" style="width:auto;">
+                                    <ul id="top_tabs" class="nav nav-tabs" data-tabs="tabs">
+                
+                                    </ul>
+                                    <div id="content_tabs" class="tab-content">
+                
+                                    </div>
+                                </div>-->
             </ul>
         </div>
     </nav>
@@ -96,23 +96,20 @@
         <div class="col-md-9"  id="map_panel">
             <div id="map" class="map content_border" contextmenu="menu_options">
                 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/map.js'); ?>
-                <!--<script src="../javascript/map.js" type="text/javascript"></script>-->
-                <!-- create the menu -->
-                <menu type="context" id="menu_options">
-                    <menuitem label="Refresh" onclick="window.location.reload();" icon="ico_reload.png"></menuitem>
-                    <!--<menuitem label="Export Map" onclick="exportar_mapa()" icon="ico_export_map.png"></menuitem>-->
-                    <menuitem label="Print" onclick="imprimir_plantas()" icon="ico_print.png"></menuitem>
-                    <menuitem label="Open StreetView" onclick="" icon="ico_streetview.png"></menuitem>
-                    <menuitem label="Get Informations" onclick="obter_informacoes()" icon="ico_info.png"></menuitem>
-                    <menu label="Share on...">
-                        <menuitem label="Twitter" icon="ico_twitter.png" onclick="window.open('//twitter.com/intent/tweet?text=' + window.location.href);"></menuitem>
-                        <menuitem label="Facebook" icon="ico_facebook.png" onclick="window.open('//facebook.com/sharer/sharer.php?u=' + window.location.href);"></menuitem>
-                        <menuitem label="Email This Page" icon="ico_email.png" onclick="window.location = 'mailto:?body=' + window.location.href;"></menuitem>
-                    </menu>
-
+            </div>
+            <menu type="context" id="menu_options">
+                <menuitem label="Refresh" onclick="window.location.reload();" icon="ico_reload.png"></menuitem>
+                <!--<menuitem label="Export Map" onclick="exportar_mapa()" icon="ico_export_map.png"></menuitem>-->
+                <menuitem label="Print" onclick="imprimir_plantas()" icon="ico_print.png"></menuitem>
+                <menuitem label="Open StreetView" onclick="" icon="ico_streetview.png"></menuitem>
+                <menuitem label="Get Informations" onclick="obter_informacoes()" icon="ico_info.png"></menuitem>
+                <menu label="Share on...">
+                    <menuitem label="Twitter" icon="ico_twitter.png" onclick="window.open('//twitter.com/intent/tweet?text=' + window.location.href);"></menuitem>
+                    <menuitem label="Facebook" icon="ico_facebook.png" onclick="window.open('//facebook.com/sharer/sharer.php?u=' + window.location.href);"></menuitem>
+                    <menuitem label="Email This Page" icon="ico_email.png" onclick="window.location = 'mailto:?body=' + window.location.href;"></menuitem>
                 </menu>
 
-            </div>
+            </menu>
             <div class="btn-toolbar" style="position:absolute; left: 60px; top:10px" role="toolbar" aria-label="...">
                 <div class="btn-group" role="group"><!--data-toggle="button" --> 
                     <button class="btn btn-default_toolbar" id="btn_vista_inicial" type="button" data-placement="bottom" title="Vista Inicial" onclick="extensao_total()"><span class="glyphicon glyphicon-globe"></span>&nbsp;</button>

@@ -57,7 +57,9 @@ body{
 .map {
     width: 100%;
     /*height: 86vh !important;*/
+    /*min-height: 80vh !important;*/
     min-height: 80vh !important;
+    /* max-height: 86vh !important; */
 }
 
 .btn-default-menu {
@@ -100,10 +102,10 @@ body{
     user-select: none;
 }
 .content_border {
-    border-radius: 10px; 
+    border-radius: 5px; 
     -moz-border-radius: 1px; 
-    -webkit-border-radius: 10px; 
-    border: 3px solid #CCCCCC;
+    -webkit-border-radius: 5px; 
+    border: 1.5px solid #CCCCCC;
 }
 
 .container-viewer {
@@ -247,12 +249,12 @@ ul.layerstack li.selected {
     color: #333 !important;
     background-color: #fff !important;
     border-color: #ccc !important;
-    width: 34px!important;
-    height: 24px !important;
+    width: 30px!important;
+    height: 20px !important;
 }
 
 .ol-control button {
-    font-size: 1.5em !important;
+    font-size: 1.2em !important;
 }
 
 .col-md-2, .col-md-9, .col-md-12 {

@@ -166,7 +166,7 @@ function arrastar_mapa() {
     map.removeInteraction(boundingBox_out);
     map.removeInteraction(draw);
     map.removeInteraction(drawmeasure);
-    map.addInteraction(new ol.interaction.DragPan());
+    //map.addInteraction(new ol.interaction.DragPan());
 //    map.addInteraction(new ol.interaction.DragPan({
 //        kinetic: new ol.Kinetic(-0.01, 0.1, 200)
 //    }));
@@ -792,6 +792,4 @@ function add_sugestao() {
 
         $('#add_registo').modal('show');
     });
-    
-    
 }

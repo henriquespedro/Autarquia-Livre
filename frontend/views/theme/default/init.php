@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * Copyright (C) 2015 Autarquia-Livre
  *
  * This program is free software; you can redistribute it and/or
@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-include __DIR__ .'/../../connections.php';
+include __DIR__ . '/../../connections.php';
 ?>
 
 <script type="text/javascript" >
@@ -39,11 +39,17 @@ for ($i = 0; $i < count($view_scales); $i++) {
         $('#select_scales').append('<option value="<?php echo $view_scales[$i]; ?>">1:<?php echo $view_scales[$i]; ?></option>');
     <?php
 }
-include_once __DIR__.'/../common/layers.php';
+include_once __DIR__ . '/../common/layers.php';
 //include_once 'layers.php';d
 include_once 'tabs.php';
 include_once 'pesquisas.php';
-include_once 'formularios.php';
+$load_formularios = $connection->query('SELECT * FROM forms WHERE viewer_id =' . $row['id']);
+
+while ($row_forms = $load_formularios->fetchArray(SQLITE3_ASSOC)) {
+    ?>
+        $('#modulos').append('<button type="button" onclick="formulario(<?php echo $row_forms['id']; ?>)" title="<?php echo $row_forms['description']; ?>" class="btn btn-default btn-default-menu bt_size"> <span class="glyphicon" style="background-image:url(../images/<?php echo $row_forms['icon']; ?>);background-repeat:no-repeat;background-position:center;width:26px;height:26px;" aria-hidden="true"></span><p ><?php echo $row_forms['name']; ?></p></button>');
+    <?php
+}
 ?>
 
 </script>

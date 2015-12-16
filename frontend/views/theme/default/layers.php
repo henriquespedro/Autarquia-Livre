@@ -42,6 +42,8 @@ $load_baselayers = $connection->query('SELECT * FROM layers WHERE viewer_id =' .
     if ($base_server = $load_base_server->fetchArray(SQLITE3_ASSOC)) {
      ?>
     
+        <!--load_base_layers('<?php echo $row_baselayers["id"] ?>', '<?php echo $row_baselayers["name"] ?>', '<?php echo $row_baselayers["layer"] ?>', <?php echo $row_baselayers["visible"] ?>, '<?php echo $row_baselayers["crs"] ?>',<?php echo $row_baselayers["opacity"] ?>,<?php echo $base_server["url"] ?>,<?php echo $row_baselayers["show_toc"] ?>,<?php echo $row_baselayers["type"] ?>);-->
+
 
     layers.push(    
         new ol.layer.Tile({
@@ -83,8 +85,12 @@ $load_layers = $connection->query('SELECT * FROM layers WHERE viewer_id =' . $ro
  while ($row_layers = $load_layers->fetchArray(SQLITE3_ASSOC)) {
     $load_server = $connection->query('SELECT type, url FROM param_server WHERE id =' . $row_layers['serverType'] . ' LIMIT 1');
     if ($server = $load_server->fetchArray(SQLITE3_ASSOC)) {
-     ?>
+     ?> 
+                    
+        <!--load_layers('<?php echo $row_layers["id"] ?>', '<?php echo $row_layers["name"] ?>', '<?php echo $row_layers["layer"] ?>', '<?php echo $row_layers["fields"] ?>', <?php echo $row_layers["visible"] ?>, '<?php echo $row_layers["crs"] ?>',<?php echo $row_layers["opacity"] ?>,<?php echo $server["url"] ?>,<?php echo $row_layers["show_toc"] ?>,<?php echo $row_layers["type"] ?>);-->
+        
         layers.push(new ol.layer.Image({
+            id: '<?php echo $row_layers["id"] ?>';
             title: '<?php echo $row_layers["name"] ?>',
             name: '<?php echo $row_layers["name"] ?>',
             layer: '<?php echo $row_layers["layer"] ?>',
@@ -189,7 +195,7 @@ $load_layers = $connection->query('SELECT * FROM layers WHERE viewer_id =' . $ro
             $('#layer_tree').bind("uncheck_node.jstree", function (e, data) {
                 var array = data.instance.get_bottom_checked(data);
                 map.getLayers().forEach(function (lyr) {  
-                    var result = validate_exist_layer(lyr.get('layer'));
+                    var result = validate_exist_layer(lyr.get('id'));
                     if (result === '') {
                         lyr.setVisible(false);
                     }
@@ -198,7 +204,7 @@ $load_layers = $connection->query('SELECT * FROM layers WHERE viewer_id =' . $ro
 
                     var result = ''
                     for(k = 0; k < array.length; k++) {
-                        var id_layer = array[k].li_attr.layer;
+                        var id_layer = array[k].li_attr.id;
                         if  (id_layer === layer) {
                             result = 'yes';
                             return false;
