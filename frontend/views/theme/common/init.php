@@ -39,13 +39,34 @@ for ($i = 0; $i < count($view_scales); $i++) {
         $('#select_scales').append('<option value="<?php echo $view_scales[$i]; ?>">1:<?php echo $view_scales[$i]; ?></option>');
     <?php
 }
+?>
+</script>
+<script src="../javascript/map.js"></script>
+<script src="../javascript/default.js"></script>
+<script type="text/javascript" >
+<?php
+include_once 'layers.php';
+if ($row["theme"] === 'default') {
+    include_once 'tabs.php';
+    include_once 'pesquisas.php';
 
-include_once __DIR__ . '/../common/layers.php';
+    $load_formularios = $connection->query('SELECT * FROM forms WHERE viewer_id =' . $row['id']);
 
+    while ($row_forms = $load_formularios->fetchArray(SQLITE3_ASSOC)) {
+        ?>
+            $('#modulos').append('<button type="button" onclick="formulario(<?php echo $row_forms['id']; ?>)" title="<?php echo $row_forms['description']; ?>" class="btn btn-default btn-default-menu bt_size"> <span class="glyphicon" style="background-image:url(../images/<?php echo $row_forms['icon']; ?>);background-repeat:no-repeat;background-position:center;width:26px;height:26px;" aria-hidden="true"></span><p ><?php echo $row_forms['name']; ?></p></button>');
+        <?php
+    }
+} elseif ($row["theme"] === 'mobile') {
+    include_once 'tabs.php';
+    include_once 'pesquisas.php';
+    include_once 'formularios.php';
+} elseif ($row['theme'] === 'sugestoes') {
+    $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/sugestoes.js');
+}
 ?>
 
 </script>
 
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/tools.js'); ?>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/sugestoes.js'); ?>
 
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/tools.js'); ?>

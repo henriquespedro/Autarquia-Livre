@@ -94,14 +94,12 @@ $connection = new SQLite3(__DIR__ . '/../../../data/data.db');
             if ($load_permissions->fetchArray(SQLITE3_ASSOC)) {
                 if (isset($_SESSION['login_username'])) {
                     include_once __DIR__ . '/../theme/' . $row['theme'] . '/index.php';
-                    include_once __DIR__ . '/../theme/' . $row['theme'] . '/init.php';
                 } else {
                     ?>
                     <script>
                         $(document).attr("title", "Login - <?php echo $row['description']; ?>");
                     </script>
                     <h1 style="text-align: center">Iniciar Sessão</h1><br><br>
-                    <!--border:3px dotted #CCC; background-color:#00BFFF;-->
                     <div style="width:300px; height:200px; margin: 0 auto; ">
                         <form action="../views/viewer/login.php" method="post">
                             <div class="form-group">
@@ -123,7 +121,6 @@ $connection = new SQLite3(__DIR__ . '/../../../data/data.db');
                 }
             } else {
                 include_once __DIR__ . '/../theme/' . $row['theme'] . '/index.php';
-                include_once __DIR__ . '/../theme/' . $row['theme'] . '/init.php';
             }
         }
     }

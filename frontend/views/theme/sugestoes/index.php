@@ -47,7 +47,6 @@
 
         <div class="col-md-12"  id="map_panel">
             <div id="map" style="height: 92.5vh" class="map content_border" contextmenu="menu_options">
-                <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/map.js'); ?>
             </div>
             <menu type="context" id="menu_options">
                     <menuitem label="Refresh" onclick="window.location.reload();" icon="ico_reload.png"></menuitem>
@@ -125,3 +124,6 @@
 </div>
 
 
+<?php
+include_once __DIR__ . '/../common/init.php';
+?>

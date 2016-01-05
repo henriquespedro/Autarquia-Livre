@@ -793,3 +793,71 @@ function add_sugestao() {
         $('#add_registo').modal('show');
     });
 }
+
+var arr = [], data_tree_collection = [];
+$.each(data_tree, function (index, value) {
+    if ($.inArray(value.id, arr) == -1) {
+        arr.push(value.id);
+        data_tree_collection.push(value);
+    }
+});
+
+$('#layer_tree').jstree({
+    "checkbox": {
+        "tie_selection": false,
+        "keep_selected_style": false
+    },
+    "plugins": ["search", "dnd", "wholerow", "checkbox"], 'core': {
+        "check_callback": false,
+        "multiple": true,
+        "themes": {
+            "icons": true
+        },
+        'data': data_tree_collection
+    }});
+
+var to = false;
+$('#tree_search').keyup(function () {
+    if (to) {
+        clearTimeout(to);
+    }
+    to = setTimeout(function () {
+        var v = $('#tree_search').val();
+        $('#layer_tree').jstree(true).search(v);
+    }, 250);
+});
+
+$('#layer_tree').bind("check_node.jstree", function (e, data) {
+    var array = data.instance.get_bottom_checked(data);
+    for (k = 0; k < array.length; k++) {
+        var id_layer = array[k].li_attr.layer;
+        map.getLayers().forEach(function (lyr) {
+            if (id_layer === lyr.get('layer')) {
+                lyr.setVisible(true);
+            }
+        });
+    }
+});
+
+$('#layer_tree').bind("uncheck_node.jstree", function (e, data) {
+    var layer_unchecked = data.node.li_attr.layer;
+    map.getLayers().forEach(function (lyr) {
+        if (layer_unchecked === lyr.get('layer')) {
+            lyr.setVisible(false);
+        }
+    });
+
+});
+
+$("#layer_tree").bind("hover_node.jstree", function (e, data)
+{
+    if (data.node.li_attr.layer) {
+        var text = data.node.li_attr.layer;
+        var lagend_url = data.node.li_attr.legend_url;
+        var image = lagend_url + "/wms?TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&EXCEPTIONS=application%2Fvnd.ogc.se_xml&FORMAT=image%2Fjpeg&LAYER=" + text + "&LEGEND_OPTIONS=forceLabels%3Aon%3BfontName%3DVerdana%3BfontSize%3A12";
+        $("#" + data.node.li_attr.id).tooltipster({
+            theme: 'tooltipster-shadow',
+            content: $('<img src="' + image + '">')
+        });
+    }
+});

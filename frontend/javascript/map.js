@@ -27,7 +27,7 @@ var map = new ol.Map({
 //            collapsible: false
 //        })
     }),
-    layers: layers,
+//    layers: layers,
     target: 'map',
     view: new ol.View({
         extent: view_extent,

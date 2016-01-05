@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (C) 2015 Autarquia-Livre
  *
@@ -45,10 +46,6 @@
     });</script>
 <div>
     <nav class="navbar navbar-default" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <!--                <div>
-                            <a class="navbar-brand" id="site_name" href="#"></a>
-                        </div>-->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#top_options">
                 <span class="sr-only">Ferramentas</span>
@@ -61,19 +58,10 @@
         </div>
         <div class="collapse navbar-collapse" id="top_options">
             <ul class="nav navbar-nav" id="top_tabs" >
-                <!--                <div class="container" style="width:auto;">
-                                    <ul id="top_tabs" class="nav nav-tabs" data-tabs="tabs">
-                
-                                    </ul>
-                                    <div id="content_tabs" class="tab-content">
-                
-                                    </div>
-                                </div>-->
             </ul>
         </div>
     </nav>
 </div>
-<!--<div class="container-fluid fill">-->
 <div class="container-fluid fill">
     <div class="row">
         <div id="panel" class="col-md-3" >
@@ -95,7 +83,6 @@
         </div>
         <div class="col-md-9"  id="map_panel">
             <div id="map" class="map content_border" contextmenu="menu_options">
-                <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/../javascript/map.js'); ?>
             </div>
             <menu type="context" id="menu_options">
                 <menuitem label="Refresh" onclick="window.location.reload();" icon="ico_reload.png"></menuitem>
@@ -136,3 +123,8 @@
 <div id="search_div" hidden></div>
 <div id="streetview_div" title="Google StreetView"></div>
 <div id="formularios_div" title=""></div>
+
+<?php
+
+include_once __DIR__ . '/../common/init.php';
+?>
